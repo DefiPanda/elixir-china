@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <h3>帖子</h3>
+
+  <ul>
+    <%= for post <- @posts do %>
+      <li>
+        <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
+          <%= post.content %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <a href="<%= ElixirChina.Router.post_path(:new)%>" class="btn btn-primary">
+    发帖
+  </a>
+</div>

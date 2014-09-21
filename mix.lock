@@ -1,0 +1,11 @@
+%{"cowboy": {:package, "1.0.0"},
+  "cowlib": {:package, "1.0.0"},
+  "decimal": {:package, "0.2.5"},
+  "ecto": {:package, "0.2.5"},
+  "linguist": {:package, "0.1.2"},
+  "phoenix": {:package, "0.4.1"},
+  "plug": {:package, "0.7.0"},
+  "poison": {:package, "1.1.1"},
+  "poolboy": {:package, "1.2.1"},
+  "postgrex": {:package, "0.6.0"},
+  "ranch": {:package, "1.0.0"}}

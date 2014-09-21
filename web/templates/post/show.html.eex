@@ -1,0 +1,37 @@
+<div class="col-md-12">
+
+  <a href="<%= ElixirChina.Router.post_path(:index)%>" class="btn btn-default btn-sm">
+    返回
+  </a>
+
+  <h1>
+    <%= @post.content %>
+  </h1>
+
+  <div class="actions">
+    <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
+      编辑
+    </a>
+
+    <form action="/posts/<%= @post.id %>" method="post">
+      <button type="submit" class="btn btn-danger">删除</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+
+    $that = this;
+
+    $.ajax({
+      url: $that.getAttribute('action'),
+      type: "DELETE",
+      data: $('form').serialize(),
+      success: function(data) {
+        window.location = data.location;
+      }
+    });
+  });
+</script>

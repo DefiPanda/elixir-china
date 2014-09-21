@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6">
+    <ul class="nav nav-pills pull-left">
+      <li>
+        <a href="<%= ElixirChina.Router.root_path(:index) %>"> 主页 </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="<%= ElixirChina.Router.post_path(:index) %>"> 帖子 </a>
+      </li>
+    </ul>
+  </div>
+</div>

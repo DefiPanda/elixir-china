@@ -1,0 +1,9 @@
+<h1>新贴</h1>
+
+<form action="/posts" method="post">
+  <div class="form-group">
+    <label for="post[content]">内容</label>
+    <input type="text" name="post[content]" class="form-control" />
+  </div>
+  <button type="submit" class="btn btn-primary">保存</button>
+</form>
