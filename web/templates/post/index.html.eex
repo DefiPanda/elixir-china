@@ -5,7 +5,7 @@
     <%= for post <- @posts do %>
       <li>
         <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
-          <%= post.content %>
+          <%= post.title %>
         </a>
       </li>
     <% end %>

@@ -20,8 +20,8 @@ defmodule ElixirChina.PostController do
     render conn, "new"
   end
 
-  def create(conn, %{"post" => %{"content" => content}}) do
-    post = %Post{content: content}
+  def create(conn, %{"post" => %{"title" => title, "content" => content}}) do
+    post = %Post{title: title, content: content}
 
     case Post.validate(post) do
       [] ->
@@ -43,7 +43,7 @@ defmodule ElixirChina.PostController do
 
   def update(conn, %{"id" => id, "post" => params}) do
     post = Repo.get(Post, String.to_integer(id))
-    post = %{post | content: params["content"]}
+    post = %{post | title: params["title"], content: params["content"]}
 
     case Post.validate(post) do
       [] ->

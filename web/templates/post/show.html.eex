@@ -5,8 +5,11 @@
   </a>
 
   <h1>
-    <%= @post.content %>
+    <%= @post.title %>
   </h1>
+  <pre>
+    <%= @post.content %>
+  </pre>
 
   <div class="actions">
     <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
