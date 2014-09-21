@@ -12,7 +12,7 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         render conn, "show", post: post
       _ ->
-        redirect conn, ElixirChina.Router.page_path(page: "unauthorized")
+        redirect conn, Router.page_path(page: "unauthorized")
     end
   end
 
@@ -37,7 +37,7 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         render conn, "edit", post: post
       _ ->
-        redirect conn, ElixirChina.Router.page_path("unauthorized")
+        redirect conn, Router.page_path("unauthorized")
     end
   end
 
@@ -48,7 +48,7 @@ defmodule ElixirChina.PostController do
     case Post.validate(post) do
       [] ->
         Repo.update(post)
-        json conn, 201, JSON.encode!(%{location: ElixirChina.Router.post_path(:show, post.id)})
+        json conn, 201, JSON.encode!(%{location: Router.post_path(:show, post.id)})
       errors ->
         json conn, errors: errors
     end
@@ -59,9 +59,9 @@ defmodule ElixirChina.PostController do
     case post do
       post when is_map(post) ->
         Repo.delete(post)
-        json conn, 200, JSON.encode!(%{location: ElixirChina.Router.post_path(:index)})
+        json conn, 200, JSON.encode!(%{location: Router.post_path(:index)})
       _ ->
-        redirect conn, ElixirChina.Router.page_path("unauthorized")
+        redirect conn, Router.page_path("unauthorized")
     end
   end
 end
