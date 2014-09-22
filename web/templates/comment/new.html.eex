@@ -1,0 +1,9 @@
+<h1>新贴</h1>
+
+<form action="<%= ElixirChina.Router.post_comment_path(:create, @post_id)%>" method="post">
+  <div class="form-group">
+    <label for="comment[content]">内容</label>
+    <textarea name="comment[content]" class="form-control"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">保存</button>
+</form>

@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <h3>评论</h3>
+
+  <ul>
+    <%= for comment <- @comments do %>
+      <li>
+        <a href="<%= ElixirChina.Router.post_comment_path(:show, @post_id, comment.id) %>">
+          <%= comment.content %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <a href="<%= ElixirChina.Router.post_comment_path(:new, @post_id)%>" class="btn btn-primary">
+    发表评论
+  </a>
+</div>

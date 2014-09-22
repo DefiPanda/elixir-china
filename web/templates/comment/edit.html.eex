@@ -1,0 +1,30 @@
+<div class="col-md-12">
+  <h3>编辑评论</h3>
+
+  <div class="actions">
+    <form action="<%= ElixirChina.Router.post_comment_path(:update, @post_id, @comment.id) %>" method="post">
+       <input type="hidden" name="_method" value="PUT">
+      <div class="form-group">
+         <textarea name="comment[content]" class="form-control"><%= @comment.content %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">更新</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+
+    $that = this;
+
+    $.ajax({
+      url: $that.getAttribute('action'),
+      type: "POST",
+      data: $('form').serialize(),
+      success: function(data) {
+        window.location = data.location;
+      }
+    });
+  });
+</script>

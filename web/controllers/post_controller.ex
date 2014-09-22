@@ -1,7 +1,9 @@
 defmodule ElixirChina.PostController do
+  import Ecto.Query
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Post
+  alias ElixirChina.Comment
 
   def index(conn, _params) do
     render conn, "index", posts: Repo.all(Post)
@@ -10,7 +12,8 @@ defmodule ElixirChina.PostController do
   def show(conn, %{"id" => id}) do
     case Repo.get(Post, String.to_integer(id)) do
       post when is_map(post) ->
-        render conn, "show", post: post
+        comments = Repo.all(from comment in Comment, where: comment.post_id == ^String.to_integer(id))
+        render conn, "show", post: post, comments: comments
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end
@@ -58,6 +61,7 @@ defmodule ElixirChina.PostController do
     post = Repo.get(Post, String.to_integer(id))
     case post do
       post when is_map(post) ->
+        (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
         Repo.delete(post)
         json conn, 200, JSON.encode!(%{location: Router.post_path(:index)})
       _ ->
