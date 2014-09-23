@@ -1,0 +1,21 @@
+<div class="col-md-12">
+  <h3>修改密码: <%= @user.name %></h3>
+
+  <div class="actions">
+    <form action="<%= ElixirChina.Router.user_path(:update, @user.id) %>" method="post">
+      <input type="hidden" name="_method" value="PUT">
+      <div class="form-group">
+        <input type="password" name="user[password]" value="" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary">更新</button>
+    </form>
+  </div>
+</div>
+
+<%= if @errors do %>
+  <%= for error <- @errors do %>
+    <div class="alert alert-warning">
+      <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+    </div>
+  <% end %>
+<% end %>

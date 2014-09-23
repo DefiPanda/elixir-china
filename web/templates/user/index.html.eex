@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <h3>所有用户</h3>
+
+  <ul>
+    <%= for user <- @users do %>
+      <li>
+        <a href="<%= ElixirChina.Router.user_path(:show, user.id) %>">
+          <%= user.name %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <a href="<%= ElixirChina.Router.user_path(:new)%>" class="btn btn-primary">
+    注册
+  </a>
+</div>

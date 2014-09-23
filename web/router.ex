@@ -9,6 +9,7 @@ defmodule ElixirChina.Router do
     resources "/posts", PostController do
       resources "/comments", CommentController
    	end
+   	resources "/users", UserController
   end
 
 end

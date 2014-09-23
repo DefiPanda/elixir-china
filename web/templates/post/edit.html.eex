@@ -3,7 +3,7 @@
 
   <div class="actions">
     <form action="<%= ElixirChina.Router.post_path(:update, @post.id) %>" method="post">
-       <input type="hidden" name="_method" value="PUT">
+      <input type="hidden" name="_method" value="PUT">
       <div class="form-group">
          <input type="text" name="post[title]" value="<%= @post.title %>" class="form-control" />
          <textarea name="post[content]" class="form-control"><%= @post.content %></textarea>
