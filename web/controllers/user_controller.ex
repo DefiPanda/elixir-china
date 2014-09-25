@@ -1,5 +1,4 @@
 defmodule ElixirChina.UserController do
-  import Ecto.Query
   use Phoenix.Controller
   alias ElixirChina.Router
 

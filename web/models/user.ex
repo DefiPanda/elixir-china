@@ -43,14 +43,13 @@ defmodule User do
   end
 
   def valid_password?(record, password) do
-    salt = String.slice(record.encrypted_password, 0, 29)
+    salt = String.slice(record.password, 0, 29)
     {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
-    "#{hashed_password}" == record.encrypted_password
+    "#{hashed_password}" == record.password
   end
 
-  def assign_auth_token(record) do
+  def generate_auth_token() do
     "#{:uuid.get_v4() |> :uuid.uuid_to_string()}"
-    |> record.auth_token()
   end
 
   def encrypt_password(password) do

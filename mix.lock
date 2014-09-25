@@ -9,4 +9,6 @@
   "poison": {:package, "1.1.1"},
   "poolboy": {:package, "1.2.1"},
   "postgrex": {:package, "0.6.0"},
-  "ranch": {:package, "1.0.0"}}
+  "quickrand": {:git, "https://github.com/okeuday/quickrand.git", "0395a10b94472ccbe38b62bbfa9d0fc1ddac1dd7", [tag: "v1.3.2"]},
+  "ranch": {:package, "1.0.0"},
+  "uuid": {:git, "git://github.com/okeuday/uuid.git", "f7c141c8359cd690faba0d2684b449a07db8e915", []}}
