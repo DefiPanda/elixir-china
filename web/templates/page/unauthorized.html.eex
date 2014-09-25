@@ -1,8 +1,8 @@
 <html>
   <head>
-    <title>404 Not Found</title>
+    <title>401 Unauthorized Error</title>
   </head>
   <body>
-    <h1> 大哥，打错地址了吧？ </h1>
+    <h1> 大哥，您没权限进行此操作。 </h1>
   </body>
 </html>

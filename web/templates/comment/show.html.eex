@@ -8,6 +8,10 @@
     <%= @comment.content %>
   </pre>
 
+  <a href="<%= ElixirChina.Router.user_path(:show, @comment.user_id) %>">
+      用户ID: <%= @comment.user_id %>
+  </a>
+
   <div class="actions">
     <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post_id, @comment.id) %>" class="btn btn-primary">
       编辑

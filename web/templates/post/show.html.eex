@@ -7,9 +7,13 @@
   <h1>
     <%= @post.title %>
   </h1>
+  <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
+      用户ID: <%= @post.user_id %>
+  </a>
   <pre>
     <%= @post.content %>
   </pre>
+  
 
   <div class="actions">
     <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
@@ -29,6 +33,9 @@
         <li>
           <a href="<%= ElixirChina.Router.post_comment_path(:show, @post.id, comment.id) %>">
             <%= comment.content %>
+          </a>
+          <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
+            (用户ID <%= comment.user_id %>)
           </a>
         </li>
       <% end %>

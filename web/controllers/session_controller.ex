@@ -19,7 +19,8 @@ defmodule ElixirChina.SessionController do
       true ->
         user = users |> hd
         if User.valid_password?(user, password) do
-          # TODO: Add session validation logic
+          conn = put_session conn, :user_id, user.id
+          conn = put_session conn, :current_user, user
           redirect conn, Router.post_path(:index)
         else
           render conn, "new", errors: [{"密码", "错误"}]
@@ -30,7 +31,8 @@ defmodule ElixirChina.SessionController do
   end
 
   def destroy(conn, _params) do
-  	# TODO: Add session validation logic
+  	conn = put_session conn, :user_id, nil
+    conn = put_session conn, :current_user, nil
     render conn, "new"
   end
 end

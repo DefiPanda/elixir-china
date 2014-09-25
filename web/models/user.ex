@@ -14,7 +14,8 @@ defmodule User do
     field :admin,       :boolean
     field :name, :string
     field :password,   :string
-    field :auth_token, :string
+    has_many :comments, ElixirChina.Comment
+    has_many :posts, ElixirChina.Post
   end
 
   defp validate_uniqueness(user) do
@@ -28,7 +29,7 @@ defmodule User do
     end
   end
 
-  defp unique(attr, value, opts \\ []) do
+  defp unique(attr, value) do
     case Repo.one(from t in __MODULE__, where: field(t, ^attr) == ^value) do
       nil -> true
       _   -> false
@@ -46,10 +47,6 @@ defmodule User do
     salt = String.slice(record.password, 0, 29)
     {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
     "#{hashed_password}" == record.password
-  end
-
-  def generate_auth_token() do
-    "#{:uuid.get_v4() |> :uuid.uuid_to_string()}"
   end
 
   def encrypt_password(password) do

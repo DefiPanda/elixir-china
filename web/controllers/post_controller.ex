@@ -1,5 +1,6 @@
 defmodule ElixirChina.PostController do
   import Ecto.Query
+  import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Post
@@ -24,7 +25,8 @@ defmodule ElixirChina.PostController do
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content}}) do
-    post = %Post{title: title, content: content}
+    user_id = get_user_id!(conn)
+    post = %Post{title: title, content: content, user_id: user_id}
 
     case Post.validate(post) do
       [] ->
@@ -36,7 +38,8 @@ defmodule ElixirChina.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    case Repo.get(Post, String.to_integer(id)) do
+    post = validate_and_get_post!(conn, id)
+    case post do
       post when is_map(post) ->
         render conn, "edit", post: post
       _ ->
@@ -45,7 +48,7 @@ defmodule ElixirChina.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => params}) do
-    post = Repo.get(Post, String.to_integer(id))
+    post = validate_and_get_post!(conn, id)
     post = %{post | title: params["title"], content: params["content"]}
 
     case Post.validate(post) do
@@ -58,7 +61,7 @@ defmodule ElixirChina.PostController do
   end
 
   def destroy(conn, %{"id" => id}) do
-    post = Repo.get(Post, String.to_integer(id))
+    post = validate_and_get_post!(conn, id)
     case post do
       post when is_map(post) ->
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
@@ -67,5 +70,14 @@ defmodule ElixirChina.PostController do
       _ ->
         redirect conn, Router.page_path("unauthorized")
     end
+  end
+
+  defp validate_and_get_post!(conn, id) do
+    user_id = get_user_id!(conn)
+    post = Repo.get(Post, String.to_integer(id))
+    if user_id != post.user_id do
+      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此帖子"
+    end
+    post
   end
 end

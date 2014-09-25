@@ -1,4 +1,5 @@
 defmodule ElixirChina.UserController do
+  import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
 
@@ -26,6 +27,8 @@ defmodule ElixirChina.UserController do
       [] ->
       	user = %{user | :password => to_string User.encrypt_password(user.password)}
         user = Repo.insert(user)
+        conn = put_session conn, :user_id, user.id
+        conn = put_session conn, :current_user, user
         render conn, "show", user: user
       errors ->
         render conn, "new", user: user, errors: errors
@@ -33,6 +36,10 @@ defmodule ElixirChina.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
+    user_id = get_user_id!(conn)
+    if user_id != String.to_integer(id) do
+      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改密码"
+    end
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
         render conn, "edit", user: user
@@ -56,6 +63,7 @@ defmodule ElixirChina.UserController do
   end
 
   def destroy(conn, %{"id" => id}) do
+    user_id = get_user_id!(conn)
     user = Repo.get(User, String.to_integer(id))
     case user do
       user when is_map(user) ->

@@ -7,5 +7,6 @@ defmodule ElixirChina.Comment do
   schema "comments" do
     field :content, :string
     belongs_to :post, ElixirChina.Post
+    belongs_to :user, ElixirChina.User
   end
 end

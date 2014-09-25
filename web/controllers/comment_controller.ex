@@ -1,5 +1,6 @@
 defmodule ElixirChina.CommentController do
   import Ecto.Query
+  import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Comment
@@ -23,7 +24,8 @@ defmodule ElixirChina.CommentController do
   end
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
-    comment = %Comment{post_id: String.to_integer(post_id), content: params["content"]}
+    user_id = get_user_id!(conn)
+    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id, content: params["content"]}
 
     case Comment.validate(comment) do
       [] ->
@@ -35,7 +37,8 @@ defmodule ElixirChina.CommentController do
   end
 
   def edit(conn, %{"post_id" => post_id, "id" => id}) do
-    case Repo.get(Comment, String.to_integer(id)) do
+    comment = validate_and_get_comment(conn, id)
+    case comment do
       comment when is_map(comment) ->
         render conn, "edit", comment: comment, post_id: post_id
       _ ->
@@ -44,9 +47,8 @@ defmodule ElixirChina.CommentController do
   end
 
   def update(conn, %{"post_id" => post_id, "id" => id, "comment" => params}) do
-    comment = Repo.get(Comment, String.to_integer(id))
+    comment = validate_and_get_comment(conn, id)
     comment = %{comment | content: params["content"]}
-
     case Comment.validate(comment) do
       [] ->
         Repo.update(comment)
@@ -57,7 +59,7 @@ defmodule ElixirChina.CommentController do
   end
 
   def destroy(conn, %{"post_id" => post_id, "id" => id}) do
-    comment = Repo.get(Comment, String.to_integer(id))
+    comment = validate_and_get_comment(conn, id)
     case comment do
       comment when is_map(comment) ->
         Repo.delete(comment)
@@ -65,5 +67,14 @@ defmodule ElixirChina.CommentController do
       _ ->
         redirect conn, Router.page_path("unauthorized")
     end
+  end
+
+  defp validate_and_get_comment(conn, id) do
+    user_id = get_user_id!(conn)
+    comment = Repo.get(Comment, String.to_integer(id))
+    if user_id != comment.user_id do
+      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此评论"
+    end
+    comment
   end
 end
