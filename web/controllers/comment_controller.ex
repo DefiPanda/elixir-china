@@ -4,7 +4,6 @@ defmodule ElixirChina.CommentController do
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Comment
-  alias ElixirChina.User
 
   def index(conn, %{"post_id" => post_id}) do
     render conn, "index", post_id: post_id, comments: Repo.all(Comment), user_id: get_session(conn, :user_id)

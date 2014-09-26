@@ -62,16 +62,4 @@ defmodule ElixirChina.UserController do
         render conn, "edit", user: user, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
-
-  def destroy(conn, %{"id" => id}) do
-    user_id = get_user_id!(conn)
-    user = Repo.get(User, String.to_integer(id))
-    case user do
-      user when is_map(user) ->
-        Repo.delete(user)
-        json conn, 200, JSON.encode!(%{location: Router.user_path(:index)})
-      _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
-    end
-  end
 end

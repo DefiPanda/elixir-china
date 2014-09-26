@@ -17,7 +17,7 @@ defmodule ElixirChina.Router do
     get "/signup", UserController, :new
 
     # Sessions
-    resources "/sessions", SessionController, only: [:new, :create, :destroy]
+    resources "/sessions", SessionController, only: [:new, :create]
     get "/signin", SessionController, :new
     get "/signout", SessionController, :destroy
   end
