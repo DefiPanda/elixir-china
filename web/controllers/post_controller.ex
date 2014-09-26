@@ -7,7 +7,7 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Comment
 
   def index(conn, _params) do
-    render conn, "index", posts: Repo.all(Post)
+    render conn, "index", posts: Repo.all(Post), user_id: get_session(conn, :user_id)
   end
 
   def show(conn, %{"id" => id}) do
@@ -31,9 +31,9 @@ defmodule ElixirChina.PostController do
     case Post.validate(post) do
       [] ->
         post = Repo.insert(post)
-        render conn, "show", post: post
+        render conn, "show", post: post, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "new", post: post, errors: errors
+        render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 

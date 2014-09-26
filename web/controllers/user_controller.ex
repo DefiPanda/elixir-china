@@ -4,7 +4,7 @@ defmodule ElixirChina.UserController do
   alias ElixirChina.Router
 
   def index(conn, _params) do
-      render conn, "index", users: Repo.all(User)
+      render conn, "index", users: Repo.all(User), user_id: get_session(conn, :user_id)
   end
 
   def show(conn, %{"id" => id}) do
@@ -31,7 +31,7 @@ defmodule ElixirChina.UserController do
         conn = put_session conn, :current_user, user
         render conn, "show", user: user, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "new", user: user, errors: errors
+        render conn, "new", user: user, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 
@@ -56,9 +56,9 @@ defmodule ElixirChina.UserController do
       [] ->
         user = %{user | :password => to_string User.encrypt_password(user.password)}
         Repo.update(user)
-        render conn, "show", user: user
+        render conn, "show", user: user, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "edit", user: user, errors: errors
+        render conn, "edit", user: user, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 

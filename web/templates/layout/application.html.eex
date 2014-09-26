@@ -14,7 +14,7 @@
 
   <body>
     <main role="main" class="container">
-      <%= render "nav/nav.html" %>
+      <%= render "nav/nav.html", user_id: @user_id %>
 
       <div class="row">
         <%= @inner %>

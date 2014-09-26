@@ -7,7 +7,8 @@ defmodule ElixirChina.CommentController do
 
   def index(conn, %{"post_id" => post_id}) do
     render conn, "index", post_id: post_id, 
-      comments: Repo.all(from comment in Comment, where: comment.post_id == ^String.to_integer(post_id))
+      comments: Repo.all(from comment in Comment, where: comment.post_id == ^String.to_integer(post_id)),
+      user_id: get_session(conn, :user_id)
   end
 
   def show(conn, %{"post_id" => post_id, "id" => id}) do
@@ -32,7 +33,7 @@ defmodule ElixirChina.CommentController do
         comment = Repo.insert(comment)
         render conn, "show", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "new", comment: comment, errors: errors
+        render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 
@@ -40,7 +41,7 @@ defmodule ElixirChina.CommentController do
     comment = validate_and_get_comment(conn, id)
     case comment do
       comment when is_map(comment) ->
-        render conn, "edit", comment: comment, post_id: post_id
+        render conn, "edit", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
