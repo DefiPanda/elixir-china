@@ -7,11 +7,7 @@
     </ul>
   </div>
   <div class="col-md-6">
-    <ul class="nav nav-pills pull-right">
-      <li>
-        <a href="<%= ElixirChina.Router.post_path(:index) %>"> 帖子 </a>
-      </li>
-    </ul>
+    
     <%= if @user_id == nil do %>
       <ul class="nav nav-pills pull-right">
         <li>
@@ -30,6 +26,16 @@
           <a href="/signout"> 退出 </a>
         </li>
       </ul>
+      <ul class="nav nav-pills pull-right">
+        <li>
+          <a href="<%= ElixirChina.Router.user_path(:show, @user_id) %>"> 账户 </a>
+        </li>
+      </ul>
     <% end %>
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="<%= ElixirChina.Router.post_path(:index) %>"> 帖子 </a>
+      </li>
+    </ul>
   </div>
 </div>
