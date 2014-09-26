@@ -10,7 +10,7 @@ defmodule ElixirChina.UserController do
   def show(conn, %{"id" => id}) do
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
-        render conn, "show", user: user
+        render conn, "show", user: user, user_id: get_session(conn, :user_id)
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end
@@ -29,7 +29,7 @@ defmodule ElixirChina.UserController do
         user = Repo.insert(user)
         conn = put_session conn, :user_id, user.id
         conn = put_session conn, :current_user, user
-        render conn, "show", user: user
+        render conn, "show", user: user, user_id: get_session(conn, :user_id)
       errors ->
         render conn, "new", user: user, errors: errors
     end
@@ -42,9 +42,9 @@ defmodule ElixirChina.UserController do
     end
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
-        render conn, "edit", user: user
+        render conn, "edit", user: user, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 
@@ -70,7 +70,7 @@ defmodule ElixirChina.UserController do
         Repo.delete(user)
         json conn, 200, JSON.encode!(%{location: Router.user_path(:index)})
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 end

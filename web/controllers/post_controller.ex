@@ -14,7 +14,7 @@ defmodule ElixirChina.PostController do
     case Repo.get(Post, String.to_integer(id)) do
       post when is_map(post) ->
         comments = Repo.all(from comment in Comment, where: comment.post_id == ^String.to_integer(id))
-        render conn, "show", post: post, comments: comments
+        render conn, "show", post: post, comments: comments, user_id: get_session(conn, :user_id)
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end
@@ -41,9 +41,9 @@ defmodule ElixirChina.PostController do
     post = validate_and_get_post!(conn, id)
     case post do
       post when is_map(post) ->
-        render conn, "edit", post: post
+        render conn, "edit", post: post, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, Router.page_path("unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 
@@ -68,7 +68,7 @@ defmodule ElixirChina.PostController do
         Repo.delete(post)
         json conn, 200, JSON.encode!(%{location: Router.post_path(:index)})
       _ ->
-        redirect conn, Router.page_path("unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 

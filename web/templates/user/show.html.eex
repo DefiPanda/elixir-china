@@ -8,16 +8,18 @@
     用户名: <%= @user.name %>
   </h1>
 
-  <div class="actions">
-    <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
-      编辑
-    </a>
+  <%= if @user_id != nil and @user_id == @user.id do %>
+      <div class="actions">
+        <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
+          编辑
+        </a>
 
-    <form action="/users/<%= @user.id %>" method="post">
-      <button type="submit" class="btn btn-danger">删除账号</button>
-    </form>
-  </div>
-</div>
+        <form action="/users/<%= @user.id %>" method="post">
+          <button type="submit" class="btn btn-danger">删除账号</button>
+        </form>
+      </div>
+    </div>
+  <% end %>
 
 <script>
   $("form").on("submit", function(event) {

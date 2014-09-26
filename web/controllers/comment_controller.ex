@@ -13,7 +13,7 @@ defmodule ElixirChina.CommentController do
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case Repo.get(Comment, String.to_integer(id)) do
       comment when is_map(comment) ->
-        render conn, "show", post_id: post_id, comment: comment
+        render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end
@@ -30,7 +30,7 @@ defmodule ElixirChina.CommentController do
     case Comment.validate(comment) do
       [] ->
         comment = Repo.insert(comment)
-        render conn, "show", comment: comment, post_id: post_id
+        render conn, "show", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       errors ->
         render conn, "new", comment: comment, errors: errors
     end
@@ -42,7 +42,7 @@ defmodule ElixirChina.CommentController do
       comment when is_map(comment) ->
         render conn, "edit", comment: comment, post_id: post_id
       _ ->
-        redirect conn, Router.page_path("unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 
@@ -65,7 +65,7 @@ defmodule ElixirChina.CommentController do
         Repo.delete(comment)
         json conn, 200, JSON.encode!(%{location: Router.post_path(:show, post_id)})
       _ ->
-        redirect conn, Router.page_path("unauthorized")
+        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
   end
 

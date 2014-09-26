@@ -14,18 +14,19 @@
     <%= @post.content %>
   </pre>
   
+  <%= if @user_id != nil and @user_id == @post.user_id do %>
+    <div class="actions">
+      <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
+        编辑
+      </a>
 
-  <div class="actions">
-    <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
-      编辑
-    </a>
+      <form action="/posts/<%= @post.id %>" method="post">
+        <button type="submit" class="btn btn-danger">删除</button>
+      </form>
 
-    <form action="/posts/<%= @post.id %>" method="post">
-      <button type="submit" class="btn btn-danger">删除</button>
-    </form>
-
-    <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
-  </div>
+      <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
+    </div>
+  <% end %>
 
   <ul>
     <%= if @comments != nil do %>

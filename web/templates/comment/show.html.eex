@@ -12,15 +12,17 @@
       用户ID: <%= @comment.user_id %>
   </a>
 
-  <div class="actions">
-    <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post_id, @comment.id) %>" class="btn btn-primary">
-      编辑
-    </a>
+  <%= if @user_id != nil and @user_id == @comment.user_id do %>
+    <div class="actions">
+      <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post_id, @comment.id) %>" class="btn btn-primary">
+        编辑
+      </a>
 
-    <form action="/posts/<%= @post_id %>/comments/<%= @comment.id %>" method="post">
-      <button type="submit" class="btn btn-danger">删除</button>
-    </form>
-  </div>
+      <form action="/posts/<%= @post_id %>/comments/<%= @comment.id %>" method="post">
+        <button type="submit" class="btn btn-danger">删除</button>
+      </form>
+    </div>
+  <% end %>
 </div>
 
 <script>
