@@ -8,14 +8,14 @@
     <%= @post.title %>
   </h1>
   <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
-      用户ID: <%= @post.user_id %>
+      发帖人: <%= @post.user.get.name %>
   </a>
   <pre>
     <%= @post.content %>
   </pre>
   
-  <%= if @user_id != nil and @user_id == @post.user_id do %>
-    <div class="actions">
+  <div class="actions">
+    <%= if @user_id != nil and @user_id == @post.user_id do %>
       <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
         编辑
       </a>
@@ -23,10 +23,10 @@
       <form action="/posts/<%= @post.id %>" method="post">
         <button type="submit" class="btn btn-danger">删除</button>
       </form>
+    <% end %>
 
-      <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
-    </div>
-  <% end %>
+    <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
+  </div>
 
   <ul>
     <%= if @comments != nil do %>
@@ -36,7 +36,7 @@
             <%= comment.content %>
           </a>
           <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
-            (用户ID <%= comment.user_id %>)
+            (<%= comment.user.get.name %>)
           </a>
         </li>
       <% end %>

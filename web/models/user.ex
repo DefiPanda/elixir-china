@@ -1,4 +1,4 @@
-defmodule User do
+defmodule ElixirChina.User do
   use Ecto.Model
 
   validate user,

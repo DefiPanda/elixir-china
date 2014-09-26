@@ -1,5 +1,6 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
+  alias ElixirChina.User
 
   # A new connection must be returned
   def authenticate_user!(conn) do

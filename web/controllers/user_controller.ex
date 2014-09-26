@@ -2,6 +2,7 @@ defmodule ElixirChina.UserController do
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
+  alias ElixirChina.User
 
   def index(conn, _params) do
       render conn, "index", users: Repo.all(User), user_id: get_session(conn, :user_id)

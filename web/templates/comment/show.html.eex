@@ -9,7 +9,7 @@
   </pre>
 
   <a href="<%= ElixirChina.Router.user_path(:show, @comment.user_id) %>">
-      用户ID: <%= @comment.user_id %>
+      用户ID: <%= @comment.user.get.name %>
   </a>
 
   <%= if @user_id != nil and @user_id == @comment.user_id do %>

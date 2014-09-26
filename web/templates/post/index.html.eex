@@ -8,7 +8,7 @@
           <%= post.title %>
         </a>
         <a href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
-          (用户ID <%= post.user_id %>)
+          (<%= post.user.get.name %>)
         </a>
       </li>
     <% end %>

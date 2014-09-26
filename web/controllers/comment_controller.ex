@@ -4,15 +4,14 @@ defmodule ElixirChina.CommentController do
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Comment
+  alias ElixirChina.User
 
   def index(conn, %{"post_id" => post_id}) do
-    render conn, "index", post_id: post_id, 
-      comments: Repo.all(from comment in Comment, where: comment.post_id == ^String.to_integer(post_id)),
-      user_id: get_session(conn, :user_id)
+    render conn, "index", post_id: post_id, comments: Repo.all(Comment), user_id: get_session(conn, :user_id)
   end
 
   def show(conn, %{"post_id" => post_id, "id" => id}) do
-    case Repo.get(Comment, String.to_integer(id)) do
+    case get_comment_with_loaded_user(String.to_integer(id)) do
       comment when is_map(comment) ->
         render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
       _ ->
@@ -31,7 +30,9 @@ defmodule ElixirChina.CommentController do
     case Comment.validate(comment) do
       [] ->
         comment = Repo.insert(comment)
-        render conn, "show", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
+        render conn, "show", comment: get_comment_with_loaded_user(comment.id), 
+                             post_id: post_id, 
+                             user_id: get_session(conn, :user_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
     end
@@ -68,6 +69,11 @@ defmodule ElixirChina.CommentController do
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
+  end
+
+  defp get_comment_with_loaded_user(id) do
+    query = from(c in Comment, where: c.id == ^id, preload: :user)
+    hd(Repo.all(query))
   end
 
   defp validate_and_get_comment(conn, id) do

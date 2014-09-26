@@ -2,6 +2,7 @@ defmodule ElixirChina.SessionController do
   import Ecto.Query
   use Phoenix.Controller
   alias ElixirChina.Router
+  alias ElixirChina.User
 
   def new(conn, _params) do
     render conn, "new"
