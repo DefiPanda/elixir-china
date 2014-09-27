@@ -10,8 +10,4 @@
       </li>
     <% end %>
   </ul>
-
-  <a href="<%= ElixirChina.Router.post_comment_path(:new, @post_id)%>" class="btn btn-primary">
-    发表评论
-  </a>
 </div>

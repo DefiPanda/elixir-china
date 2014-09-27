@@ -24,8 +24,10 @@
         <button type="submit" class="btn btn-danger">删除</button>
       </form>
     <% end %>
-
-    <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
+    
+    <%= if @user_id != nil do %>
+      <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
+    <% end %>
   </div>
 
   <ul>

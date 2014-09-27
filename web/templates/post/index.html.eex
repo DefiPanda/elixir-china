@@ -14,7 +14,9 @@
     <% end %>
   </ul>
 
-  <a href="<%= ElixirChina.Router.post_path(:new)%>" class="btn btn-primary">
-    发帖
-  </a>
+  <%= if @user_id != nil do %>
+    <a href="<%= ElixirChina.Router.post_path(:new)%>" class="btn btn-primary">
+      发帖
+    </a>
+  <% end %>
 </div>
