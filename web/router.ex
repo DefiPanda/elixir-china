@@ -12,6 +12,10 @@ defmodule ElixirChina.Router do
       resources "/comments", CommentController
     end
 
+    resources "/users", UserController do
+      resources "/posts", PostController, only: [:index]
+    end
+
     # Users
     resources "/users", UserController
     get "/signup", UserController, :new

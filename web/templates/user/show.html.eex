@@ -8,14 +8,19 @@
     用户名: <%= @user.name %>
   </h1>
 
-  <%= if @user_id != nil and @user_id == @user.id do %>
-      <div class="actions">
-        <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
-          修改密码
-        </a>
-      </div>
-    </div>
+  <%= if @user_id != nil and @user_id != @user.id do %>
+    <a href="<%= ElixirChina.Router.user_post_path(:index, @user.id) %>"> 查看<%= @user.name %>的帖子 </a>
   <% end %>
+  
+  <div class="actions">
+    <%= if @user_id != nil and @user_id == @user.id do %>
+      <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
+        修改密码
+      </a>
+    <% end %>
+  </div>
+  
+</div>
 
 <script>
   $("form").on("submit", function(event) {

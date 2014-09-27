@@ -6,6 +6,12 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Post
   alias ElixirChina.Comment
 
+  def index(conn, %{"user_id" => user_id}) do
+    query = from c in Post, where: c.user_id == ^String.to_integer(user_id), preload: :user
+    render conn, "index", posts: Repo.all(query), 
+                          user_id: get_session(conn, :user_id)
+  end
+
   def index(conn, _params) do
     render conn, "index", posts: Repo.all(from c in Post, where: true, preload: :user), 
                           user_id: get_session(conn, :user_id)
