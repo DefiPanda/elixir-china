@@ -15,4 +15,8 @@ config :phoenix, :code_reloader,
 config :logger, :console,
   level: :debug
 
-
+config :elixir_china, :postgres,
+  host: "localhost",
+  database: "elixir_china",
+  username: "postgres",
+  password: "postgres"
