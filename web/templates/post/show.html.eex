@@ -10,9 +10,7 @@
   <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
       发帖人: <%= @post.user.get.name %>
   </a>
-  <pre>
-    <%= @post.content %>
-  </pre>
+  <pre><%= @post.content %></pre>
   
   <div class="actions">
     <%= if @user_id != nil and @user_id == @post.user_id do %>

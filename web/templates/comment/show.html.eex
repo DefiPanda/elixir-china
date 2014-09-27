@@ -4,9 +4,7 @@
     返回帖子
   </a>
 
-  <pre>
-    <%= @comment.content %>
-  </pre>
+  <pre><%= @comment.content %></pre>
 
   <a href="<%= ElixirChina.Router.user_path(:show, @comment.user_id) %>">
       用户ID: <%= @comment.user.get.name %>
