@@ -19,7 +19,7 @@ defmodule ElixirChina.CommentController do
   end
 
   def new(conn, %{"post_id" => post_id}) do
-    render conn, "new",  post_id: post_id
+    render conn, "new",  post_id: post_id, user_id: get_session(conn, :user_id)
   end
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do

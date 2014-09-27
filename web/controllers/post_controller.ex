@@ -22,7 +22,7 @@ defmodule ElixirChina.PostController do
   end
 
   def new(conn, _params) do
-    render conn, "new"
+    render conn, "new", user_id: get_session(conn, :user_id)
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content}}) do
