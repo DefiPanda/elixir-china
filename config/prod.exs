@@ -21,3 +21,8 @@ config :logger, :console,
   level: :info,
   metadata: [:request_id]
 
+config :elixir_china, :postgres,
+  host: "localhost",
+  database: "elixir_china",
+  username: "postgres",
+  password: "postgres"

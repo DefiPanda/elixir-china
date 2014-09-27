@@ -2,7 +2,8 @@ defmodule Repo do
     use Ecto.Repo, adapter: Ecto.Adapters.Postgres
 
     def conf do
-      parse_url "ecto://postgres:postgres@localhost/elixir_china"
+      config = Application.get_all_env(:elixir_china)[:postgres]
+      parse_url "ecto://#{config[:username]}:#{config[:password]}@#{config[:host]}/#{config[:database]}"
     end
 
     def priv do
