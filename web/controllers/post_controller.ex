@@ -38,8 +38,7 @@ defmodule ElixirChina.PostController do
     case Post.validate(post) do
       [] ->
         post = Repo.insert(post)
-        render conn, "show", post: get_post_with_loaded_user(post.id), 
-                             user_id: get_session(conn, :user_id)
+        redirect conn, Router.post_path(:show, post.id)
       errors ->
         render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id)
     end
