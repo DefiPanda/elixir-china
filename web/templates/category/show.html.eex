@@ -1,0 +1,12 @@
+<h2><%= @category.name %></h2>
+
+<%= for post <- @posts do %>
+  <li>
+    <a href="<%= ElixirChina.Router.post_path(:show, @post_id) %>">
+      <%= post.title %> 
+    </a>
+    <a href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
+      (<%= post.user.get.name %>)
+    </a>
+  </li>
+<% end %>

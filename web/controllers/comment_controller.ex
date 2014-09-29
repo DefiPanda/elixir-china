@@ -28,7 +28,7 @@ defmodule ElixirChina.CommentController do
 
     case Comment.validate(comment) do
       [] ->
-        comment = Repo.insert(comment)
+        Repo.insert(comment)
         redirect conn, Router.post_comment_path(:index, post_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)

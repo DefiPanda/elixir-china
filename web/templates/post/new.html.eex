@@ -6,6 +6,13 @@
     <input type="text" name="post[title]" class="form-control" />
     <label for="post[content]">内容</label>
     <textarea name="post[content]" class="form-control"></textarea>
+    <label for="post[category_id]">所属板块</label>
+    <select name="post[category_id]" class="form-control">
+      <%= for category <- @categories do %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+      <% end %>
+    </select>
+
   </div>
   <button type="submit" class="btn btn-primary">保存</button>
 </form>

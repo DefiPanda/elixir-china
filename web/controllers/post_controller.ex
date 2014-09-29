@@ -5,6 +5,7 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Router
   alias ElixirChina.Post
   alias ElixirChina.Comment
+  alias ElixirChina.Category
 
   def index(conn, %{"user_id" => user_id}) do
     query = from c in Post, where: c.user_id == ^String.to_integer(user_id), preload: :user
@@ -28,12 +29,12 @@ defmodule ElixirChina.PostController do
   end
 
   def new(conn, _params) do
-    render conn, "new", user_id: get_session(conn, :user_id)
+    render conn, "new", user_id: get_session(conn, :user_id), categories: Repo.all(Category)
   end
 
-  def create(conn, %{"post" => %{"title" => title, "content" => content}}) do
+  def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id!(conn)
-    post = %Post{title: title, content: content, user_id: user_id}
+    post = %Post{title: title, content: content, user_id: user_id, category_id: String.to_integer(category_id)}
 
     case Post.validate(post) do
       [] ->
