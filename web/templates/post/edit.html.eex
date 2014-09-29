@@ -5,8 +5,16 @@
     <form action="<%= ElixirChina.Router.post_path(:update, @post.id) %>" method="post">
       <input type="hidden" name="_method" value="PUT">
       <div class="form-group">
+         <label for="post[title]">标题</label>
          <input type="text" name="post[title]" value="<%= @post.title %>" class="form-control" />
+         <label for="post[content]">内容</label>
          <textarea name="post[content]" class="form-control"><%= @post.content %></textarea>
+         <label for="post[category_id]">所属板块</label>
+         <select name="post[category_id]" class="form-control">
+          <%= for category <- @categories do %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+          <% end %>
+        </select>
       </div>
       <button type="submit" class="btn btn-primary">更新</button>
     </form>

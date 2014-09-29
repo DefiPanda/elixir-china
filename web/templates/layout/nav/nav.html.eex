@@ -37,10 +37,5 @@
         </li>
       </ul>
     <% end %>
-    <ul class="nav nav-pills pull-right">
-      <li>
-        <a href="/"> 帖子 </a>
-      </li>
-    </ul>
   </div>
 </div>

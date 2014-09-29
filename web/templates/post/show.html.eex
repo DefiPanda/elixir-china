@@ -7,9 +7,16 @@
   <h1>
     <%= @post.title %>
   </h1>
-  <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
+  <div>
+    <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
       发帖人: <%= @post.user.get.name %>
-  </a>
+    </a>
+  </div>
+  <div>
+    <a href="<%= ElixirChina.Router.category_path(:show, @post.category_id) %>">
+      所属板块: <%= @post.category.get.name %>
+    </a>
+  </div>
   <pre><%= @post.content %></pre>
   
   <div class="actions">

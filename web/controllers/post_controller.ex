@@ -19,7 +19,7 @@ defmodule ElixirChina.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    case get_post_with_loaded_user(String.to_integer(id)) do
+    case get_loaded_post(String.to_integer(id)) do
       post when is_map(post) ->
         comments = get_comments_with_loaded_user(String.to_integer(id))
         render conn, "show", post: post, comments: comments, user_id: get_session(conn, :user_id)
@@ -49,7 +49,7 @@ defmodule ElixirChina.PostController do
     post = validate_and_get_post!(conn, id)
     case post do
       post when is_map(post) ->
-        render conn, "edit", post: post, user_id: get_session(conn, :user_id)
+        render conn, "edit", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end
@@ -57,7 +57,9 @@ defmodule ElixirChina.PostController do
 
   def update(conn, %{"id" => id, "post" => params}) do
     post = validate_and_get_post!(conn, id)
-    post = %{post | title: params["title"], content: params["content"]}
+    post = %{post | title: params["title"], 
+                    content: params["content"], 
+                    category_id: String.to_integer(params["category_id"])}
 
     case Post.validate(post) do
       [] ->
@@ -80,8 +82,8 @@ defmodule ElixirChina.PostController do
     end
   end
 
-  defp get_post_with_loaded_user(id) do
-    query = from(c in Post, where: c.id == ^id, preload: :user)
+  defp get_loaded_post(id) do
+    query = from(c in Post, where: c.id == ^id, preload: [:user, :category])
     hd(Repo.all(query))
   end
 
