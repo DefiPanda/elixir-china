@@ -4,7 +4,7 @@ defmodule ElixirChina.Router do
   plug Plug.Static, at: "/static", from: :elixir_china
 
   scope alias: ElixirChina do
-    get "/", WelcomeController, :index, as: :root
+    get "/", CategoryController, :index, as: :root
     get "/pages/:page", PageController, :show, as: :page
 
     # Posts and comments

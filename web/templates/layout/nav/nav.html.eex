@@ -39,7 +39,7 @@
     <% end %>
     <ul class="nav nav-pills pull-right">
       <li>
-        <a href="<%= ElixirChina.Router.post_path(:index) %>"> 帖子 </a>
+        <a href="/"> 帖子 </a>
       </li>
     </ul>
   </div>

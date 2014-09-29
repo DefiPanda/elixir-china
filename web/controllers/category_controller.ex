@@ -20,6 +20,6 @@ defmodule ElixirChina.CategoryController do
   defp get_categories(categories) do
     for category <- categories, do: %{name: category.name,
         id: category.id,
-    	posts: Repo.all(from p in Post, where: p.category_id == ^category.id, limit: 2, preload: [:user])}
+    	posts: Repo.all(from p in Post, where: p.category_id == ^category.id, limit: 10, preload: [:user])}
   end
 end
