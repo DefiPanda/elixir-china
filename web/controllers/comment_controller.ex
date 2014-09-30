@@ -6,10 +6,6 @@ defmodule ElixirChina.CommentController do
   alias ElixirChina.Comment
   alias ElixirChina.User
 
-  def index(conn, %{"post_id" => post_id}) do
-    render conn, "index", post_id: post_id, comments: Repo.all(Comment), user_id: get_session(conn, :user_id)
-  end
-
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case get_comment_with_loaded_user(String.to_integer(id)) do
       comment when is_map(comment) ->
@@ -31,7 +27,7 @@ defmodule ElixirChina.CommentController do
       [] ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
-        redirect conn, Router.post_comment_path(:index, post_id)
+        redirect conn, Router.post_path(:show, post_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
     end
@@ -53,7 +49,7 @@ defmodule ElixirChina.CommentController do
     case Comment.validate(comment) do
       [] ->
         Repo.update(comment)
-        json conn, 201, JSON.encode!(%{location: Router.post_comment_path(:show, post_id, comment.id)})
+        json conn, 201, JSON.encode!(%{location: Router.post_path(:show, post_id)})
       errors ->
         json conn, errors: errors
     end
