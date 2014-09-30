@@ -1,7 +1,6 @@
 defmodule ElixirChina.CategoryController do
   import Ecto.Query
   use Phoenix.Controller
-  alias ElixirChina.Router
   alias ElixirChina.Post
   alias ElixirChina.Category
 

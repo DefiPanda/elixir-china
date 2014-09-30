@@ -35,20 +35,25 @@
     <% end %>
   </div>
 
-  <ul>
+  <div>
     <%= if @comments != nil do %>
       <%= for comment <- @comments do %>
-        <li>
-          <a href="<%= ElixirChina.Router.post_comment_path(:show, @post.id, comment.id) %>">
+        <div class="comment">
+          <div class="user-info">
+            <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
+              <%= comment.user.get.name %> (<%= comment.user.get.score %>分)
+            </a>
+            <a href="<%= ElixirChina.Router.post_comment_path(:show, @post.id, comment.id) %>" class="pull-right">
+              查看此评论
+            </a>
+          </div>
+          <div class="content">
             <%= comment.content %>
-          </a>
-          <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
-            (<%= comment.user.get.name %>)
-          </a>
-        </li>
+          </div>
+        </div>
       <% end %>
     <% end %>
-  </ul>
+  </div>
 </div>
 
 <script>

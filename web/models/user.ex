@@ -14,6 +14,7 @@ defmodule ElixirChina.User do
     field :admin,       :boolean
     field :name, :string
     field :password,   :string
+    field :score, :integer
     has_many :comments, ElixirChina.Comment
     has_many :posts, ElixirChina.Post
   end

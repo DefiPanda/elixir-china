@@ -1,12 +1,14 @@
 <div class="col-md-12">
-
   <a href="<%= ElixirChina.Router.user_path(:index)%>" class="btn btn-default btn-sm">
     返回
   </a>
 
-  <h1>
+  <h3>
     用户名: <%= @user.name %>
-  </h1>
+  </h3>
+  <h3>
+    积分: <%= @user.score %>
+  </h3>
 
   <a href="<%= ElixirChina.Router.user_post_path(:index, @user.id) %>"> 
     <%= if @user_id != nil and @user_id == @user.id do %>
@@ -16,7 +18,6 @@
     <% end %>
   </a>
   
-  
   <div class="actions">
     <%= if @user_id != nil and @user_id == @user.id do %>
       <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
@@ -24,7 +25,6 @@
       </a>
     <% end %>
   </div>
-  
 </div>
 
 <script>

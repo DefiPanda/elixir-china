@@ -30,6 +30,11 @@ defmodule ElixirChina.ControllerUtils do
     end
   end
 
+  def increment_score(user, amount) do
+    user = %{user | score: user.score + amount}
+    Repo.update(user)
+  end
+
   defp unauthorized!(_conn) do
     raise ElixirChina.Errors.Unauthorized, message: "请登录后继续操作"
   end

@@ -6,6 +6,7 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Post
   alias ElixirChina.Comment
   alias ElixirChina.Category
+  alias ElixirChina.User
 
   def index(conn, %{"user_id" => user_id}) do
     query = from c in Post, where: c.user_id == ^String.to_integer(user_id), preload: :user
@@ -39,6 +40,7 @@ defmodule ElixirChina.PostController do
     case Post.validate(post) do
       [] ->
         post = Repo.insert(post)
+        increment_score(Repo.get(User, user_id), 10)
         redirect conn, Router.post_path(:show, post.id)
       errors ->
         render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id)
