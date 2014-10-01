@@ -25,13 +25,9 @@
         编辑
       </a>
 
-      <form action="/posts/<%= @post.id %>" method="post">
+      <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
         <button type="submit" class="btn btn-danger">删除</button>
       </form>
-    <% end %>
-    
-    <%= if @user_id != nil do %>
-      <a href ="<%= ElixirChina.Router.post_comment_path(:new, @post.id)%>" method="post">添加新评论</a>
     <% end %>
   </div>
 
@@ -43,9 +39,11 @@
             <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
               <%= comment.user.get.name %> (<%= comment.user.get.score %>分)
             </a>
-            <a href="<%= ElixirChina.Router.post_comment_path(:show, @post.id, comment.id) %>" class="pull-right">
-              查看此评论
-            </a>
+            <%= if @user_id != nil and @user_id == comment.user_id do %>
+              <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="pull-right">
+                修改
+              </a>
+            <% end %>
           </div>
           <div class="content">
             <%= comment.content %>
@@ -54,10 +52,20 @@
       <% end %>
     <% end %>
   </div>
+
+  <%= if @user_id != nil do %>
+    <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" method="post">
+      <div class="form-group">
+        <label for="comment[content]">回帖</label>
+        <textarea name="comment[content]" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">回复</button>
+    </form>
+  <% end %>
 </div>
 
 <script>
-  $("form").on("submit", function(event) {
+  $("#delete-form").on("submit", function(event) {
     event.preventDefault();
 
     $that = this;

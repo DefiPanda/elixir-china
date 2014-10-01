@@ -56,6 +56,10 @@ body {
   border-bottom: 1px dotted #DDD;
 }
 
+.user-info a {
+	margin-right: 8px;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
