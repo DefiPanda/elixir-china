@@ -17,6 +17,7 @@ defmodule ElixirChina.User do
     field :score, :integer
     has_many :comments, ElixirChina.Comment
     has_many :posts, ElixirChina.Post
+    has_many :notifications, ElixirChina.Notification
   end
 
   defp validate_uniqueness(user) do

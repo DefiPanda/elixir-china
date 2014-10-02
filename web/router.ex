@@ -22,10 +22,15 @@ defmodule ElixirChina.Router do
     resources "/users", UserController
     get "/signup", UserController, :new
 
+
+    # Notifications
+    resources "/users", UserController do
+      resources "/notifications", NotificationController, only: [:index]
+    end
+
     # Sessions
     resources "/sessions", SessionController, only: [:new, :create]
     get "/signin", SessionController, :new
     get "/signout", SessionController, :destroy
   end
-
 end

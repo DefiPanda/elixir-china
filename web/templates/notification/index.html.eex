@@ -1,0 +1,13 @@
+<div>
+  <%= if @notifications != nil do %>
+    <%= for notification <- @notifications do %>
+      <div>
+        您在
+        <a href="<%= ElixirChina.Router.post_path(:show, notification.post_id) %>">
+          <%= notification.post.get.title %>
+        </a>
+        中的评论有了新回复
+      </div>
+    <% end %>
+  <% end %>
+</div>

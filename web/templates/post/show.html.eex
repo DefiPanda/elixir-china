@@ -44,6 +44,9 @@
                 修改
               </a>
             <% end %>
+            <a href="#post-form" data-uid="<%= comment.user.get.id %>" class="reply pull-right">
+              引用
+            </a>
           </div>
           <div class="content">
             <%= comment.content %>
@@ -54,8 +57,9 @@
   </div>
 
   <%= if @user_id != nil do %>
-    <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" method="post">
+    <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" id="post-form" method="post">
       <div class="form-group">
+        <input type="hidden" id="comment-uid" name="comment[uid]" value="">
         <label for="comment[content]">回帖</label>
         <textarea name="comment[content]" class="form-control"></textarea>
       </div>
@@ -65,6 +69,12 @@
 </div>
 
 <script>
+  $(".reply").click(function(){
+    $('#post-form .form-control').html($(this).parent().siblings(".content").html().trim());
+    var uid = $(this).attr("data-uid");
+    $("#comment-uid").val(uid);
+  });
+
   $("#delete-form").on("submit", function(event) {
     event.preventDefault();
 

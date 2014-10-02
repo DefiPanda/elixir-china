@@ -5,6 +5,7 @@ defmodule ElixirChina.CommentController do
   alias ElixirChina.Router
   alias ElixirChina.Comment
   alias ElixirChina.User
+  alias ElixirChina.Notification
 
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case get_comment_with_loaded_user(String.to_integer(id)) do
@@ -27,6 +28,7 @@ defmodule ElixirChina.CommentController do
       [] ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
+        notify_subscriber(comment.post_id, params["uid"])
         redirect conn, Router.post_path(:show, post_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
@@ -78,5 +80,15 @@ defmodule ElixirChina.CommentController do
       raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此评论"
     end
     comment
+  end
+
+  defp notify_subscriber(post_id, user_id) do
+    if user_id != "" do
+      uid = String.to_integer(user_id)
+      if Repo.all(from n in Notification, where: n.user_id == ^uid and n.post_id == ^post_id) == [] do
+        notification = %Notification{post_id: post_id, user_id: uid}
+        Repo.insert(notification)
+      end
+    end
   end
 end
