@@ -3,7 +3,7 @@
     <%= for notification <- @notifications do %>
       <div>
         您在
-        <a href="<%= ElixirChina.Router.post_path(:show, notification.post_id) %>">
+        <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
           <%= notification.post.get.title %>
         </a>
         中的评论有了新回复
@@ -11,3 +11,21 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  $(".read-notification").on("click", function(event) {
+    event.preventDefault();
+
+    $that = this;
+
+    $.ajax({
+      url: $that.getAttribute('href'),
+      type: "DELETE",
+      success: function(data) {
+        window.location = $that.getAttribute('data-post-link')
+      }
+    });
+
+    event.stopPropagation();
+  });
+</script>

@@ -25,7 +25,7 @@ defmodule ElixirChina.Router do
 
     # Notifications
     resources "/users", UserController do
-      resources "/notifications", NotificationController, only: [:index]
+      resources "/notifications", NotificationController, only: [:index, :destroy]
     end
 
     # Sessions
