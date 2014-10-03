@@ -60,6 +60,10 @@ body {
 	margin-right: 8px;
 }
 
+.line-breaks {
+	white-space:pre-wrap;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {

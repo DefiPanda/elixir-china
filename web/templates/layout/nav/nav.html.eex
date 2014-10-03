@@ -33,6 +33,11 @@
       </ul>
       <ul class="nav nav-pills pull-right">
         <li>
+          <a href="<%= ElixirChina.Router.user_notification_path(:index, @user_id) %>"> 消息中心 </a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills pull-right">
+        <li>
           <a href="<%= ElixirChina.Router.user_post_path(:index, @user_id) %>"> 我的帖子 </a>
         </li>
       </ul>

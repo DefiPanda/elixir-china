@@ -44,13 +44,11 @@
                 修改
               </a>
             <% end %>
-            <a href="#post-form" data-uid="<%= comment.user.get.id %>" class="reply pull-right">
+            <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="reply pull-right">
               引用
             </a>
           </div>
-          <div class="content">
-            <%= comment.content %>
-          </div>
+          <div class="content line-breaks"><%= comment.content %></div>
         </div>
       <% end %>
     <% end %>
@@ -61,7 +59,7 @@
       <div class="form-group">
         <input type="hidden" id="comment-uid" name="comment[uid]" value="">
         <label for="comment[content]">回帖</label>
-        <textarea name="comment[content]" class="form-control"></textarea>
+        <textarea rows="6" name="comment[content]" class="form-control"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">回复</button>
     </form>
@@ -70,7 +68,9 @@
 
 <script>
   $(".reply").click(function(){
-    $('#post-form .form-control').html($(this).parent().siblings(".content").html().trim());
+    var quote = $(this).parent().siblings(".content").html().trim();
+    var content = "---引用自" + $(this).attr("data-uname") + "----\n" + quote + "\n------------------\n";
+    $('#post-form .form-control').html(content);
     var uid = $(this).attr("data-uid");
     $("#comment-uid").val(uid);
   });

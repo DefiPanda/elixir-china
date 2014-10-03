@@ -9,6 +9,11 @@
         中的评论有了新回复
       </div>
     <% end %>
+    <%= if length(@notifications) == 0 do %>
+      <div>
+        目前没有消息。
+      </div>
+    <% end %>
   <% end %>
 </div>
 
