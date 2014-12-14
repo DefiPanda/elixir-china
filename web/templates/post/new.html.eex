@@ -1,17 +1,30 @@
-<h1>新贴</h1>
-
-<form action="/posts" method="post">
-  <div class="form-group">
-  	<label for="post[title]">标题</label>
-    <input type="text" name="post[title]" class="form-control" />
-    <label for="post[content]">内容</label>
-    <textarea name="post[content]" class="form-control"></textarea>
-    <label for="post[category_id]">所属板块</label>
-    <select name="post[category_id]" class="form-control">
-      <%= for category <- @categories do %>
-        <option value="<%= category.id %>"><%= category.name %></option>
-      <% end %>
-    </select>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ol class="breadcrumb">
+        <li class="active">发表话题</li>
+      </ol>
+    </div>
+    <div class="inner post">
+      <form action="/posts" method="post">
+        <div class="form-group">
+          <span class="tab-selector">所属板块</span>
+          <select name="post[category_id]" class="form-control">
+            <%= for category <- @categories do %>
+              <option value="<%= category.id %>"><%= category.name %></option>
+            <% end %>
+          </select>
+          <textarea rows="1" id="title" class="span9" name="post[title]" placeholder="请输入标题"></textarea>
+          <div class="markdown_editor in_editor">
+            <div class="markdown_in_editor">
+              <textarea rows="8" name="post[content]" class="editor"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="editor_buttons">
+            <input type="submit" class="span-primary submit_btn" value="发布"></input>
+          </div>
+      </form>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">保存</button>
-</form>
+</div>
