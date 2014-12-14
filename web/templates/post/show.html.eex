@@ -57,7 +57,7 @@
                   修改
                 </a>
               <% end %>
-              <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" id="reply" class="dark pull-right reply_author">
+              <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
                 引用
               </a>
             </div>
@@ -99,7 +99,7 @@
 </div>
 
 <script>
-  $("#reply").click(function(){
+  $(".reply-link").click(function(e){
     var quote = $(this).parent().parent().siblings(".reply_content").first(".markdown-text").text().trim();
     var content = "引用自" + $(this).attr("data-uname") + ":\n" + quote + "\n===\n";
     $('.editor').html(content);
