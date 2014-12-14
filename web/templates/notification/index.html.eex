@@ -8,11 +8,18 @@
         <div class="inner topic">
           <%= for notification <- @notifications do %>
             <div>
-              您在
-              <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
-                <%= notification.post.get.title %>
-              </a>
-              中的评论有了新回复
+              <%= if notification.type == 0 do %>
+                您的帖子
+                <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
+                  <%= notification.post.get.title %>
+                </a>有了新回复
+              <%= else %>
+                您在
+                <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
+                  <%= notification.post.get.title %>
+                </a>
+                中的评论有了新回复
+              <% end %>
             </div>
           <% end %>
           <%= if length(@notifications) == 0 do %>
