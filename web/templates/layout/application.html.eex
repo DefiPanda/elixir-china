@@ -26,11 +26,7 @@
         </div>
       </div>
 
-      <div id="content">
-        <div class="panel">
-          <%= @inner %>
-        </div>
-      </div>
+      <%= @inner %>
 
       <footer class="footer">
         <p>ElixirChina</p>

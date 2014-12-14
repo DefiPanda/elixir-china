@@ -1,58 +1,82 @@
-<div class="col-md-12">
+<div id="content">
+  <div class="panel">
+    <div class="header topic_header">
+      <span class="topic_full_title">
+        <%= @post.title %>
+      </span>
+      <div class="changes">
+        <span>
+          作者
+          <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
+            <%= @post.user.get.name %>
+          </a>
+        </span>
+        <span>
+          所属板块
+          <a href="<%= ElixirChina.Router.category_path(:show, @post.category_id) %>">
+            <%= @post.category.get.name %>
+          </a>
+        </span>
+      </div>
+    </div>
 
-  <a href="/" class="btn btn-default btn-sm">
-    返回
-  </a>
+    <div class="inner topic">
+      <div class="topic_content">
+        <div class="markdown-text"><%= @post.content %></div>
+      </div>
 
-  <h1>
-    <%= @post.title %>
-  </h1>
-  <div>
-    <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
-      发帖人: <%= @post.user.get.name %>
-    </a>
+      <div class="actions">
+        <%= if @user_id != nil and @user_id == @post.user_id do %>
+          <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
+            编辑
+          </a>
+
+          <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+            <button type="submit" class="btn btn-danger">删除</button>
+          </form>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div>
-    <a href="<%= ElixirChina.Router.category_path(:show, @post.category_id) %>">
-      所属板块: <%= @post.category.get.name %>
-    </a>
-  </div>
-  <pre><%= @post.content %></pre>
-  
-  <div class="actions">
-    <%= if @user_id != nil and @user_id == @post.user_id do %>
-      <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
-        编辑
-      </a>
 
-      <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
-        <button type="submit" class="btn btn-danger">删除</button>
-      </form>
-    <% end %>
-  </div>
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade"><%=length(@comments)%> 回复</span>
+    </div>
 
-  <div>
     <%= if @comments != nil do %>
       <%= for comment <- @comments do %>
-        <div class="comment">
-          <div class="user-info">
-            <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
-              <%= comment.user.get.name %> (<%= comment.user.get.score %>分)
-            </a>
-            <%= if @user_id != nil and @user_id == comment.user_id do %>
-              <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="pull-right">
-                修改
+        <div class="cell reply_area reply_item">
+          <div class="author_content">
+            <div class="user_info">
+              <a class="dark reply_author" href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
+                <%= comment.user.get.name %> (<%= comment.user.get.score %>分)
               </a>
-            <% end %>
-            <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="reply pull-right">
-              引用
-            </a>
+              <%= if @user_id != nil and @user_id == comment.user_id do %>
+                <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
+                  修改
+                </a>
+              <% end %>
+              <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply">
+                引用
+              </a>
+            </div>
           </div>
-          <div class="content line-breaks"><%= comment.content %></div>
+
+          <div class="reply_content">
+            <div class="markdown-text"><%= comment.content %></div>
+          </div>
+
+          <div class="clearfix"></div>
         </div>
       <% end %>
     <% end %>
   </div>
+</div>
+
+
+
+
 
   <%= if @user_id != nil do %>
     <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" id="post-form" method="post">
@@ -64,12 +88,11 @@
       <button type="submit" class="btn btn-primary">回复</button>
     </form>
   <% end %>
-</div>
 
 <script>
   $(".reply").click(function(){
-    var quote = $(this).parent().siblings(".content").html().trim();
-    var content = "---引用自" + $(this).attr("data-uname") + "----\n" + quote + "\n------------------\n";
+    var quote = $(this).parent().parent().siblings(".reply_content").first(".markdown-text").text().trim();
+    var content = "引用自" + $(this).attr("data-uname") + ":\n" + quote + "\n===\n";
     $('#post-form .form-control').html(content);
     var uid = $(this).attr("data-uid");
     $("#comment-uid").val(uid);

@@ -1,5 +1,12 @@
-.navbar .title{
-	font-family: verdana;
-	font-size: 150%;
-	color: white;
+.actions * {
+	display: inline-block;
+	color: white !important;
+}
+
+.reply_author {
+	margin-right: 2px;
+}
+
+.markdown-text {
+	white-space: pre-wrap;
 }
