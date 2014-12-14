@@ -8,22 +8,32 @@
     <meta name="author" content="">
 
     <title>ElixirChina</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/app.css">
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
   </head>
 
   <body>
-    <main role="main" class="container">
-      <%= render "nav/nav.html", user_id: @user_id %>
+    <%= render "nav/nav.html", user_id: @user_id %>
 
-      <div class="row">
-        <%= @inner %>
+    <div id="main">
+      <div id='sidebar'>
+        <div class='panel'>
+          <div class='inner'>
+            <p>广告位开放</p>
+            <p>请联系 <a href="mailto:elixirchina@gmail.com?Subject=广告位申请" target="_top">elixirchina@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="content">
+        <div class="panel">
+          <%= @inner %>
+        </div>
       </div>
 
       <footer class="footer">
-        <p>
-          ElixirChina
-        </p>
+        <p>ElixirChina</p>
       </fotter>
     </main>
   </body>

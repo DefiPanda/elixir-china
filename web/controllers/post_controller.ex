@@ -8,15 +8,8 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Category
   alias ElixirChina.User
 
-  def index(conn, %{"user_id" => user_id}) do
-    query = from c in Post, where: c.user_id == ^String.to_integer(user_id), preload: :user
-    render conn, "index", posts: Repo.all(query), 
-                          user_id: get_session(conn, :user_id)
-  end
-
   def index(conn, _params) do
-    render conn, "index", posts: Repo.all(from c in Post, where: true, preload: :user), 
-                          user_id: get_session(conn, :user_id)
+    redirect conn, "/"
   end
 
   def show(conn, %{"id" => id}) do
@@ -78,7 +71,7 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
         Repo.delete(post)
-        json conn, 200, JSON.encode!(%{location: Router.post_path(:index)})
+        json conn, 200, JSON.encode!(%{location: "/"})
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end

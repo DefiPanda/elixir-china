@@ -1,12 +1,32 @@
-<h2><%= @category.name %></h2>
+<div class="header">
+  <a href="<%= ElixirChina.Router.category_path(:index) %>" class="topic-tab">全部</a>
+  <%= for category <- @categories do %>
+    <a href="<%= ElixirChina.Router.category_path(:show, category.id) %>" 
+    	class="topic-tab<%= if category.id == @category, do: ' current-tab'%>">
+    	<%= category.name %>
+    </a>
+  <% end %>
+</div>
 
-<%= for post <- @posts do %>
-  <li>
-    <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
-      <%= post.title %> 
+<div class="inner no-padding">
+  <div id="topic_list">
+    <%= for post <- @posts do %>
+      <div class="cell">
+        <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
+          <%= post.title %>
+        </a>
+        <a href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
+          (<%= post.user.get.name %>)
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="pagination">
+  <%= if @user_id != nil do %>
+    <a href="<%= ElixirChina.Router.post_path(:new)%>" class="span-info">
+      发帖
     </a>
-    <a href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
-      (<%= post.user.get.name %>)
-    </a>
-  </li>
-<% end %>
+  <% end %>
+</div>

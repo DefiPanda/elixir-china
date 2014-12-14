@@ -1,46 +1,25 @@
-<div class="row">
-  <div class="col-md-6">
-    <ul class="nav nav-pills pull-left">
-      <li>
-        <a href="<%= ElixirChina.Router.root_path(:index) %>"> 主页 </a>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-6">
-    
-    <%= if @user_id == nil do %>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="/signup"> 注册 </a>
-        </li>
+<div class='navbar'>
+  <div class='navbar-inner'>
+    <div class="container">
+      <ul class="nav">
+        <li><a class="title" href="/"> ElixirChina </a></li>
       </ul>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="/signin"> 登录 </a>
-        </li>
+
+      <ul class="nav pull-right">
+        <li><a href="<%= ElixirChina.Router.root_path(:index) %>"> 主页 </a></li>
+        
+        <%= if @user_id == nil do %>
+          <li><a href="/signup"> 注册 </a></li>
+          <li><a href="/signin"> 登录 </a></li>
+        <% end %>
+
+        <%= if @user_id != nil do %>
+          <li><a href="/signout"> 退出 </a></li>
+          <li><a href="<%= ElixirChina.Router.user_path(:show, @user_id) %>"> 账户 </a></li>
+          <li><a href="<%= ElixirChina.Router.user_notification_path(:index, @user_id) %>"> 消息中心 </a></li>
+          <li><a href="<%= ElixirChina.Router.user_post_path(:index, @user_id) %>"> 我的帖子 </a></li>
+        <% end %>
       </ul>
-    <% end %>
-    <%= if @user_id != nil do %>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="/signout"> 退出 </a>
-        </li>
-      </ul>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="<%= ElixirChina.Router.user_path(:show, @user_id) %>"> 账户 </a>
-        </li>
-      </ul>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="<%= ElixirChina.Router.user_notification_path(:index, @user_id) %>"> 消息中心 </a>
-        </li>
-      </ul>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="<%= ElixirChina.Router.user_post_path(:index, @user_id) %>"> 我的帖子 </a>
-        </li>
-      </ul>
-    <% end %>
+    </div>
   </div>
 </div>

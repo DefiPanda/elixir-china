@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-  <a href="<%= ElixirChina.Router.post_path(:index)%>" class="btn btn-default btn-sm">
+  <a href="/" class="btn btn-default btn-sm">
     返回
   </a>
 
