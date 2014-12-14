@@ -5,6 +5,7 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Router
   alias ElixirChina.Post
   alias ElixirChina.Comment
+  alias ElixirChina.Notification
   alias ElixirChina.Category
   alias ElixirChina.User
 
@@ -69,6 +70,7 @@ defmodule ElixirChina.PostController do
     post = validate_and_get_post!(conn, id)
     case post do
       post when is_map(post) ->
+        (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
         Repo.delete(post)
         json conn, 200, JSON.encode!(%{location: "/"})
