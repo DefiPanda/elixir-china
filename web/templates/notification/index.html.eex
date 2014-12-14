@@ -1,21 +1,30 @@
+<div id="content">
+  <div class="panel">
+      <div class="header">
+        <span class="col_fade">新消息提示</span>
+      </div>
+
+      <%= if @notifications != nil do %>
+        <div class="inner topic">
+          <%= for notification <- @notifications do %>
+            <div>
+              您在
+              <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
+                <%= notification.post.get.title %>
+              </a>
+              中的评论有了新回复
+            </div>
+          <% end %>
+          <%= if length(@notifications) == 0 do %>
+            <div>
+              目前没有消息。
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+  </div>
 <div>
-  <%= if @notifications != nil do %>
-    <%= for notification <- @notifications do %>
-      <div>
-        您在
-        <a class="read-notification" data-post-link="<%= ElixirChina.Router.post_path(:show, notification.post.get.id) %>" href="<%= ElixirChina.Router.user_notification_path(:destroy, @user_id, notification.id) %>">
-          <%= notification.post.get.title %>
-        </a>
-        中的评论有了新回复
-      </div>
-    <% end %>
-    <%= if length(@notifications) == 0 do %>
-      <div>
-        目前没有消息。
-      </div>
-    <% end %>
-  <% end %>
-</div>
+  
 
 <script>
   $(".read-notification").on("click", function(event) {
