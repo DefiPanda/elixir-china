@@ -27,10 +27,12 @@
       </div>
 
       <%= @inner %>
+    </div>
 
-      <footer class="footer">
-        <p>ElixirChina</p>
-      </fotter>
-    </main>
+    <div id="footer">
+      <div id="footer_main">
+        <div class="col_fade">ElixirChina</div>
+      </div>
+    </div>
   </body>
 </html>
