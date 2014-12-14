@@ -27,12 +27,12 @@
 
       <div class="actions">
         <%= if @user_id != nil and @user_id == @post.user_id do %>
-          <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="btn btn-primary">
+          <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="span-primary submit_btn">
             编辑
           </a>
 
           <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
-            <button type="submit" class="btn btn-danger">删除</button>
+            <input type="submit" class="span-danger span-common" value="删除"></input>
           </form>
         <% end %>
       </div>
@@ -72,22 +72,32 @@
       <% end %>
     <% end %>
   </div>
-</div>
-
-
-
-
 
   <%= if @user_id != nil do %>
-    <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" id="post-form" method="post">
-      <div class="form-group">
-        <input type="hidden" id="comment-uid" name="comment[uid]" value="">
-        <label for="comment[content]">回帖</label>
-        <textarea rows="6" name="comment[content]" class="form-control"></textarea>
+    <div class="panel">
+      <div class="header">
+        <span class="col_fade">回帖</span>
       </div>
-      <button type="submit" class="btn btn-primary">回复</button>
-    </form>
+      <div class="inner reply">
+        <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" id="post-form" method="post">
+            <input type="hidden" id="comment-uid" name="comment[uid]" value="">
+
+            <div class="markdown_editor in_editor">
+              <div class="markdown_in_editor">
+                <textarea rows="8" name="comment[content]" class="editor"></textarea>
+              </div>
+            </div>
+            
+
+            <div class="editor_buttons">
+              <input type="submit" class="span-primary submit_btn" value="回复"></input>
+            </div>
+          
+        </form>
+      </div>
+    </div>
   <% end %>
+</div>
 
 <script>
   $(".reply").click(function(){
