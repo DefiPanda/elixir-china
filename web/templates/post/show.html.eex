@@ -87,7 +87,6 @@
                 <textarea rows="8" name="comment[content]" class="editor"></textarea>
               </div>
             </div>
-            
 
             <div class="editor_buttons">
               <input type="submit" class="span-primary submit_btn" value="回复"></input>
