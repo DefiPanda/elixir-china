@@ -1,29 +1,45 @@
-<div class="col-md-12">
-  <a href="<%= ElixirChina.Router.user_path(:index)%>" class="btn btn-default btn-sm">
-    返回
-  </a>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ol class="breadcrumb">
+        <li class="active">用户</li>
+      </ol>
+    </div>
+    <div class="inner userinfo">
+      <a class="dark"><%= @user.name %></a>
 
-  <h3>
-    用户名: <%= @user.name %>
-  </h3>
-  <h3>
-    积分: <%= @user.score %>
-  </h3>
+      <div class="user_profile">
+        <ul class="unstyled">
+          <span class="big"><%= @user.score %></span> 积分
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <a href="<%= ElixirChina.Router.user_post_path(:index, @user.id) %>"> 
-    <%= if @user_id != nil and @user_id == @user.id do %>
-      查看我的帖子
-    <%= else %>
-      查看<%= @user.name %>的帖子
-    <% end %>
-  </a>
-  
-  <div class="actions">
-    <%= if @user_id != nil and @user_id == @user.id do %>
-      <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="btn btn-primary">
-        修改密码
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <a href="<%= ElixirChina.Router.user_post_path(:index, @user.id) %>"> 
+        <%= if @user_id != nil and @user_id == @user.id do %>
+          查看我的帖子
+        <%= else %>
+          查看<%= @user.name %>的帖子
+        <% end %>
       </a>
-    <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <%= if @user_id != nil and @user_id == @user.id do %>
+        <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="span-primary submit_btn">
+          修改密码
+        </a>
+      <% end %>
+    </div>
   </div>
 </div>
 

@@ -1,17 +1,23 @@
-<div class="col-md-12">
-  <h3>所有用户</h3>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+        <span class="col_fade">所有用户</span>
+      </div>
 
-  <ul>
-    <%= for user <- @users do %>
-      <li>
-        <a href="<%= ElixirChina.Router.user_path(:show, user.id) %>">
-          <%= user.name %>
-        </a>
-      </li>
+    <%= if @users != nil do %>
+      <%= for user <- @users do %>
+        <div class="cell reply_area reply_item">
+          <a href="<%= ElixirChina.Router.user_path(:show, user.id) %>">
+            <%= user.name %>
+          </a>
+        </div>
+      <% end %>
     <% end %>
-  </ul>
+  </div>
 
-  <a href="<%= ElixirChina.Router.user_path(:new)%>" class="btn btn-primary">
-    注册
-  </a>
+  <div class="panel">
+    <a href="<%= ElixirChina.Router.user_path(:new)%>" class="span-primary">
+      注册
+    </a>
+  </div>
 </div>

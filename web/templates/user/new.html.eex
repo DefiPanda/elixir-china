@@ -1,21 +1,32 @@
-<h1>创建新用户</h1>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">加入ElixirChina</span>
+    </div>
 
-<form action="/users" method="post">
-  <div class="form-group">
-    <label for="user[name]">用户名</label>
-    <input type="text" name="user[name]" class="form-control" />
-    <label for="user[email]">邮箱</label>
-    <input type="text" name="user[email]" class="form-control" />
-    <label for="user[password]">密码</label>
-    <input type="password" name="user[password]" class="form-control" />
+    <div class="inner post">
+      <form class="signup-signin" action="/users" method="post">
+        <div class="form-group">
+          <span class="tab-selector">用户名</span>
+          <input rows="1" class="span4" type="text" name="user[name]"></input>
+          <span class="tab-selector">邮箱</span>
+          <input rows="1" class="span4" type="text" name="user[email]"></input>
+          <span class="tab-selector">密码</span>
+          <input type="password" rows="1" class="span4" type="password" name="user[password]"></input>
+        </div>
+
+        <div class="editor_buttons">
+          <a href="<%= ElixirChina.Router.user_path(:new)%>" class="span-primary" id="signup-btn">注册</a>
+        </div>
+      </form>
+
+      <%= if @errors do %>
+        <%= for error <- @errors do %>
+          <div class="alert alert-warning">
+            <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">保存</button>
-</form>
-
-<%= if @errors do %>
-	<%= for error <- @errors do %>
-	  <div class="alert alert-warning">
-	    <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
-	  </div>
-	<% end %>
-<% end %>
+</div>
