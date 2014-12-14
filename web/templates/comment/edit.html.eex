@@ -1,14 +1,21 @@
-<div class="col-md-12">
-  <h3>编辑评论</h3>
-
-  <div class="actions">
-    <form action="<%= ElixirChina.Router.post_comment_path(:update, @post_id, @comment.id) %>" method="post">
-       <input type="hidden" name="_method" value="PUT">
-      <div class="form-group">
-         <textarea name="comment[content]" class="form-control"><%= @comment.content %></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">更新</button>
-    </form>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ol class="breadcrumb">
+        <li class="active">编辑评论</li>
+      </ol>
+    </div>
+    <div class="inner post">
+      <form action="<%= ElixirChina.Router.post_comment_path(:update, @post_id, @comment.id) %>" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+           <textarea rows="8" name="comment[content]" class="editor"><%= @comment.content %></textarea>
+        </div>
+        <div class="editor_buttons">
+          <input type="submit" class="span-primary submit_btn" value="更新"></button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

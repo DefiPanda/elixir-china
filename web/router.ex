@@ -9,7 +9,7 @@ defmodule ElixirChina.Router do
 
     # Posts and comments
     resources "/posts", PostController do
-      resources "/comments", CommentController, except: [:index]
+      resources "/comments", CommentController, except: [:index, :new, :show]
     end
 
     resources "/users", UserController do
