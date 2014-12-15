@@ -16,7 +16,7 @@
         </div>
 
         <div class="editor_buttons">
-          <a href="<%= ElixirChina.Router.user_path(:new)%>" class="span-primary" id="signup-btn">注册</a>
+          <input type="submit" class="span-primary" value="注册"></input>
         </div>
       </form>
 
