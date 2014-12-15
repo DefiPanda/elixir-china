@@ -48,6 +48,11 @@
       <%= for comment <- @comments do %>
         <div class="cell reply_area reply_item">
           <div class="author_content">
+            <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>" class="user_avatar">
+                <img src="http://www.gravatar.com/avatar/<%= String.strip(comment.user.get.email) |> :crypto.md5
+                      |> :erlang.bitstring_to_list |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
+                      |> List.flatten %>" height="30" width="30">
+            </a>
             <div class="user_info">
               <a class="dark reply_author" href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
                 <%= comment.user.get.name %> (<%= comment.user.get.score %>分)

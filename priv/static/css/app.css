@@ -33,3 +33,8 @@ input:focus, input:active, input:hover {
 .span-common:focus, .span-common:hover {
 	border: 0px !important;
 }
+
+#topic_list .user_avatar {
+	margin-right: 1em;
+	margin-left: 1em;
+}
