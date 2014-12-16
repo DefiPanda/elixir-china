@@ -37,7 +37,7 @@ defmodule ElixirChina.PostController do
         increment_score(Repo.get(User, user_id), 10)
         redirect conn, Router.post_path(:show, post.id)
       errors ->
-        render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id)
+        render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 
