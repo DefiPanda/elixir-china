@@ -27,7 +27,7 @@ defmodule ElixirChina.Mixfile do
       {:phoenix, "0.4.1"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 0.2.0"},
+      {:ecto, "0.2.5"},
       {:bcrypt, github: "opscode/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]
