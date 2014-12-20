@@ -16,11 +16,13 @@
                                 |> :erlang.bitstring_to_list |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
                                 |> List.flatten %>" height="30" width="30">
             </a>
+            <a class="last_time pull-right">
+              <span class="last_active_time">
+                <%= "#{post.user.get.name} 于 #{post.time.year}-#{post.time.month}-#{post.time.day} #{post.time.hour}点#{post.time.min}分 发表" %>
+              </span>
+            </a>
             <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
               <%= post.title %>
-            </a>
-            <a href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
-              (<%= post.user.get.name %>)
             </a>
           </div>
         <% end %>

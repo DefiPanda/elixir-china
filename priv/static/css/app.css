@@ -5,6 +5,8 @@
 
 .reply_author {
 	margin-right: 2px;
+	display: block;
+	text-align: center;
 }
 
 .markdown-text {
@@ -37,4 +39,8 @@ input:focus, input:active, input:hover {
 #topic_list .user_avatar {
 	margin-right: 1em;
 	margin-left: 1em;
+}
+
+.user_avatar {
+	display: inline-block;
 }

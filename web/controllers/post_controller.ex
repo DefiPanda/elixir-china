@@ -1,5 +1,6 @@
 defmodule ElixirChina.PostController do
   import Ecto.Query
+  import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
@@ -29,7 +30,9 @@ defmodule ElixirChina.PostController do
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id!(conn)
-    post = %Post{title: title, content: content, user_id: user_id, category_id: String.to_integer(category_id)}
+    IO.inspect utc()
+    post = %Post{title: title, content: content, user_id: user_id,
+                category_id: String.to_integer(category_id), time: utc()}
 
     case Post.validate(post) do
       [] ->
@@ -85,7 +88,7 @@ defmodule ElixirChina.PostController do
   end
 
   defp get_comments_with_loaded_user(id) do
-    query = from(c in Comment, where: c.post_id == ^id, preload: :user)
+    query = from(c in Comment, where: c.post_id == ^id, order_by: c.time, preload: :user)
     Repo.all(query)
   end
 

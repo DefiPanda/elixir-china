@@ -52,19 +52,27 @@
                 <img src="http://www.gravatar.com/avatar/<%= String.strip(comment.user.get.email) |> :crypto.md5
                       |> :erlang.bitstring_to_list |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
                       |> List.flatten %>" height="30" width="30">
+                <span class="dark reply_author" href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
+                  <%= comment.user.get.name %>
+                </span>
             </a>
             <div class="user_info">
-              <a class="dark reply_author" href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
-                <%= comment.user.get.name %> (<%= comment.user.get.score %>分)
-              </a>
-              <%= if @user_id != nil and @user_id == comment.user_id do %>
-                <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
-                  修改
+              <div>
+                
+                <span class="reply_time"> 
+                  于<%= "#{comment.time.year}-#{comment.time.month}-#{comment.time.day} #{comment.time.hour}点#{comment.time.min}分" %>发表
+                </span>
+              </div>
+              <div>
+                <%= if @user_id != nil and @user_id == comment.user_id do %>
+                  <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
+                    修改
+                  </a>
+                <% end %>
+                <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
+                  引用
                 </a>
-              <% end %>
-              <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
-                引用
-              </a>
+              </div>
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 defmodule ElixirChina.CommentController do
   import Ecto.Query
+  import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router
@@ -23,7 +24,8 @@ defmodule ElixirChina.CommentController do
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
     user_id = get_user_id!(conn)
-    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id, content: params["content"]}
+    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
+                      content: params["content"], time: utc()}
 
     case Comment.validate(comment) do
       [] ->
