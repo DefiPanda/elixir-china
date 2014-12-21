@@ -1,6 +1,6 @@
 # ElixirChina
 
-目前[ElixirChina 网站](http://120.24.62.150:4000/)部署在阿里云上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
+目前[ElixirChina 网站](http://elixir-cn.com/)部署在DigitalOcean上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
 
 `mix deps.get`  
 `mix ecto.create Repo`  
