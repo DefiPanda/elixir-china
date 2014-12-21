@@ -4,7 +4,7 @@ defmodule ElixirChina.Mixfile do
   def project do
     [ app: :elixir_china,
       version: "0.0.1",
-      elixir: "~> 1.0.0",
+      elixir: "1.0.2",
       elixirc_paths: ["lib", "web"],
       deps: deps ]
   end
