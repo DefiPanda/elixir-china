@@ -69,9 +69,6 @@
                     修改
                   </a>
                 <% end %>
-                <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
-                  引用
-                </a>
               </div>
             </div>
           </div>
@@ -97,7 +94,7 @@
 
             <div class="markdown_editor in_editor">
               <div class="markdown_in_editor">
-                <textarea rows="8" name="comment[content]" class="editor"></textarea>
+                <textarea rows="8" name="comment[content]" class="editor" id="editor"></textarea>
               </div>
             </div>
 
@@ -112,14 +109,6 @@
 </div>
 
 <script>
-  $(".reply-link").click(function(e){
-    var quote = $(this).parent().parent().siblings(".reply_content").first(".markdown-text").text().trim();
-    var content = "引用自" + $(this).attr("data-uname") + ":\n" + quote + "\n===\n";
-    $('.editor').html(content);
-    var uid = $(this).attr("data-uid");
-    $("#comment-uid").val(uid);
-  });
-
   $("#delete-form").on("submit", function(event) {
     event.preventDefault();
 

@@ -35,9 +35,6 @@ defmodule ElixirChina.CommentController do
           |> Repo.all |> hd
         quoted_uid = params["uid"]
         # POST_REPLY = 0, COMMENT_REPLY = 1
-        if quoted_uid != "" do
-          notify_subscriber(comment.post_id, String.to_integer(quoted_uid), 1)
-        end
         notify_subscriber(comment.post_id, post.user_id, 0)
         redirect conn, Router.post_path(:show, post_id)
       errors ->

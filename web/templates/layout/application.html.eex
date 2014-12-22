@@ -10,7 +10,11 @@
     <title>ElixirChina</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/editor.css" />
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/editor.js"></script>
+    <script type="text/javascript" src="/js/marked.js"></script>
+    <script type="text/javascript" src="/js/helper.js"></script>
   </head>
 
   <body>

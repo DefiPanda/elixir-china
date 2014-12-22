@@ -17,7 +17,7 @@
           <textarea rows="1" id="title" class="span9" name="post[title]" placeholder="请输入标题"></textarea>
           <div class="markdown_editor in_editor">
             <div class="markdown_in_editor">
-              <textarea rows="8" name="post[content]" class="editor"></textarea>
+              <textarea name="post[content]" class="editor" id="editor"></textarea>
             </div>
           </div>
         </div>
