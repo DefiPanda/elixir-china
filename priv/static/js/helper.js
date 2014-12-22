@@ -4,4 +4,8 @@ $(document).ready(function(){
 		var editor = new Editor({element: ele});
   		editor.render();
 	}
+
+	$(".markdown-text").each(function() {
+		$(this).html(marked($(this).html()));
+	});
 });

@@ -21,9 +21,7 @@
     </div>
 
     <div class="inner topic">
-      <div class="topic_content">
-        <div class="markdown-text"><%= @post.content %></div>
-      </div>
+      <div class="markdown-text"><%= @post.content %></div>
 
       <div class="actions">
         <%= if @user_id != nil and @user_id == @post.user_id do %>
@@ -46,7 +44,7 @@
 
     <%= if @comments != nil do %>
       <%= for comment <- @comments do %>
-        <div class="cell reply_area reply_item">
+        <div class="cell reply_item">
           <div class="author_content">
             <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>" class="user_avatar">
                 <img src="http://www.gravatar.com/avatar/<%= String.strip(comment.user.get.email) |> :crypto.md5
