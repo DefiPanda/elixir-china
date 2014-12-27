@@ -11,7 +11,7 @@ defmodule ElixirChina.CategoryController do
   end
 
   def show(conn, %{"id" => id}) do
-	  query = from p in Post, where: p.category_id == ^String.to_integer(id), preload: :user
+	  query = from p in Post, where: p.category_id == ^String.to_integer(id), order_by: [{:desc, p.time}], preload: :user
     render conn, "show", categories: get_categories(),
                       posts: Repo.all(query),
                       category: String.to_integer(id),
