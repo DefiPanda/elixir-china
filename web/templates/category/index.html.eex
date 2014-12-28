@@ -12,9 +12,7 @@
         <%= for post <- @posts do %>
           <div class="cell">
             <a class="user_avatar" href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
-              <img src="http://www.gravatar.com/avatar/<%= String.strip(post.user.get.email) |> :crypto.md5
-                                |> :erlang.bitstring_to_list |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
-                                |> List.flatten %>" height="30" width="30">
+              <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
             </a>
             <a class="last_time pull-right">
               <span class="last_active_time">
