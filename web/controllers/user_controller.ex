@@ -5,7 +5,7 @@ defmodule ElixirChina.UserController do
   alias ElixirChina.User
 
   def index(conn, _params) do
-      render conn, "index", users: Repo.all(User), user_id: get_session(conn, :user_id)
+    redirect conn, "/"
   end
 
   def show(conn, %{"id" => id}) do
