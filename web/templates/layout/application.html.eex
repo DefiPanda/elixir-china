@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <%= if @show_post != nil do %>
+        <%= if @user_id != nil and @show_post != nil do %>
           <div class="panel">
             <div class="inner">
               <a href="<%= ElixirChina.Router.post_path(:new)%>" id="create_topic_btn">
