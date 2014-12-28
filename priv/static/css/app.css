@@ -37,6 +37,16 @@ input:focus, input:active, input:hover {
 	margin-left: 1em;
 }
 
+#topic_list {
+	border-bottom: 1px solid #f0f0f0;
+}
+
 .user_avatar {
 	display: inline-block;
+}
+
+.pagination {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 0 25px;
 }
