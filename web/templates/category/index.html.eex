@@ -28,8 +28,9 @@
         <% end %>
       </div>
 
-      <div class="pagination" id="pagination">
-      </div>
+      <%= if @pages> 1 do %>
+        <div class="pagination" id="pagination"></div>
+      <% end %>
     </div>
   </div>
 </div>
