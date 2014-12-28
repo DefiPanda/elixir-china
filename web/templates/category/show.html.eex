@@ -28,14 +28,20 @@
           </div>
         <% end %>
       </div>
-    </div>
 
-    <div class="pagination">
-      <%= if @user_id != nil do %>
-        <a href="<%= ElixirChina.Router.post_path(:new)%>" class="span-info">
-          发帖
-        </a>
+      <%= if @pages> 1 do %>
+        <div class="pagination" id="pagination"></div>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $("#pagination").pagination({
+    total_pages: <%= @pages %>,
+    current_page: <%= @page %>,
+    callback: function(_event, page) {
+      window.location.replace("<%= ElixirChina.Router.category_path(:index) %>?page=" + page);
+    }
+  });
+</script>
