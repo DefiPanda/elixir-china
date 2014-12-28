@@ -12,6 +12,16 @@ defmodule ElixirChina.Views do
   end
 
   # Functions defined here are available to all other views/templates
+
+  def avatar_url(email) do
+    hash = email 
+      |> String.strip
+      |> :crypto.md5
+      |> :erlang.bitstring_to_list 
+      |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
+      |> List.flatten 
+    "http://cdn.v2ex.com/gravatar/#{hash}"
+  end
 end
 
 
