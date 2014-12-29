@@ -9,6 +9,13 @@
 
 在浏览器输入 `localhost:4000` 就能访问网站啦。
 
+## 贡献
+如果你想为ElixirChina贡献代码，可以来[Issue list](https://github.com/jw2013/elixir-china/issues)完成那里的一个个issue，另一种方式就是实现下面`想实现的功能`板块中还没实现的功能。完成后请提交[Pull request](https://github.com/jw2013/elixir-china/pulls)。
+  
+任何贡献：小到修复错别字，大到修复严重的bug或者实现比较大的功能，都非常的欢迎。  
+
+:heart: :green_heart: :blue_heart: :yellow_heart: :purple_heart:
+
 ## 想实现的功能
 - 论坛基本功能
   - [x] 发帖
