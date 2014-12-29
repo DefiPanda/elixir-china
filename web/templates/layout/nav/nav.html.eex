@@ -2,7 +2,7 @@
   <div class='navbar-inner'>
     <div class="container">
       <ul class="nav">
-        <li><a class="title" href="/"> ElixirChina </a></li>
+        <li><a class="brand" href="/"> ElixirChina </a></li>
       </ul>
 
       <ul class="nav pull-right">
