@@ -29,6 +29,7 @@
 - UI设计
   - [x] 主页帖子分页
   - [x] css美化
+  - [x] 支持显示所有的Github [Emoji](http://www.emoji-cheat-sheet.com/)
 
 - 论坛高级功能
   - [x] 帖子分类
