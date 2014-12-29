@@ -60,9 +60,15 @@
                 </span>
               </div>
               <div>
-                <%= if @user_id != nil and @user_id == comment.user_id do %>
-                  <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
-                    修改
+                <%= if @user_id != nil do %>
+                  <%= if @user_id == comment.user_id do %>
+                    <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
+                      修改
+                    </a>
+                  <% end %>
+
+                  <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
+                    回复
                   </a>
                 <% end %>
               </div>

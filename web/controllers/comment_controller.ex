@@ -34,8 +34,9 @@ defmodule ElixirChina.CommentController do
         post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
           |> Repo.all |> hd
         quoted_uid = params["uid"]
-        # POST_REPLY = 0, COMMENT_REPLY = 1
+        # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
+        notify_mentioed_users(comment.post_id, comment.content)
         redirect conn, Router.post_path(:show, post_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
@@ -87,6 +88,16 @@ defmodule ElixirChina.CommentController do
       raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此评论"
     end
     comment
+  end
+
+  defp get_mentioned_user_ids(text) do
+    Regex.scan(~r/(?<=]\(#{Router.user_path(:index)}\/)[0-9]*(?=\))/, text)
+  end
+
+  defp notify_mentioed_users(post_id, text) do
+    user_ids = get_mentioned_user_ids(text)
+    # MENTIONED_REPLY = 1
+    for user_id <- user_ids, do: notify_subscriber(post_id, String.to_integer(user_id |> List.first), 1)
   end
 
   defp notify_subscriber(post_id, uid, type) do
