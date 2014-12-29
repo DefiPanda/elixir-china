@@ -71,7 +71,7 @@
               <ol>
                 <li>会员 <%= @user_count %></li>
                 <li>主题 <%= @post_count %></li>
-                <li>回复 <%= @post_count %></li>
+                <li>回复 <%= @comment_count %></li>
               </ol>
             </div>
           </div>
