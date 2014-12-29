@@ -56,3 +56,8 @@ input:focus, input:active, input:hover {
 	padding: 10px 15px !important;
 	margin-left: 0;
 }
+
+img[alt=emoji] {
+	width: 20px;
+	height: 20px;
+}
