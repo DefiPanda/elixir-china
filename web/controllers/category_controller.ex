@@ -2,15 +2,24 @@ defmodule ElixirChina.CategoryController do
   import Ecto.Query
   use Phoenix.Controller
   alias ElixirChina.Post
+  alias ElixirChina.Comment
+  alias ElixirChina.User
   alias ElixirChina.Category
 
   @posts_per_page 10
+  @leading_users_to_display 10
 
   def index(conn, %{"page" => page}) do
+    post_count = Repo.one(from p in Post, select: count(p.id))
+
     render conn, "index", categories: get_categories(),
                       posts: get_posts_by_page(page),
-                      pages: Repo.one(from p in Post, select: count(p.id)) / @posts_per_page |> Float.ceil,
+                      pages: post_count / @posts_per_page |> Float.ceil,
                       page: page,
+                      post_count: post_count,
+                      comment_count: Repo.one(from c in Comment, select: count(c.id)),
+                      user_count: Repo.one(from u in User, select: count(u.id)),
+                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: @leading_users_to_display),
                       show_post: true,
                       user_id: get_session(conn, :user_id)
   end
@@ -26,6 +35,10 @@ defmodule ElixirChina.CategoryController do
                       pages: Repo.one(from p in Post, where: p.category_id == ^String.to_integer(id), select: count(p.id))
                              / @posts_per_page |> Float.ceil,
                       page: page,
+                      post_count: Repo.one(from p in Post, select: count(p.id)),
+                      comment_count: Repo.one(from c in Comment, select: count(c.id)),
+                      user_count: Repo.one(from u in User, select: count(u.id)),
+                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: @leading_users_to_display),
                       show_post: true,
                       user_id: get_session(conn, :user_id)
   end

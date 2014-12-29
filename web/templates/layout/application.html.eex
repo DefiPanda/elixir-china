@@ -39,6 +39,43 @@
             </div>
           </div>
         <% end %>
+
+        <%= if @leading_users != nil do %>
+          <div class="panel">
+            <div class="header">
+              <span class="col_fade">积分榜</span>
+            </div>
+            <div class="inner">
+              <ol>
+                <%= for user <- @leading_users do %>
+                  <li>
+                    <span class="top_score"><%= user.score %></span>
+                    <span class="user_name">
+                      <a href="<%= ElixirChina.Router.user_path(:show, user.id) %>">
+                        <%= user.name %>
+                      </a>
+                    </span>
+                  </li>
+                <% end %>
+              </ol>
+            </div>
+          </div>
+        <% end %>
+
+        <%= if @post_count != nil and @comment_count != nil and @user_count != nil do %>
+          <div class="panel">
+            <div class="header">
+              <span class="col_fade">社区状态</span>
+            </div>
+            <div class="inner">
+              <ol>
+                <li>会员 <%= @user_count %></li>
+                <li>主题 <%= @post_count %></li>
+                <li>回复 <%= @post_count %></li>
+              </ol>
+            </div>
+          </div>
+        <% end %>
       </div>
 
       <%= @inner %>
