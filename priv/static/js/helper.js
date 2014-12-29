@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 	$(".reply-link").click(function(){
 	    var uid = $(this).attr("data-uid");
-	    var content = "[@" + $(this).attr("data-uname") +  "](/users/" + uid + ")";
+	    var content = "[@" + $(this).attr("data-uname") +  "](/users/" + uid + ") ";
 	    editor.codemirror.replaceRange(content, {line: Infinity});
 
 	    setTimeout(function() {
