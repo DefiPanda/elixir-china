@@ -15,7 +15,7 @@ config :phoenix, ElixirChina.Router,
   host: "example.com",
   cookies: true,
   session_key: "_elixir_china_key",
-  session_secret: "Y7$OZ^TN9H**1EO3@VKKLSZ3VH)@SL)@VK6P@TI0(N8U_EOO+*XZKVM#G80VJRN4DURCW1IV&H"
+  session_secret: System.get_env("SESSION_SECRET") || "Y7$OZ^TN9H**1EO3@VKKLSZ3VH)@SL)@VK6P@TI0(N8U_EOO+*XZKVM#G80VJRN4DURCW1IV&H"
 
 config :logger, :console,
   level: :info,
