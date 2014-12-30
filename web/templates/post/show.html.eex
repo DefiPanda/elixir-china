@@ -55,8 +55,8 @@
             <div class="user_info">
               <div>
                 
-                <span class="reply_time"> 
-                  于<%= "#{comment.time.year}-#{comment.time.month}-#{comment.time.day} #{comment.time.hour}点#{comment.time.min}分" %>发表
+                <span class="reply_time" data-year="<%= comment.time.year %>" data-month="<%= comment.time.month %>"
+                    data-day="<%= comment.time.day %>" data-hour="<%= comment.time.hour %>" data-min="<%= comment.time.min %>">
                 </span>
               </div>
               <div>
@@ -124,5 +124,21 @@
         window.location = data.location;
       }
     });
+  });
+
+  $(".reply_time").each(function() {
+    var year = $(this).attr("data-year"),
+        month = $(this).attr("data-month"),
+        day = $(this).attr("data-day"),
+        hour = $(this).attr("data-hour"),
+        min = $(this).attr("data-min"),
+        user = $(this).attr("data-user");
+    
+    var utc = new Date(year, month - 1, day, hour, min, 0 /* milliseconds */);
+    var offset = new Date().getTimezoneOffset();
+    // convert utc time to local time
+    utc.setMinutes(utc.getMinutes() - offset);
+    $(this).html(" 于 " + utc.getFullYear() + "-" + (utc.getMonth() + 1) + '-' + utc.getDate() + " "
+                  + utc.getHours() + "点" + utc.getMinutes() + "分发表");
   });
 </script>

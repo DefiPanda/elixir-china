@@ -15,8 +15,9 @@
               <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
             </a>
             <a class="last_time pull-right">
-              <span class="last_active_time">
-                <%= "#{post.user.get.name} 于 #{post.time.year}-#{post.time.month}-#{post.time.day} #{post.time.hour}点#{post.time.min}分 发表" %>
+              <span class="last_active_time" data-year="<%= post.time.year %>" data-month="<%= post.time.month %>"
+                    data-day="<%= post.time.day %>" data-hour="<%= post.time.hour %>" data-min="<%= post.time.min %>"
+                    data-user="<%= post.user.get.name %>">
               </span>
             </a>
             <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
@@ -40,5 +41,21 @@
     callback: function(_event, page) {
       window.location.replace("<%= ElixirChina.Router.category_path(:index) %>?page=" + page);
     }
+  });
+
+  $(".last_active_time").each(function() {
+    var year = $(this).attr("data-year"),
+        month = $(this).attr("data-month"),
+        day = $(this).attr("data-day"),
+        hour = $(this).attr("data-hour"),
+        min = $(this).attr("data-min"),
+        user = $(this).attr("data-user");
+    
+    var utc = new Date(year, month - 1, day, hour, min, 0 /* milliseconds */);
+    var offset = new Date().getTimezoneOffset();
+    // convert utc time to local time
+    utc.setMinutes(utc.getMinutes() - offset);
+    $(this).html(user + " 于 " + utc.getFullYear() + "-" + (utc.getMonth() + 1) + '-' + utc.getDate() + " "
+                  + utc.getHours() + "点" + utc.getMinutes() + "分 发表");
   });
 </script>
