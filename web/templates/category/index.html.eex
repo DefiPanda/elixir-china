@@ -1,9 +1,9 @@
 <div id="content">
   <div class="panel">
     <div class="header">
-      <a href="<%= ElixirChina.Router.category_path(:index) %>" class="topic-tab current-tab">全部</a>
+      <a href="<%= category_path(:index) %>" class="topic-tab current-tab">全部</a>
       <%= for category <- @categories do %>
-        <a href="<%= ElixirChina.Router.category_path(:show, category.id) %>" class="topic-tab"><%= category.name %></a>
+        <a href="<%= category_path(:show, category.id) %>" class="topic-tab"><%= category.name %></a>
       <% end %>
     </div>
 
@@ -11,7 +11,7 @@
       <div id="topic_list">
         <%= for post <- @posts do %>
           <div class="cell">
-            <a class="user_avatar" href="<%= ElixirChina.Router.user_path(:show, post.user_id) %>">
+            <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
               <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
             </a>
             <a class="last_time pull-right">
@@ -20,7 +20,7 @@
                     data-user="<%= post.user.get.name %>">
               </span>
             </a>
-            <a href="<%= ElixirChina.Router.post_path(:show, post.id) %>">
+            <a href="<%= post_path(:show, post.id) %>">
               <%= post.title %>
             </a>
           </div>
@@ -39,7 +39,7 @@
     total_pages: <%= @pages %>,
     current_page: <%= @page %>,
     callback: function(_event, page) {
-      window.location.replace("<%= ElixirChina.Router.category_path(:index) %>?page=" + page);
+      window.location.replace("<%= category_path(:index) %>?page=" + page);
     }
   });
 

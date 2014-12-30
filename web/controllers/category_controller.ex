@@ -6,6 +6,8 @@ defmodule ElixirChina.CategoryController do
   alias ElixirChina.User
   alias ElixirChina.Category
 
+  plug :action
+
   @posts_per_page 10
   @leading_users_to_display 10
 
@@ -21,7 +23,7 @@ defmodule ElixirChina.CategoryController do
                       user_count: Repo.one(from u in User, select: count(u.id)),
                       leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: @leading_users_to_display),
                       show_post: true,
-                      user_id: get_session(conn, :user_id)
+                      user_id: get_session(fetch_session(conn), :user_id)
   end
 
   def index(conn, %{}) do

@@ -33,7 +33,7 @@
         <%= if @user_id != nil and @show_post != nil do %>
           <div class="panel">
             <div class="inner">
-              <a href="<%= ElixirChina.Router.post_path(:new)%>" id="create_topic_btn">
+              <a href="<%= post_path(:new)%>" id="create_topic_btn">
                 <span class="span-success">发布话题</span>
               </a>
             </div>
@@ -51,7 +51,7 @@
                   <li>
                     <span class="top_score"><%= user.score %></span>
                     <span class="user_name">
-                      <a href="<%= ElixirChina.Router.user_path(:show, user.id) %>">
+                      <a href="<%= user_path(:show, user.id) %>">
                         <%= user.name %>
                       </a>
                     </span>
