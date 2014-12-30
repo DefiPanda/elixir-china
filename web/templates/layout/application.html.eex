@@ -23,13 +23,6 @@
 
     <div id="main">
       <div id='sidebar'>
-        <div class='panel'>
-          <div class='inner'>
-            <p>广告位开放</p>
-            <p>请联系 <a href="mailto:elixirchina@gmail.com?Subject=广告位申请" target="_top">elixirchina@gmail.com</a></p>
-          </div>
-        </div>
-
         <%= if @user_id != nil and @show_post != nil do %>
           <div class="panel">
             <div class="inner">
@@ -76,6 +69,15 @@
             </div>
           </div>
         <% end %>
+
+        <div class='panel'>
+          <div class='header'>
+            <p>贡献代码</p>
+          </div>
+          <div class="inner">
+            <p><a href="https://github.com/jw2013/elixir-china" target="_top">请点击这里</a></p>
+          </div>
+        </div>
       </div>
 
       <%= @inner %>
@@ -83,7 +85,7 @@
 
     <div id="footer">
       <div id="footer_main">
-        <div class="col_fade">ElixirChina</div>
+        <div class="col_fade">Made with &#9825; by Elixir makers.</div>
       </div>
     </div>
   </body>
