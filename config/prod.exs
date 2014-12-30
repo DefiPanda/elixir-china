@@ -1,25 +1,23 @@
 use Mix.Config
 
-# NOTE: To get SSL working, you will need to set:
+# ## SSL Support
 #
-#     ssl: true,
-#     keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#     certfile: System.get_env("SOME_APP_SSL_CERT_PATH"),
+# To get SSL working, you will need to set:
 #
-# Where those two env variables point to a file on disk
-# for the key and cert
+#     https: [port: 443,
+#             keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+#             certfile: System.get_env("SOME_APP_SSL_CERT_PATH")]
+#
+# Where those two env variables point to a file on
+# disk for the key and cert.
 
 config :phoenix, ElixirChina.Router,
-  port: System.get_env("PORT"),
-  ssl: false,
-  host: "example.com",
-  cookies: true,
-  session_key: "_elixir_china_key",
-  session_secret: System.get_env("SESSION_SECRET") || "Y7$OZ^TN9H**1EO3@VKKLSZ3VH)@SL)@VK6P@TI0(N8U_EOO+*XZKVM#G80VJRN4DURCW1IV&H"
+  url: [host: "example.com"],
+  http: [port: System.get_env("PORT")],
+  secret_key_base: "EY09dw1kA5pa8QNMieBi+vHaRGrovhaL8TRwhXYRqU1JDlUmWOax/XiRz4Bxa4iqwHlPsOYt1hKYD3Z+gImLog=="
 
 config :logger, :console,
-  level: :info,
-  metadata: [:request_id]
+  level: :info
 
 config :elixir_china, :postgres,
   host: "localhost",

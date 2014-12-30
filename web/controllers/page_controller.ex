@@ -1,6 +1,8 @@
 defmodule ElixirChina.PageController do
   use Phoenix.Controller
 
+  plug :action
+  
   def show(conn, %{"page" => "unauthorized"}) do
     conn
     |> assign_layout(:none)

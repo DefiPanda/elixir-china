@@ -102,10 +102,24 @@
 
       Socket.prototype.reconnectAfterMs = 5000;
 
-      function Socket(endPoint) {
+      Socket.prototype.heartbeatIntervalMs = 30000;
+
+      Socket.prototype.stateChangeCallbacks = null;
+
+      function Socket(endPoint, opts) {
+        var _ref;
+        if (opts == null) {
+          opts = {};
+        }
+        this.heartbeatIntervalMs = (_ref = opts.heartbeatIntervalMs) != null ? _ref : this.heartbeatIntervalMs;
         this.endPoint = this.expandEndpoint(endPoint);
         this.channels = [];
         this.sendBuffer = [];
+        this.stateChangeCallbacks = {
+          open: [],
+          close: [],
+          error: []
+        };
         this.resetBufferTimer();
         this.reconnect();
       }
@@ -128,12 +142,16 @@
         return "" + (this.protocol()) + "://" + location.host + endPoint;
       };
 
-      Socket.prototype.close = function(callback) {
+      Socket.prototype.close = function(callback, code, reason) {
         if (this.conn != null) {
           this.conn.onclose = (function(_this) {
             return function() {};
           })(this);
-          this.conn.close();
+          if (code != null) {
+            this.conn.close(code, reason != null ? reason : "");
+          } else {
+            this.conn.close();
+          }
           this.conn = null;
         }
         return typeof callback === "function" ? callback() : void 0;
@@ -144,16 +162,16 @@
           return function() {
             _this.conn = new WebSocket(_this.endPoint);
             _this.conn.onopen = function() {
-              return _this.onOpen();
+              return _this.onConnOpen();
             };
             _this.conn.onerror = function(error) {
-              return _this.onError(error);
+              return _this.onConnError(error);
             };
             _this.conn.onmessage = function(event) {
               return _this.onMessage(event);
             };
             return _this.conn.onclose = function(event) {
-              return _this.onClose(event);
+              return _this.onConnClose(event);
             };
           };
         })(this));
@@ -168,37 +186,88 @@
         })(this)), this.flushEveryMs);
       };
 
-      Socket.prototype.onOpen = function() {
-        clearInterval(this.reconnectTimer);
-        return this.rejoinAll();
+      Socket.prototype.onOpen = function(callback) {
+        if (callback) {
+          return this.stateChangeCallbacks.open.push(callback);
+        }
       };
 
-      Socket.prototype.onClose = function(event) {
+      Socket.prototype.onClose = function(callback) {
+        if (callback) {
+          return this.stateChangeCallbacks.close.push(callback);
+        }
+      };
+
+      Socket.prototype.onError = function(callback) {
+        if (callback) {
+          return this.stateChangeCallbacks.error.push(callback);
+        }
+      };
+
+      Socket.prototype.onConnOpen = function() {
+        var callback, _i, _len, _ref, _results;
+        clearInterval(this.reconnectTimer);
+        this.heartbeatTimer = setInterval(((function(_this) {
+          return function() {
+            return _this.sendHeartbeat();
+          };
+        })(this)), this.heartbeatIntervalMs);
+        this.rejoinAll();
+        _ref = this.stateChangeCallbacks.open;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          callback = _ref[_i];
+          _results.push(callback());
+        }
+        return _results;
+      };
+
+      Socket.prototype.onConnClose = function(event) {
+        var callback, _i, _len, _ref, _results;
         if (typeof console.log === "function") {
           console.log("WS close: ", event);
         }
         clearInterval(this.reconnectTimer);
-        return this.reconnectTimer = setInterval(((function(_this) {
+        clearInterval(this.heartbeatTimer);
+        this.reconnectTimer = setInterval(((function(_this) {
           return function() {
             return _this.reconnect();
           };
         })(this)), this.reconnectAfterMs);
+        _ref = this.stateChangeCallbacks.close;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          callback = _ref[_i];
+          _results.push(callback(event));
+        }
+        return _results;
       };
 
-      Socket.prototype.onError = function(error) {
-        return typeof console.log === "function" ? console.log("WS error: ", error) : void 0;
+      Socket.prototype.onConnError = function(error) {
+        var callback, _i, _len, _ref, _results;
+        if (typeof console.log === "function") {
+          console.log("WS error: ", error);
+        }
+        _ref = this.stateChangeCallbacks.error;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          callback = _ref[_i];
+          _results.push(callback(error));
+        }
+        return _results;
       };
 
       Socket.prototype.connectionState = function() {
-        var _ref, _ref1;
-        switch ((_ref = (_ref1 = this.conn) != null ? _ref1.readyState : void 0) != null ? _ref : 3) {
-          case 0:
+        var _ref;
+        switch ((_ref = this.conn) != null ? _ref.readyState : void 0) {
+          case WebSocket.CONNECTING:
             return "connecting";
-          case 1:
+          case WebSocket.OPEN:
             return "open";
-          case 2:
+          case WebSocket.CLOSING:
             return "closing";
-          case 3:
+          case WebSocket.CLOSED:
+          case null:
             return "closed";
         }
       };
@@ -233,7 +302,7 @@
 
       Socket.prototype.join = function(channel, topic, message, callback) {
         var chan;
-        chan = new Phoenix.Channel(channel, topic, message, callback, this);
+        chan = new exports.Channel(channel, topic, message, callback, this);
         this.channels.push(chan);
         if (this.isConnected()) {
           return this.rejoin(chan);
@@ -277,6 +346,15 @@
         } else {
           return this.sendBuffer.push(callback);
         }
+      };
+
+      Socket.prototype.sendHeartbeat = function() {
+        return this.send({
+          channel: "phoenix",
+          topic: "conn",
+          event: "heartbeat",
+          message: {}
+        });
       };
 
       Socket.prototype.flushSendBuffer = function() {

@@ -1,8 +1,6 @@
 defmodule ElixirChina.Router do
   use Phoenix.Router
 
-  plug Plug.Static, at: "/static", from: :elixir_china
-
   scope alias: ElixirChina do
     get "/", CategoryController, :index, as: :root
     get "/pages/:page", PageController, :show, as: :page
@@ -14,19 +12,13 @@ defmodule ElixirChina.Router do
 
     resources "/users", UserController do
       resources "/posts", PostController, only: [:index]
+      resources "/notifications", NotificationController, only: [:index, :destroy]
     end
 
     resources "/categories", CategoryController, only: [:index, :show]
 
     # Users
-    resources "/users", UserController
     get "/signup", UserController, :new
-
-
-    # Notifications
-    resources "/users", UserController do
-      resources "/notifications", NotificationController, only: [:index, :destroy]
-    end
 
     # Sessions
     resources "/sessions", SessionController, only: [:new, :create]

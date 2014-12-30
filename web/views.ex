@@ -8,6 +8,7 @@ defmodule ElixirChina.Views do
       # This block is expanded within all views for aliases, imports, etc
       import ElixirChina.I18n
       import ElixirChina.Router.Helpers
+      alias Phoenix.Controller.Flash
     end
   end
 
