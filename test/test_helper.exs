@@ -1,2 +1,2 @@
-ElixirChina.Router.start
+ElixirChina.Endpoint.start
 ExUnit.start

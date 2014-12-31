@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :phoenix, ElixirChina.Router,
+config :elixir_china, ElixirChina.Endpoint,
   http: [port: System.get_env("PORT") || 4000],
   debug_errors: true
 
@@ -8,7 +8,7 @@ config :phoenix, ElixirChina.Router,
 config :phoenix, :code_reloader, true
 
 config :elixir_china, :postgres,
-  host: "192.168.59.103",
+  host: "localhost",
   database: "elixir_china",
   username: "postgres",
   password: "postgres"

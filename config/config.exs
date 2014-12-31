@@ -5,20 +5,12 @@
 # is restricted to this project.
 use Mix.Config
 
-# Configures the router
-config :phoenix, ElixirChina.Router,
+# Configures the endpoint
+config :elixir_china, ElixirChina.Endpoint,
   url: [host: "localhost"],
   http: [port: System.get_env("PORT")],
-  https: false,
-  secret_key_base: "EY09dw1kA5pa8QNMieBi+vHaRGrovhaL8TRwhXYRqU1JDlUmWOax/XiRz4Bxa4iqwHlPsOYt1hKYD3Z+gImLog==",
-  catch_errors: true,
-  debug_errors: false,
-  error_controller: ElixirChina.PageController
-
-# Session configuration
-config :phoenix, ElixirChina.Router,
-  session: [store: :cookie,
-            key: "_elixir_china_key"]
+  secret_key_base: "ziHerwRAx1RS4ksABZzkL3Vl9aa1RH7b80BIv3v7Pn8l0ciAmfCjmuGKJxqoVoAL",
+  debug_errors: false
 
 # Configures Elixir's Logger
 config :logger, :console,

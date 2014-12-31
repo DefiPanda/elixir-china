@@ -3,7 +3,7 @@ defmodule ElixirChina.CommentController do
   import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router.Helpers, as: Router
+  alias ElixirChina.Router.Helpers
   alias ElixirChina.Comment
   alias ElixirChina.User
   alias ElixirChina.Post
@@ -17,7 +17,7 @@ defmodule ElixirChina.CommentController do
       comment when is_map(comment) ->
         render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        redirect conn, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -40,7 +40,7 @@ defmodule ElixirChina.CommentController do
         # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
         notify_mentioed_users(comment.post_id, comment.content)
-        redirect conn, Router.post_path(:show, post_id)
+        redirect conn, to: Helpers.post_path(:show, post_id)
       errors ->
         render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
     end
@@ -52,7 +52,7 @@ defmodule ElixirChina.CommentController do
       comment when is_map(comment) ->
         render conn, "edit.html", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -62,7 +62,7 @@ defmodule ElixirChina.CommentController do
     case Comment.validate(comment) do
       [] ->
         Repo.update(comment)
-        json conn, 201, JSON.encode!(%{location: Router.post_path(:show, post_id)})
+        json conn, %{location: Helpers.post_path(:show, post_id)}
       errors ->
         json conn, errors: errors
     end
@@ -73,9 +73,9 @@ defmodule ElixirChina.CommentController do
     case comment do
       comment when is_map(comment) ->
         Repo.delete(comment)
-        json conn, 200, JSON.encode!(%{location: Router.post_path(:show, post_id)})
+        json conn, %{location: Helpers.post_path(:show, post_id)}
       _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -94,7 +94,7 @@ defmodule ElixirChina.CommentController do
   end
 
   defp get_mentioned_user_ids(text) do
-    Regex.scan(~r/(?<=]\(#{Router.user_path(:index)}\/)[0-9]*(?=\))/, text)
+    Regex.scan(~r/(?<=]\(#{Helpers.user_path(:index)}\/)[0-9]*(?=\))/, text)
   end
 
   defp notify_mentioed_users(post_id, text) do

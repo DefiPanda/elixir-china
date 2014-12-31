@@ -6,7 +6,7 @@ defmodule ElixirChina.Router do
     plug :fetch_session
   end
 
-  scope alias: ElixirChina do
+  scope "/", ElixirChina do
     pipe_through :browser
 
     get "/", CategoryController, :index, as: :root

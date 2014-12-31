@@ -3,7 +3,7 @@ defmodule ElixirChina.PostController do
   import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router.Helpers, as: Router
+  alias ElixirChina.Router.Helpers
   alias ElixirChina.Post
   alias ElixirChina.Comment
   alias ElixirChina.Notification
@@ -15,7 +15,7 @@ defmodule ElixirChina.PostController do
   plug :action
   
   def index(conn, _params) do
-    redirect conn, "/"
+    redirect conn, to: "/"
   end
 
   def show(conn, %{"id" => id}) do
@@ -24,7 +24,7 @@ defmodule ElixirChina.PostController do
         comments = get_comments_with_loaded_user(String.to_integer(id))
         render conn, "show.html", post: post, comments: comments, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        redirect conn, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -42,7 +42,7 @@ defmodule ElixirChina.PostController do
       [] ->
         post = Repo.insert(post)
         increment_score(Repo.get(User, user_id), 10)
-        redirect conn, Router.post_path(:show, post.id)
+        redirect conn, to: Helpers.post_path(:show, post.id)
       errors ->
         render conn, "new.html", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
@@ -54,7 +54,7 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         render conn, "edit.html", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -67,7 +67,7 @@ defmodule ElixirChina.PostController do
     case Post.validate(post) do
       [] ->
         Repo.update(post)
-        json conn, 201, JSON.encode!(%{location: Router.post_path(:show, post.id)})
+        json conn, %{location: Helpers.post_path(:show, post.id)}
       errors ->
         json conn, errors: errors
     end
@@ -80,9 +80,9 @@ defmodule ElixirChina.PostController do
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
         Repo.delete(post)
-        json conn, 200, JSON.encode!(%{location: "/"})
+        json conn, %{location: "/"}
       _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
