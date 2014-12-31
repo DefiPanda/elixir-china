@@ -3,12 +3,14 @@ defmodule ElixirChina.PostController do
   import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router
+  alias ElixirChina.Router.Helpers, as: Router
   alias ElixirChina.Post
   alias ElixirChina.Comment
   alias ElixirChina.Notification
   alias ElixirChina.Category
   alias ElixirChina.User
+  
+  alias Poison, as: JSON
 
   plug :action
   

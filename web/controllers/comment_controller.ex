@@ -3,11 +3,12 @@ defmodule ElixirChina.CommentController do
   import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router
+  alias ElixirChina.Router.Helpers, as: Router
   alias ElixirChina.Comment
   alias ElixirChina.User
   alias ElixirChina.Post
   alias ElixirChina.Notification
+  alias Poison, as: JSON
 
   plug :action
 

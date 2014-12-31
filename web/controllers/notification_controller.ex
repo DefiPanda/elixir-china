@@ -2,7 +2,6 @@ defmodule ElixirChina.NotificationController do
   import Ecto.Query
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router
   alias ElixirChina.Notification
   
   plug :action
