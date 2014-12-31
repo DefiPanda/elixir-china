@@ -4,6 +4,8 @@ defmodule ElixirChina.NotificationController do
   use Phoenix.Controller
   alias ElixirChina.Router
   alias ElixirChina.Notification
+  
+  plug :action
 
   def index(conn, %{"user_id" => user_id}) do
     current_user_id = get_user_id!(conn)

@@ -4,6 +4,8 @@ defmodule ElixirChina.UserController do
   alias ElixirChina.Router
   alias ElixirChina.User
 
+  plug :action
+
   def index(conn, _params) do
     redirect conn, "/"
   end

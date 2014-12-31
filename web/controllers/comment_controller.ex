@@ -9,6 +9,8 @@ defmodule ElixirChina.CommentController do
   alias ElixirChina.Post
   alias ElixirChina.Notification
 
+  plug :action
+
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case get_comment_with_loaded_user(String.to_integer(id)) do
       comment when is_map(comment) ->

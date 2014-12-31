@@ -4,6 +4,8 @@ defmodule ElixirChina.SessionController do
   alias ElixirChina.Router
   alias ElixirChina.User
 
+  plug :action
+
   def new(conn, _params) do
     render conn, "new"
   end
@@ -22,7 +24,7 @@ defmodule ElixirChina.SessionController do
         if User.valid_password?(user, password) do
           conn = put_session conn, :user_id, user.id
           conn = put_session conn, :current_user, user
-          redirect conn, Router.post_path(:index)
+          redirect conn, Router.Helpers.post_path(:index)
         else
           render conn, "new", errors: [{"密码", "错误"}]
         end

@@ -10,6 +10,8 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Category
   alias ElixirChina.User
 
+  plug :action
+  
   def index(conn, _params) do
     redirect conn, "/"
   end
