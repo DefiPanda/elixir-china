@@ -2,6 +2,7 @@ defmodule ElixirChina.Router do
   use Phoenix.Router
 
   scope alias: ElixirChina do
+    pipe_through :browser
     get "/", CategoryController, :index, as: :root
     get "/pages/:page", PageController, :show, as: :page
 
