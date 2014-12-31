@@ -19,7 +19,7 @@
   </head>
 
   <body>
-    <%= render "nav/nav.html", user_id: @user_id %>
+    <%= render "nav.html", user_id: @user_id %>
 
     <div id="main">
       <div id='sidebar'>

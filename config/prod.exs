@@ -16,7 +16,7 @@ config :phoenix, ElixirChina.Router,
   http: [port: System.get_env("PORT")],
   secret_key_base: "EY09dw1kA5pa8QNMieBi+vHaRGrovhaL8TRwhXYRqU1JDlUmWOax/XiRz4Bxa4iqwHlPsOYt1hKYD3Z+gImLog=="
 
-config :logger, :console,
+config :logger,
   level: :info
 
 config :elixir_china, :postgres,

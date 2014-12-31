@@ -1,4 +1,4 @@
 defmodule ElixirChina.UserView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

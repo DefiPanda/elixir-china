@@ -1,8 +1,14 @@
 defmodule ElixirChina.Router do
   use Phoenix.Router
 
+  pipeline :browser do
+    plug :accepts, ~w(html)
+    plug :fetch_session
+  end
+
   scope alias: ElixirChina do
     pipe_through :browser
+
     get "/", CategoryController, :index, as: :root
     get "/pages/:page", PageController, :show, as: :page
 

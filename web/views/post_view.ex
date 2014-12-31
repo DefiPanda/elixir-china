@@ -1,4 +1,4 @@
 defmodule ElixirChina.PostView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

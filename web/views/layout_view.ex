@@ -1,4 +1,4 @@
 defmodule ElixirChina.LayoutView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

@@ -14,7 +14,7 @@ defmodule ElixirChina.CategoryController do
   def index(conn, %{"page" => page}) do
     post_count = Repo.one(from p in Post, select: count(p.id))
 
-    render conn, "index", categories: get_categories(),
+    render conn, "index.html", categories: get_categories(),
                       posts: get_posts_by_page(page),
                       pages: post_count / @posts_per_page |> Float.ceil,
                       page: page,
@@ -31,7 +31,7 @@ defmodule ElixirChina.CategoryController do
   end
 
   def show(conn, %{"id" => id, "page" => page}) do
-    render conn, "show", categories: get_categories(),
+    render conn, "show.html", categories: get_categories(),
                       posts: get_posts_by_page_and_category(page, id),
                       category: String.to_integer(id),
                       pages: Repo.one(from p in Post, where: p.category_id == ^String.to_integer(id), select: count(p.id))

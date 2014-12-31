@@ -22,14 +22,14 @@ defmodule ElixirChina.PostController do
     case get_loaded_post(String.to_integer(id)) do
       post when is_map(post) ->
         comments = get_comments_with_loaded_user(String.to_integer(id))
-        render conn, "show", post: post, comments: comments, user_id: get_session(conn, :user_id)
+        render conn, "show.html", post: post, comments: comments, user_id: get_session(conn, :user_id)
       _ ->
         redirect conn, Router.page_path(page: "unauthorized")
     end
   end
 
   def new(conn, _params) do
-    render conn, "new", user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    render conn, "new.html", user_id: get_session(conn, :user_id), categories: Repo.all(Category)
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
@@ -44,7 +44,7 @@ defmodule ElixirChina.PostController do
         increment_score(Repo.get(User, user_id), 10)
         redirect conn, Router.post_path(:show, post.id)
       errors ->
-        render conn, "new", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+        render conn, "new.html", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 
@@ -52,7 +52,7 @@ defmodule ElixirChina.PostController do
     post = validate_and_get_post!(conn, id)
     case post do
       post when is_map(post) ->
-        render conn, "edit", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
+        render conn, "edit.html", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end

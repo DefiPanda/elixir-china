@@ -1,4 +1,4 @@
 defmodule ElixirChina.NotificationView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

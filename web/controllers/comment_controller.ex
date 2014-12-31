@@ -50,7 +50,7 @@ defmodule ElixirChina.CommentController do
     comment = validate_and_get_comment(conn, id)
     case comment do
       comment when is_map(comment) ->
-        render conn, "edit", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
+        render conn, "edit.html", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       _ ->
         redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
     end

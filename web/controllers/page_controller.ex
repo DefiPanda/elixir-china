@@ -5,7 +5,7 @@ defmodule ElixirChina.PageController do
   
   def show(conn, %{"page" => "unauthorized"}) do
     conn
-    |> assign_layout(:none)
+    |> put_layout(:none)
     |> render "unauthorized"
   end
 
@@ -19,5 +19,9 @@ defmodule ElixirChina.PageController do
 
   defp handle_error(conn, _any) do
     text conn, 500, "Something went wrong"
+  end
+  
+  def not_found(conn, _params) do
+    render conn, "not_found.html"
   end
 end
