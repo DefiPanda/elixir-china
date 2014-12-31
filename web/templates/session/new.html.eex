@@ -5,7 +5,7 @@
     </div>
 
     <div class="inner post">
-      <form class="signup-signin" action="<%= ElixirChina.Router.session_path(:create) %>" method="post">
+      <form class="signup-signin" action="<%= session_path(:create) %>" method="post">
         <div class="form-group">
           <span class="tab-selector">用户名</span>
           <input rows="1" class="span4" type="text" name="user[name]"></input>
