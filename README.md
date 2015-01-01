@@ -1,4 +1,5 @@
-# ElixirChina
+# ElixirChina  
+[![Build Status](https://travis-ci.org/jw2013/elixir-china.svg)](https://travis-ci.org/jw2013/elixir-china)
 
 目前[ElixirChina 网站](http://elixir-cn.com/)部署在DigitalOcean上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
 
@@ -29,7 +30,7 @@
 - UI设计
   - [x] 主页帖子分页
   - [x] css美化
-  - [x] 支持显示所有的Github [Emoji](http://www.emoji-cheat-sheet.com/)
+  - [x] 支持显示所有的[Github Emoji](http://www.emoji-cheat-sheet.com/)
 
 - 论坛高级功能
   - [x] 帖子分类
