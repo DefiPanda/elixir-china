@@ -13,7 +13,8 @@ defmodule ElixirChina.PostController do
   plug :action
 
   def index(conn, %{"user_id" => user_id}) do
-    render conn, "index.html", posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id)),
+    render conn, "index.html",
+          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}]),
           user: Repo.get(User, String.to_integer(user_id))
   end
   
