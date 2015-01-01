@@ -23,16 +23,6 @@
 
     <div id="main">
       <div id='sidebar'>
-        <%= if @user_id != nil and @show_post != nil do %>
-          <div class="panel">
-            <div class="inner">
-              <a href="<%= post_path(:new)%>" id="create_topic_btn">
-                <span class="span-success">发布话题</span>
-              </a>
-            </div>
-          </div>
-        <% end %>
-
         <%= if @leading_users != nil do %>
           <div class="panel">
             <div class="header">

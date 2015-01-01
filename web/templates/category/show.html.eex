@@ -8,6 +8,10 @@
         	<%= category.name %>
         </a>
       <% end %>
+
+      <%= if @user_id != nil and @show_post != nil do %>
+        <a href="<%= post_path(:new)%>" class="topic-tab current-tab pull-right">发布话题</a>
+      <% end %>
     </div>
 
     <div class="inner no-padding">
