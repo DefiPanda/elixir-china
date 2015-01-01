@@ -8,7 +8,7 @@ defmodule ElixirChina.CategoryController do
 
   plug :action
 
-  @posts_per_page 10
+  @posts_per_page 15
   @leading_users_to_display 10
 
   def index(conn, %{"page" => page}) do
