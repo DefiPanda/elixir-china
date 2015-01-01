@@ -1,7 +1,6 @@
 defmodule ElixirChina.UserController do
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 
   plug :action
@@ -41,7 +40,7 @@ defmodule ElixirChina.UserController do
   def edit(conn, %{"id" => id}) do
     user_id = get_user_id(conn)
     if user_id != String.to_integer(id) do
-      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改密码"
+      unauthorized conn
     end
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->

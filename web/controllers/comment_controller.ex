@@ -35,7 +35,6 @@ defmodule ElixirChina.CommentController do
         increment_score(Repo.get(User, user_id), 1)
         post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
           |> Repo.all |> hd
-        quoted_uid = params["uid"]
         # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
         notify_mentioed_users(comment.post_id, comment.content)

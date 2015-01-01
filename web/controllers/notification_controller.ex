@@ -24,7 +24,6 @@ defmodule ElixirChina.NotificationController do
     else
       query = from n in Notification, where: n.id == ^String.to_integer(id), preload: :post
       notification = hd(Repo.all(query))
-      post_id = notification.post.get.id
       Repo.delete(notification)
       text conn, "success"
     end
