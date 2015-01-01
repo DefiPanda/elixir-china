@@ -32,7 +32,6 @@ defmodule ElixirChina.PostController do
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id(conn)
-    IO.inspect utc()
     post = %Post{title: title, content: content, user_id: user_id,
                 category_id: String.to_integer(category_id), time: utc()}
 
@@ -78,6 +77,7 @@ defmodule ElixirChina.PostController do
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
         Repo.delete(post)
+        increment_score(Repo.get(User, get_user_id(conn)), -10)
         json conn, %{location: "/"}
       _ ->
         unauthorized conn
