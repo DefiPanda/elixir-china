@@ -7,13 +7,13 @@
       <div class="changes">
         <span>
           作者
-          <a href="<%= ElixirChina.Router.user_path(:show, @post.user_id) %>">
+          <a href="<%= user_path(:show, @post.user_id) %>">
             <%= @post.user.get.name %>
           </a>
         </span>
         <span>
           所属板块
-          <a href="<%= ElixirChina.Router.category_path(:show, @post.category_id) %>">
+          <a href="<%= category_path(:show, @post.category_id) %>">
             <%= @post.category.get.name %>
           </a>
         </span>
@@ -25,7 +25,7 @@
 
       <div class="actions">
         <%= if @user_id != nil and @user_id == @post.user_id do %>
-          <a href="<%= ElixirChina.Router.post_path(:edit, @post.id) %>" class="span-primary submit_btn">
+          <a href="<%= post_path(:edit, @post.id) %>" class="span-primary submit_btn">
             编辑
           </a>
 
@@ -46,9 +46,9 @@
       <%= for comment <- @comments do %>
         <div class="cell reply_item">
           <div class="author_content">
-            <a href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>" class="user_avatar">
+            <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
                 <img src="<%= avatar_url(comment.user.get.email)%>" height="30" width="30">
-                <span class="dark reply_author" href="<%= ElixirChina.Router.user_path(:show, comment.user_id) %>">
+                <span class="dark reply_author" href="<%= user_path(:show, comment.user_id) %>">
                   <%= comment.user.get.name %>
                 </span>
             </a>
@@ -62,7 +62,7 @@
               <div>
                 <%= if @user_id != nil do %>
                   <%= if @user_id == comment.user_id do %>
-                    <a href="<%= ElixirChina.Router.post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
+                    <a href="<%= post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
                       修改
                     </a>
                   <% end %>
@@ -91,7 +91,7 @@
         <span class="col_fade">回帖</span>
       </div>
       <div class="inner reply">
-        <form action="<%= ElixirChina.Router.post_comment_path(:create, @post.id)%>" id="post-form" method="post">
+        <form action="<%= post_comment_path(:create, @post.id)%>" id="post-form" method="post">
             <input type="hidden" id="comment-uid" name="comment[uid]" value="">
 
             <div class="markdown_editor in_editor">

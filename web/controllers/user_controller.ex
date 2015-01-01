@@ -1,8 +1,10 @@
 defmodule ElixirChina.UserController do
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
-  alias ElixirChina.Router
+  alias ElixirChina.Router.Helpers
   alias ElixirChina.User
+
+  plug :action
 
   def index(conn, _params) do
     redirect conn, "/"
@@ -11,14 +13,14 @@ defmodule ElixirChina.UserController do
   def show(conn, %{"id" => id}) do
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
-        render conn, "show", user: user, user_id: get_session(conn, :user_id)
+        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, Router.page_path(page: "unauthorized")
+        redirect conn, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
   def new(conn, _params) do
-    render conn, "new"
+    render conn, "new.html"
   end
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
@@ -30,9 +32,9 @@ defmodule ElixirChina.UserController do
         user = Repo.insert(user)
         conn = put_session conn, :user_id, user.id
         conn = put_session conn, :current_user, user
-        render conn, "show", user: user, user_id: get_session(conn, :user_id)
+        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "new", user: user, errors: errors, user_id: get_session(conn, :user_id)
+        render conn, "new.html", user: user, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 
@@ -43,9 +45,9 @@ defmodule ElixirChina.UserController do
     end
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
-        render conn, "edit", user: user, user_id: get_session(conn, :user_id)
+        render conn, "edit.html", user: user, user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, Router.page_path(page: "unauthorized")
+        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
     end
   end
 
@@ -57,9 +59,9 @@ defmodule ElixirChina.UserController do
       [] ->
         user = %{user | :password => to_string User.encrypt_password(user.password)}
         Repo.update(user)
-        render conn, "show", user: user, user_id: get_session(conn, :user_id)
+        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
       errors ->
-        render conn, "edit", user: user, errors: errors, user_id: get_session(conn, :user_id)
+        render conn, "edit.html", user: user, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 end

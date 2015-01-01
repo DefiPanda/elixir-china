@@ -6,7 +6,7 @@
       </ul>
 
       <ul class="nav pull-right">
-        <li><a href="<%= ElixirChina.Router.root_path(:index) %>"> 主页 </a></li>
+        <li><a href="<%= root_path(:index) %>"> 主页 </a></li>
         
         <%= if @user_id == nil do %>
           <li><a href="/signup"> 注册 </a></li>
@@ -15,9 +15,9 @@
 
         <%= if @user_id != nil do %>
           <li><a href="/signout"> 退出 </a></li>
-          <li><a href="<%= ElixirChina.Router.user_path(:show, @user_id) %>"> 账户 </a></li>
-          <li><a href="<%= ElixirChina.Router.user_notification_path(:index, @user_id) %>"> 消息中心 </a></li>
-          <li><a href="<%= ElixirChina.Router.user_post_path(:index, @user_id) %>"> 我的帖子 </a></li>
+          <li><a href="<%= user_path(:show, @user_id) %>"> 账户 </a></li>
+          <li><a href="<%= user_notification_path(:index, @user_id) %>"> 消息中心 </a></li>
+          <li><a href="<%= user_post_path(:index, @user_id) %>"> 我的帖子 </a></li>
         <% end %>
       </ul>
     </div>

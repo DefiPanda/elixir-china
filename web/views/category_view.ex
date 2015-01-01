@@ -1,4 +1,4 @@
 defmodule ElixirChina.CategoryView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

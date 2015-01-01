@@ -6,7 +6,7 @@
       </ol>
     </div>
     <div class="inner post">
-      <form action="<%= ElixirChina.Router.post_comment_path(:update, @post_id, @comment.id) %>" method="post">
+      <form action="<%= post_comment_path(:update, @post_id, @comment.id) %>" method="post">
         <input type="hidden" name="_method" value="PUT">
         <div class="form-group">
            <textarea rows="8" name="comment[content]" class="editor"><%= @comment.content %></textarea>

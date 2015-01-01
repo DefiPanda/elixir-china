@@ -1,11 +1,13 @@
 defmodule ElixirChina.SessionController do
   import Ecto.Query
   use Phoenix.Controller
-  alias ElixirChina.Router
+  alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 
+  plug :action
+
   def new(conn, _params) do
-    render conn, "new"
+    render conn, "new.html"
   end
 
   def create(conn, %{"user" => %{"name" => name, "password" => password}}) do
@@ -22,18 +24,18 @@ defmodule ElixirChina.SessionController do
         if User.valid_password?(user, password) do
           conn = put_session conn, :user_id, user.id
           conn = put_session conn, :current_user, user
-          redirect conn, Router.post_path(:index)
+          redirect conn, to: Helpers.post_path(:index)
         else
-          render conn, "new", errors: [{"密码", "错误"}]
+          render conn, "new.html", errors: [{"密码", "错误"}]
         end
       false ->
-        render conn, "new", errors: [{"用户名", "不存在"}]
+        render conn, "new.html", errors: [{"用户名", "不存在"}]
     end
   end
 
   def destroy(conn, _params) do
   	conn = put_session conn, :user_id, nil
     conn = put_session conn, :current_user, nil
-    render conn, "new"
+    render conn, "new.html"
   end
 end
