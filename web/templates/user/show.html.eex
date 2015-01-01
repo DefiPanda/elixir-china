@@ -28,20 +28,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $("form").on("submit", function(event) {
-    event.preventDefault();
-
-    $that = this;
-
-    $.ajax({
-      url: $that.getAttribute('action'),
-      type: "DELETE",
-      data: $('form').serialize(),
-      success: function(data) {
-        window.location = data.location;
-      }
-    });
-  });
-</script>
