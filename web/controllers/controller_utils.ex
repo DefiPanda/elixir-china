@@ -1,23 +1,15 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
+  import Phoenix.Controller
+  alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 
-  # A new connection must be returned
-  def authenticate_user!(conn) do
-    user = get_user_for_request(conn)
-    if user do
-      put_session conn, :current_user, user
-    else
-      unauthorized!(conn)
-    end
-  end
-
-  def get_user_id!(conn) do
+  def get_user_id(conn) do
     user = get_user_for_request(conn)
     if user do
       user.id
     else
-      unauthorized!(conn)
+      unauthorized(conn)
     end
   end
 
@@ -35,7 +27,7 @@ defmodule ElixirChina.ControllerUtils do
     Repo.update(user)
   end
 
-  defp unauthorized!(_conn) do
-    raise ElixirChina.Errors.Unauthorized, message: "请登录后继续操作"
+  def unauthorized(conn) do
+    redirect %{conn | method: :get}, to: Helpers.page_path(:show, "unauthorized")
   end
 end

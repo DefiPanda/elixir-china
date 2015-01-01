@@ -7,7 +7,7 @@ defmodule ElixirChina.NotificationController do
   plug :action
 
   def index(conn, %{"user_id" => user_id}) do
-    current_user_id = get_user_id!(conn)
+    current_user_id = get_user_id(conn)
     if current_user_id !=  String.to_integer(user_id) do
       redirect conn, "/"
     else
@@ -18,7 +18,7 @@ defmodule ElixirChina.NotificationController do
   end
 
   def destroy(conn, %{"user_id" => user_id, "id" => id}) do
-    current_user_id = get_user_id!(conn)
+    current_user_id = get_user_id(conn)
     if current_user_id !=  String.to_integer(user_id) do
       redirect conn, "/"
     else

@@ -39,7 +39,7 @@ defmodule ElixirChina.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user_id = get_user_id!(conn)
+    user_id = get_user_id(conn)
     if user_id != String.to_integer(id) do
       raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改密码"
     end

@@ -25,7 +25,7 @@ defmodule ElixirChina.CommentController do
   end
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
-    user_id = get_user_id!(conn)
+    user_id = get_user_id(conn)
     comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
                       content: params["content"], time: utc()}
 
@@ -84,7 +84,7 @@ defmodule ElixirChina.CommentController do
   end
 
   defp validate_and_get_comment(conn, id) do
-    user_id = get_user_id!(conn)
+    user_id = get_user_id(conn)
     comment = Repo.get(Comment, String.to_integer(id))
     if user_id != comment.user_id do
       raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此评论"

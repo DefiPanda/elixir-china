@@ -31,7 +31,7 @@ defmodule ElixirChina.PostController do
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
-    user_id = get_user_id!(conn)
+    user_id = get_user_id(conn)
     IO.inspect utc()
     post = %Post{title: title, content: content, user_id: user_id,
                 category_id: String.to_integer(category_id), time: utc()}
@@ -95,7 +95,7 @@ defmodule ElixirChina.PostController do
   end
 
   defp validate_and_get_post!(conn, id) do
-    user_id = get_user_id!(conn)
+    user_id = get_user_id(conn)
     post = Repo.get(Post, String.to_integer(id))
     if user_id != post.user_id do
       raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此帖子"
