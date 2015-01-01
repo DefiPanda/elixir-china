@@ -22,7 +22,7 @@ defmodule ElixirChina.PostController do
         comments = get_comments_with_loaded_user(String.to_integer(id))
         render conn, "show.html", post: post, comments: comments, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -47,17 +47,17 @@ defmodule ElixirChina.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    post = validate_and_get_post!(conn, id)
+    post = validate_and_get_post(conn, id)
     case post do
       post when is_map(post) ->
         render conn, "edit.html", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
   def update(conn, %{"id" => id, "post" => params}) do
-    post = validate_and_get_post!(conn, id)
+    post = validate_and_get_post(conn, id)
     post = %{post | title: params["title"], 
                     content: params["content"], 
                     category_id: String.to_integer(params["category_id"])}
@@ -72,7 +72,7 @@ defmodule ElixirChina.PostController do
   end
 
   def destroy(conn, %{"id" => id}) do
-    post = validate_and_get_post!(conn, id)
+    post = validate_and_get_post(conn, id)
     case post do
       post when is_map(post) ->
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
@@ -80,7 +80,7 @@ defmodule ElixirChina.PostController do
         Repo.delete(post)
         json conn, %{location: "/"}
       _ ->
-        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -94,11 +94,11 @@ defmodule ElixirChina.PostController do
     Repo.all(query)
   end
 
-  defp validate_and_get_post!(conn, id) do
+  defp validate_and_get_post(conn, id) do
     user_id = get_user_id(conn)
     post = Repo.get(Post, String.to_integer(id))
     if user_id != post.user_id do
-      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此帖子"
+      unauthorized conn
     end
     post
   end

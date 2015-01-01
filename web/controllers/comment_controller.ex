@@ -16,7 +16,7 @@ defmodule ElixirChina.CommentController do
       comment when is_map(comment) ->
         render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -51,7 +51,7 @@ defmodule ElixirChina.CommentController do
       comment when is_map(comment) ->
         render conn, "edit.html", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -74,7 +74,7 @@ defmodule ElixirChina.CommentController do
         Repo.delete(comment)
         json conn, %{location: Helpers.post_path(:show, post_id)}
       _ ->
-        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -87,7 +87,7 @@ defmodule ElixirChina.CommentController do
     user_id = get_user_id(conn)
     comment = Repo.get(Comment, String.to_integer(id))
     if user_id != comment.user_id do
-      raise ElixirChina.Errors.Unauthorized, message: "您没有权限更改此评论"
+      unauthorized conn
     end
     comment
   end

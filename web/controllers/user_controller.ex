@@ -15,7 +15,7 @@ defmodule ElixirChina.UserController do
       user when is_map(user) ->
         render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
       _ ->
-        redirect conn, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
@@ -47,7 +47,7 @@ defmodule ElixirChina.UserController do
       user when is_map(user) ->
         render conn, "edit.html", user: user, user_id: get_session(conn, :user_id)
       _ ->
-        redirect %Plug.Conn{method: :get}, to: Helpers.page_path(page: "unauthorized")
+        unauthorized conn
     end
   end
 
