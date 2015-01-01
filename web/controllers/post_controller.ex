@@ -10,8 +10,6 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Category
   alias ElixirChina.User
   
-  alias Poison, as: JSON
-
   plug :action
   
   def index(conn, _params) do

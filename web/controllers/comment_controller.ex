@@ -8,7 +8,6 @@ defmodule ElixirChina.CommentController do
   alias ElixirChina.User
   alias ElixirChina.Post
   alias ElixirChina.Notification
-  alias Poison, as: JSON
 
   plug :action
 
