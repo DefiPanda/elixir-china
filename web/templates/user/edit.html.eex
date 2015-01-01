@@ -7,7 +7,7 @@
 
       <div class="inner post">
 
-        <form action="<%= ElixirChina.Router.user_path(:update, @user.id) %>" method="post">
+        <form action="<%= user_path(:update, @user.id) %>" method="post">
           <input type="hidden" name="_method" value="PUT">
           <div class="form-group">
             <input type="password" name="user[password]" value="" class="form-control" />

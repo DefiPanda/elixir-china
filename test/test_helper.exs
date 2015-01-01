@@ -1,2 +1,2 @@
-Phoenix.CodeReloader.reload!
+ElixirChina.Endpoint.start
 ExUnit.start

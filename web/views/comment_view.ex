@@ -1,4 +1,4 @@
 defmodule ElixirChina.CommentView do
-  use ElixirChina.Views
+  use ElixirChina.View
 
 end

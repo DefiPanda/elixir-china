@@ -21,7 +21,7 @@
   <div class="panel">
     <div class="header">
       <%= if @user_id != nil and @user_id == @user.id do %>
-        <a href="<%= ElixirChina.Router.user_path(:edit, @user.id) %>" class="span-primary submit_btn">
+        <a href="<%= user_path(:edit, @user.id) %>" class="span-primary submit_btn">
           修改密码
         </a>
       <% end %>
