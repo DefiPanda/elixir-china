@@ -4,9 +4,11 @@
 }
 
 .reply_author {
-	margin-right: 2px;
+	margin-left: -7px;
 	display: block;
 	text-align: center;
+	width: 45px;
+	line-height: 12px;
 }
 
 .span-danger {
