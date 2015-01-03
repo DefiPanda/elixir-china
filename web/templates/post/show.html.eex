@@ -1,109 +1,84 @@
 <div id="content">
-  <div class="panel panel-default">
-    <div class="panel-heading topic_header">
-      <span class="topic_full_title">
-        <%= @post.title %>
-      </span>
-      <div class="changes">
-        <span>
-          作者
-          <a href="<%= user_path(:show, @post.user_id) %>">
-            <%= @post.user.get.name %>
-          </a>
-        </span>
-        <span>
-          所属板块
-          <a href="<%= category_path(:show, @post.category_id) %>">
-            <%= @post.category.get.name %>
-          </a>
-        </span>
-      </div>
-    </div>
+  <article class="panel panel-default topic">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        <div class="title"><%= @post.title %></div>
+      </h3>
+      <h6><small>
+          作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.get.name %></a>
+          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"> <%= @post.category.get.name %> </a>
+      </small></h6>
+    </header>
 
-    <div class="inner topic">
+    <div class="panel-body">
       <div class="markdown-text"><%= @post.content %></div>
 
-      <div class="actions">
-        <%= if @user_id != nil and @user_id == @post.user_id do %>
-          <a href="<%= post_path(:edit, @post.id) %>" class="span-primary submit_btn">
-            编辑
-          </a>
-
-          <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
-            <input type="submit" class="span-danger span-common" value="删除"></input>
-          </form>
-        <% end %>
-      </div>
+      <%= if @user_id != nil and @user_id == @post.user_id do %>
+        <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+          <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">编辑</a>
+          <input type="submit" class="btn btn-danger" value="删除"></input>
+        </form>
+      <% end %>
     </div>
-  </div>
+  </article>
 
-  <div class="panel">
-    <div class="header">
-      <span class="col_fade"><%=length(@comments)%> 回复</span>
-    </div>
+  <div class="panel panel-default comments">
+    <header class="panel-heading">
+      <%=length(@comments)%> 回复
+    </header>
 
     <%= if @comments != nil do %>
+      <ul class="comment_list list-group">
       <%= for comment <- @comments do %>
-        <div class="cell reply_item">
-          <div class="author_content">
+        <li class="list-group-item media">
+          <div class="media-left">
             <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
-                <img src="<%= avatar_url(comment.user.get.email)%>" height="30" width="30">
-                <span class="dark reply_author" href="<%= user_path(:show, comment.user_id) %>">
-                  <%= comment.user.get.name %>
-                </span>
+              <img src="<%= avatar_url(comment.user.get.email)%>" height="48" width="48">
             </a>
-            <div class="user_info">
-              <div>
-
-                <span class="reply_time" data-year="<%= comment.time.year %>" data-month="<%= comment.time.month %>"
-                    data-day="<%= comment.time.day %>" data-hour="<%= comment.time.hour %>" data-min="<%= comment.time.min %>">
-                </span>
-              </div>
-              <div>
+          </div>
+          <div class="media-body reply_content">
+            <h6>
+              <a class="reply_author" href="<%= user_path(:show, comment.user_id) %>">
+                <%= comment.user.get.name %>
+              </a>
+              <small class="media-heading">
+                于 <time class="reply_time pubdate" datetime="<%= to_string comment.time %>">
+                  <%= to_string comment.time %>
+                </time> 发表
+              </small>
+              <span class="pull-right">
                 <%= if @user_id != nil do %>
                   <%= if @user_id == comment.user_id do %>
-                    <a href="<%= post_comment_path(:edit, @post.id, comment.id) %>" class="dark pull-right reply_author">
+                    <a href="<%= post_comment_path(:edit, @post.id, comment.id) %>" class="reply_author">
                       修改
                     </a>
                   <% end %>
-
-                  <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="dark pull-right reply_author reply-link">
+                  <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="reply_author reply-link">
                     回复
                   </a>
                 <% end %>
-              </div>
-            </div>
+              </span>
+            </h6>
+            <div class="markdown-text text-overflow"><%= comment.content %></div>
           </div>
-
-          <div class="reply_content">
-            <div class="markdown-text"><%= comment.content %></div>
-          </div>
-
-          <div class="clearfix"></div>
-        </div>
+        </li>
       <% end %>
+      </ul>
     <% end %>
   </div>
 
   <%= if @user_id != nil do %>
-    <div class="panel">
-      <div class="header">
+    <div class="panel panel-default">
+      <div class="panel-heading">
         <span class="col_fade">回帖</span>
       </div>
-      <div class="inner reply">
+      <div class="panel-body reply">
         <form action="<%= post_comment_path(:create, @post.id)%>" id="post-form" method="post">
             <input type="hidden" id="comment-uid" name="comment[uid]" value="">
-
-            <div class="markdown_editor in_editor">
-              <div class="markdown_in_editor">
-                <textarea rows="8" name="comment[content]" class="editor" id="editor"></textarea>
-              </div>
-            </div>
-
+            <textarea rows="8" name="comment[content]" class="editor" id="editor"></textarea>
             <div class="editor_buttons">
-              <input type="submit" class="span-primary submit_btn" value="回复"></input>
+              <input type="submit" class="btn btn-primary" value="回复"></input>
             </div>
-
         </form>
       </div>
     </div>

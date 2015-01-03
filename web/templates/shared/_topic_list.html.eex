@@ -10,9 +10,7 @@
       <span class="pull-right">
         <a href="<%= user_path(:show, post.user_id) %>" class="author"><%= post.user.get.name %></a>
         于
-        <time class="last_active_time"
-          datetime="<%= to_string post.time %>">
-        </time>
+        <time class="last_active_time pubdate" datetime="<%= to_string post.time %>"><%= to_string post.time %></time>
         发表
       </span>
     </li>

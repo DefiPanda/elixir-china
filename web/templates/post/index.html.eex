@@ -3,7 +3,6 @@
     <div class="panel-heading">
       <%= @user.name %>的帖子
     </div>
-
     <div class="panel-body no-padding">
       <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts %>
     </div>
