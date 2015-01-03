@@ -1,0 +1,18 @@
+<div id="topic_list">
+  <%= for post <- @posts do %>
+    <div class="cell">
+      <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
+        <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
+      </a>
+      <a class="last_time pull-right">
+        <span class="last_active_time" data-year="<%= post.time.year %>" data-month="<%= post.time.month %>"
+              data-day="<%= post.time.day %>" data-hour="<%= post.time.hour %>" data-min="<%= post.time.min %>"
+              data-user="<%= post.user.get.name %>">
+        </span>
+      </a>
+      <a href="<%= post_path(:show, post.id) %>">
+        <%= post.title %>
+      </a>
+    </div>
+  <% end %>
+</div>
