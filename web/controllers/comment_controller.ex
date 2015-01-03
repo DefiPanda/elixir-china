@@ -69,32 +69,6 @@ defmodule ElixirChina.CommentController do
     end
   end
 
-  def destroy(conn, %{"post_id" => post_id, "id" => id}) do
-    comment = validate_and_get_comment(conn, id)
-    case comment do
-      comment when is_map(comment) ->
-        Repo.delete(comment)
-        post = from(p in Post, where: p.id == ^ String.to_integer(post_id)) |> Repo.one
-        update_post_last_update_time(post)
-        json conn, %{location: Helpers.post_path(:show, post_id)}
-      _ ->
-        unauthorized conn
-    end
-  end
-
-  defp update_post_last_update_time(post) do
-    comment_count = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: count(c.id))
-    # If there is no comment, set last update time of post to be the post time, else set it
-    # to the time of the latest comment
-    if comment_count == 0 do
-      post = %{post | update_time: post.time}
-    else
-      latest_comment_time = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: max(c.time))
-      post = %{post | update_time: latest_comment_time}
-    end
-    Repo.update(post)
-  end
-
   defp get_comment_with_loaded_user(id) do
     query = from(c in Comment, where: c.id == ^id, preload: :user)
     hd(Repo.all(query))
