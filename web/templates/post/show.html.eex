@@ -1,6 +1,6 @@
 <div id="content">
-  <div class="panel">
-    <div class="header topic_header">
+  <div class="panel panel-default">
+    <div class="panel-heading topic_header">
       <span class="topic_full_title">
         <%= @post.title %>
       </span>
@@ -54,7 +54,7 @@
             </a>
             <div class="user_info">
               <div>
-                
+
                 <span class="reply_time" data-year="<%= comment.time.year %>" data-month="<%= comment.time.month %>"
                     data-day="<%= comment.time.day %>" data-hour="<%= comment.time.hour %>" data-min="<%= comment.time.min %>">
                 </span>
@@ -103,7 +103,7 @@
             <div class="editor_buttons">
               <input type="submit" class="span-primary submit_btn" value="回复"></input>
             </div>
-          
+
         </form>
       </div>
     </div>
@@ -124,21 +124,5 @@
         window.location = data.location;
       }
     });
-  });
-
-  $(".reply_time").each(function() {
-    var year = $(this).attr("data-year"),
-        month = $(this).attr("data-month"),
-        day = $(this).attr("data-day"),
-        hour = $(this).attr("data-hour"),
-        min = $(this).attr("data-min"),
-        user = $(this).attr("data-user");
-    
-    var utc = new Date(year, month - 1, day, hour, min, 0 /* milliseconds */);
-    var offset = new Date().getTimezoneOffset();
-    // convert utc time to local time
-    utc.setMinutes(utc.getMinutes() - offset);
-    $(this).html(" 于 " + utc.getFullYear() + "-" + (utc.getMonth() + 1) + '-' + utc.getDate() + " "
-                  + utc.getHours() + "点" + utc.getMinutes() + "分发表");
   });
 </script>

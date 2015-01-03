@@ -1,4 +1,4 @@
-<div id="topic_list">
+<div class="topic_list">
   <%= for post <- @posts do %>
     <div class="cell">
       <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">

@@ -1,9 +1,9 @@
 <div id="content">
-  <div class="panel">
-    <div class="header">
+  <div class="panel panel-default">
+    <div class="panel-heading">
       <a href="<%= category_path(:index) %>" class="topic-tab">全部</a>
       <%= for category <- @categories do %>
-        <a href="<%= category_path(:show, category.id) %>" 
+        <a href="<%= category_path(:show, category.id) %>"
         	class="topic-tab<%= if category.id == @category, do: ' current-tab'%>">
         	<%= category.name %>
         </a>
@@ -14,36 +14,12 @@
       <% end %>
     </div>
 
-    <div class="inner no-padding">
-      <div id="topic_list">
-        <%= for post <- @posts do %>
-          <div class="cell">
-            <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
-              <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
-            </a>
-            <a href="<%= post_path(:show, post.id) %>">
-              <%= post.title %>
-            </a>
-            <a href="<%= user_path(:show, post.user_id) %>">
-              (<%= post.user.get.name %>)
-            </a>
-          </div>
-        <% end %>
-      </div>
+    <div class="panel-body">
+      <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts %>
 
-      <%= if @pages> 1 do %>
-        <div class="pagination" id="pagination"></div>
+      <%= if @pages > 1 do %>
+        <div class="pagination" data-pages="<%= @pages %>" data-page="<%= @page %>"></div>
       <% end %>
     </div>
   </div>
 </div>
-
-<script>
-  $("#pagination").pagination({
-    total_pages: <%= @pages %>,
-    current_page: <%= @page %>,
-    callback: function(_event, page) {
-      window.location.replace("<%= category_path(:index) %>?page=" + page);
-    }
-  });
-</script>

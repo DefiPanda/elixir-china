@@ -11,11 +11,11 @@
       <% end %>
     </div>
 
-    <div class="panel-body no-padding">
+    <div class="panel-body">
       <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts %>
 
       <%= if @pages > 1 do %>
-        <div class="pagination" data-pages="<%= @pages %>" data-page="<%= @page %>" data-path="<%= category_path(:index) %>"></div>
+        <div class="pagination" data-pages="<%= @pages %>" data-page="<%= @page %>"></div>
       <% end %>
     </div>
   </div>

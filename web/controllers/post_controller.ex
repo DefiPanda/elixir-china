@@ -9,15 +9,15 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Notification
   alias ElixirChina.Category
   alias ElixirChina.User
-  
+
   plug :action
 
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
-          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}]),
+          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}], preload: :user),
           user: Repo.get(User, String.to_integer(user_id))
   end
-  
+
   def index(conn, _params) do
     redirect conn, to: "/"
   end
@@ -63,8 +63,8 @@ defmodule ElixirChina.PostController do
 
   def update(conn, %{"id" => id, "post" => params}) do
     post = validate_and_get_post(conn, id)
-    post = %{post | title: params["title"], 
-                    content: params["content"], 
+    post = %{post | title: params["title"],
+                    content: params["content"],
                     category_id: String.to_integer(params["category_id"])}
 
     case Post.validate(post) do
