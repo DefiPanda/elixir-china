@@ -33,7 +33,7 @@ defmodule ElixirChina.PostController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html", user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    render conn, "new.html", user_id: get_session(conn, :user_id), post: %Post{}, categories: Repo.all(Category)
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do

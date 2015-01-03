@@ -1,30 +1,8 @@
 <div id="content">
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <ol class="breadcrumb">
-        <li class="active">发表话题</li>
-      </ol>
-    </div>
+    <div class="panel-heading"> 发表话题 </div>
     <div class="panel-body post">
-      <form action="/posts" method="post">
-        <div class="form-group">
-          <span class="tab-selector">所属板块</span>
-          <select name="post[category_id]" class="form-control">
-            <%= for category <- @categories do %>
-              <option value="<%= category.id %>"><%= category.name %></option>
-            <% end %>
-          </select>
-          <input type="text" class="form-control" name="post[title]" placeholder="请输入标题" >
-          <div class="markdown_editor in_editor">
-            <div class="markdown_in_editor">
-              <textarea name="post[content]" class="editor" id="editor"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-primary" value="发布"></input>
-        </div>
-      </form>
+      <%= render ElixirChina.PostView, "_form.html", action: "/posts", post: @post, categories: @categories %>
     </div>
   </div>
 </div>
