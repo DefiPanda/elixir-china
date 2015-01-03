@@ -26,15 +26,18 @@ defmodule ElixirChina.CommentController do
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
     user_id = get_user_id(conn)
+    utc = utc()
     comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
-                      content: params["content"], time: utc()}
+                      content: params["content"], time: utc}
 
     case Comment.validate(comment) do
       [] ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
         post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
-          |> Repo.all |> hd
+          |> Repo.one
+        post = %{post | update_time: utc}
+        Repo.update(post)
         # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
         notify_mentioed_users(comment.post_id, comment.content)
@@ -71,10 +74,25 @@ defmodule ElixirChina.CommentController do
     case comment do
       comment when is_map(comment) ->
         Repo.delete(comment)
+        post = from(p in Post, where: p.id == ^ String.to_integer(post_id)) |> Repo.one
+        update_post_last_update_time(post)
         json conn, %{location: Helpers.post_path(:show, post_id)}
       _ ->
         unauthorized conn
     end
+  end
+
+  defp update_post_last_update_time(post) do
+    comment_count = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: count(c.id))
+    # If there is no comment, set last update time of post to be the post time, else set it
+    # to the time of the latest comment
+    if comment_count == 0 do
+      post = %{post | update_time: post.time}
+    else
+      latest_comment = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: max(c.time))
+      post = %{post | update_time: post.time}
+    end
+    Repo.update(post)
   end
 
   defp get_comment_with_loaded_user(id) do

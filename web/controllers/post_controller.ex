@@ -39,8 +39,10 @@ defmodule ElixirChina.PostController do
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id(conn)
+    utc = utc()
+    # update_time is initialized here and will only be changed when a comment is to be made or deleted.
     post = %Post{title: title, content: content, user_id: user_id,
-                category_id: String.to_integer(category_id), time: utc()}
+                category_id: String.to_integer(category_id), time: utc, update_time: utc}
 
     case Post.validate(post) do
       [] ->

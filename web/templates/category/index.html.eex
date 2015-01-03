@@ -19,8 +19,8 @@
               <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
             </a>
             <a class="last_time pull-right">
-              <span class="last_active_time" data-year="<%= post.time.year %>" data-month="<%= post.time.month %>"
-                    data-day="<%= post.time.day %>" data-hour="<%= post.time.hour %>" data-min="<%= post.time.min %>"
+              <span class="last_active_time" data-year="<%= post.update_time.year %>" data-month="<%= post.update_time.month %>"
+                    data-day="<%= post.update_time.day %>" data-hour="<%= post.update_time.hour %>" data-min="<%= post.update_time.min %>"
                     data-user="<%= post.user.get.name %>">
               </span>
             </a>
@@ -59,7 +59,7 @@
     var offset = new Date().getTimezoneOffset();
     // convert utc time to local time
     utc.setMinutes(utc.getMinutes() - offset);
-    $(this).html(user + " 于 " + utc.getFullYear() + "-" + (utc.getMonth() + 1) + '-' + utc.getDate() + " "
-                  + utc.getHours() + "点" + utc.getMinutes() + "分 发表");
+    $(this).html(user + "的帖子于 " + utc.getFullYear() + "-" + (utc.getMonth() + 1) + '-' + utc.getDate() + " "
+                  + utc.getHours() + "点" + utc.getMinutes() + "分 最后更新");
   });
 </script>
