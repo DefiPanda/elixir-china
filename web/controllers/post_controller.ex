@@ -86,8 +86,8 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
+        increment_score(Repo.get(User, post.user_id), -10)
         Repo.delete(post)
-        increment_score(Repo.get(User, get_user_id(conn)), -10)
         json conn, %{location: "/"}
       _ ->
         unauthorized conn
