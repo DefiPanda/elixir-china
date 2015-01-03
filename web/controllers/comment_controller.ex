@@ -89,8 +89,8 @@ defmodule ElixirChina.CommentController do
     if comment_count == 0 do
       post = %{post | update_time: post.time}
     else
-      latest_comment = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: max(c.time))
-      post = %{post | update_time: post.time}
+      latest_comment_time = Repo.one(from c in Comment, where: c.post_id == ^post.id, select: max(c.time))
+      post = %{post | update_time: latest_comment_time}
     end
     Repo.update(post)
   end
