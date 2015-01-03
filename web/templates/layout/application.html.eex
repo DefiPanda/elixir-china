@@ -10,9 +10,9 @@
     <title>ElixirChina</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="/css/app.css"> -->
+    <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/editor.css" />
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/editor.js"></script>
     <script type="text/javascript" src="/js/marked.js"></script>
@@ -35,12 +35,12 @@
 
     </div>
 
-    <nav id="footer" class="navbar navbar-default">
+    <div id="footer">
       <div class="container">
-        <div class="navbar-header">
+        <div>
           Made with &#9825; by Elixir makers.
         </div>
       </div>
-    </nav>
+    </div>
   </body>
 </html>

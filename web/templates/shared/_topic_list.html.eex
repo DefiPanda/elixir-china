@@ -1,18 +1,23 @@
-<div class="topic_list">
+<ul class="topic_list list-group">
   <%= for post <- @posts do %>
-    <div class="cell">
+    <li class="list-group-item">
       <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
         <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
-      </a>
-      <a class="last_time pull-right">
-        <span class="last_active_time" data-year="<%= post.time.year %>" data-month="<%= post.time.month %>"
-              data-day="<%= post.time.day %>" data-hour="<%= post.time.hour %>" data-min="<%= post.time.min %>"
-              data-user="<%= post.user.get.name %>">
-        </span>
       </a>
       <a href="<%= post_path(:show, post.id) %>">
         <%= post.title %>
       </a>
-    </div>
+      <span class="pull-right">
+        <a href="<%= user_path(:show, post.user_id) %>" class="author"><%= post.user.get.name %></a>
+        于
+        <time class="last_active_time"
+          datetime="<%= to_string post.time %>">
+        </time>
+        发表
+      </span>
+    </li>
   <% end %>
-</div>
+  <%= if (@pages || 0) > 1 do %>
+    <li class="topics_pagination list-group-item" data-pages="<%= @pages %>" data-page="<%= @page %>"></li>
+  <% end %>
+</ul>

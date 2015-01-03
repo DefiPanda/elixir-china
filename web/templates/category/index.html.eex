@@ -11,12 +11,6 @@
       <% end %>
     </div>
 
-    <div class="panel-body">
-      <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts %>
-
-      <%= if @pages > 1 do %>
-        <div class="pagination" data-pages="<%= @pages %>" data-page="<%= @page %>"></div>
-      <% end %>
-    </div>
+    <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, pages: @pages, page: @page %>
   </div>
 </div>

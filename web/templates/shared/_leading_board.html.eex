@@ -4,7 +4,7 @@
       <h3 class="panel-title">积分榜</h3>
     </div>
     <div class="panel-body">
-      <ol>
+      <ul>
         <%= for user <- @leading_users do %>
           <li>
             <span class="top_score"><%= user.score %></span>
@@ -15,7 +15,7 @@
             </span>
           </li>
         <% end %>
-      </ol>
+      </ul>
     </div>
   </div>
 <% end %>
