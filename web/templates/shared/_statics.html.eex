@@ -1,0 +1,14 @@
+<%= if @post_count != nil and @comment_count != nil and @user_count != nil do %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">社区状态</h3>
+    </div>
+    <div class="panel-body">
+      <ol>
+        <li>会员 <%= @user_count %></li>
+        <li>主题 <%= @post_count %></li>
+        <li>回复 <%= @comment_count %></li>
+      </ol>
+    </div>
+  </div>
+<% end %>

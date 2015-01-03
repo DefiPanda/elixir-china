@@ -1,10 +1,10 @@
 <div id="content">
-  <div class="panel">
-    <div class="header">
+  <div class="panel panel-default">
+    <div class="panel-heading">
       <%= @user.name %>的帖子
     </div>
 
-    <div class="inner no-padding">
+    <div class="panel-body no-padding">
       <div id="topic_list">
         <%= for post <- @posts do %>
           <div class="cell">
@@ -35,7 +35,7 @@
         hour = $(this).attr("data-hour"),
         min = $(this).attr("data-min"),
         user = $(this).attr("data-user");
-    
+
     var utc = new Date(year, month - 1, day, hour, min, 0 /* milliseconds */);
     var offset = new Date().getTimezoneOffset();
     // convert utc time to local time

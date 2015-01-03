@@ -1,6 +1,6 @@
 <div id="content">
-  <div class="panel">
-    <div class="header">
+  <div class="panel panel-default">
+    <div class="panel-heading">
       <a href="<%= category_path(:index) %>" class="topic-tab current-tab">全部</a>
       <%= for category <- @categories do %>
         <a href="<%= category_path(:show, category.id) %>" class="topic-tab"><%= category.name %></a>
@@ -11,7 +11,7 @@
       <% end %>
     </div>
 
-    <div class="inner no-padding">
+    <div class="panel-body no-padding">
       <div id="topic_list">
         <%= for post <- @posts do %>
           <div class="cell">
@@ -54,7 +54,7 @@
         hour = $(this).attr("data-hour"),
         min = $(this).attr("data-min"),
         user = $(this).attr("data-user");
-    
+
     var utc = new Date(year, month - 1, day, hour, min, 0 /* milliseconds */);
     var offset = new Date().getTimezoneOffset();
     // convert utc time to local time
