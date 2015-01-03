@@ -56,7 +56,7 @@ defmodule ElixirChina.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, false)
     case post do
       post when is_map(post) ->
         render conn, "edit.html", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
@@ -66,7 +66,7 @@ defmodule ElixirChina.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => params}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, false)
     post = %{post | title: params["title"], 
                     content: params["content"], 
                     category_id: String.to_integer(params["category_id"])}
@@ -81,7 +81,7 @@ defmodule ElixirChina.PostController do
   end
 
   def destroy(conn, %{"id" => id}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, true)
     case post do
       post when is_map(post) ->
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
@@ -104,13 +104,15 @@ defmodule ElixirChina.PostController do
     Repo.all(query)
   end
 
-  defp validate_and_get_post(conn, id) do
+  # Admin is only allowed to delete, but not edit, a post
+  defp validate_and_get_post(conn, id, admin_ok) do
     user_id = get_user_id(conn)
     post = Repo.get(Post, String.to_integer(id))
-    if user_id != post.user_id and !is_admin(user_id) do
+    if user_id == post.user_id or (admin_ok and is_admin(user_id)) do
+      post
+    else
       unauthorized conn
     end
-    post
   end
 
   defp is_admin(user_id) do
