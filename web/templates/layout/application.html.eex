@@ -9,7 +9,7 @@
 
     <title>ElixirChina</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/editor.css" />
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
