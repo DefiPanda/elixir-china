@@ -24,7 +24,7 @@
       <div class="markdown-text"><%= @post.content %></div>
 
       <div class="actions">
-        <%= if @user_id != nil and @user_id == @post.user_id do %>
+        <%= if @user_id != nil and (@user_id == @post.user_id or @is_admin) do %>
           <a href="<%= post_path(:edit, @post.id) %>" class="span-primary submit_btn">
             编辑
           </a>

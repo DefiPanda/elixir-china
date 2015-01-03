@@ -26,8 +26,9 @@ defmodule ElixirChina.PostController do
   def show(conn, %{"id" => id}) do
     case get_loaded_post(String.to_integer(id)) do
       post when is_map(post) ->
+        user_id = get_session(conn, :user_id)
         comments = get_comments_with_loaded_user(String.to_integer(id))
-        render conn, "show.html", post: post, comments: comments, user_id: get_session(conn, :user_id)
+        render conn, "show.html", post: post, comments: comments, user_id: user_id, is_admin: is_admin(user_id)
       _ ->
         unauthorized conn
     end
@@ -106,9 +107,14 @@ defmodule ElixirChina.PostController do
   defp validate_and_get_post(conn, id) do
     user_id = get_user_id(conn)
     post = Repo.get(Post, String.to_integer(id))
-    if user_id != post.user_id do
+    if user_id != post.user_id and !is_admin(user_id) do
       unauthorized conn
     end
     post
+  end
+
+  defp is_admin(user_id) do
+    user = Repo.one(from u in User, where: u.id == ^user_id)
+    is_map(user) and user.admin
   end
 end
