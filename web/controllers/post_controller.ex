@@ -15,7 +15,8 @@ defmodule ElixirChina.PostController do
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
           posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}]),
-          user: Repo.get(User, String.to_integer(user_id))
+          user: Repo.get(User, String.to_integer(user_id)),
+          user_id: get_session(conn, :user_id)
   end
   
   def index(conn, _params) do
