@@ -3,12 +3,16 @@
     <div class="panel-heading">用户</div>
 
     <div class="panel-body userinfo">
-      <a class="dark"><%= @user.name %></a>
-
-      <div class="user_profile">
-        <ul class="unstyled">
-          <span class="big"><%= @user.score %></span> 积分
-        </ul>
+      <div class="media">
+        <div class="media-left">
+          <a href="<%= user_path(:show, @user.id) %>" class="user_avatar">
+            <img src="<%= avatar_url(@user.email)%>" height="64" width="64" class="img-rounded">
+          </a>
+        </div>
+        <div class="media-body reply_content">
+          <h2 class="media-heading"><%= @user.name %></h2>
+          <h4 class="media-heading"><small><%= @user.score %> 积分</small></h4>
+        </div>
       </div>
     </div>
   </div>
@@ -16,9 +20,9 @@
 
 <%= if @user_id != nil and @user_id == @user.id do %>
   <div id="content">
-    <div class="panel">
-      <div class="header">
-        <a href="<%= user_path(:edit, @user.id) %>" class="span-primary submit_btn">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="<%= user_path(:edit, @user.id) %>" class="btn btn-primary">
           修改密码
         </a>
       </div>
@@ -27,8 +31,8 @@
 <% end %>
 
 <div id="content">
-   <div class="panel">
-     <div class="header">
+    <div class="panel panel-default">
+      <div class="panel-body">
       <a href="<%= user_post_path(:index, @user.id) %>">
         <%= if @user_id != nil and @user_id == @user.id do %>
           查看我的帖子
