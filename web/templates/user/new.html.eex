@@ -1,32 +1,10 @@
 <div id="content">
-  <div class="panel">
-    <div class="header">
-      <span class="col_fade">加入ElixirChina</span>
-    </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">注册 / 登录</div>
 
-    <div class="inner post">
-      <form class="signup-signin" action="/users" method="post">
-        <div class="form-group">
-          <span class="tab-selector">用户名</span>
-          <input rows="1" class="span4" type="text" name="user[name]"></input>
-          <span class="tab-selector">邮箱</span>
-          <input rows="1" class="span4" type="text" name="user[email]"></input>
-          <span class="tab-selector">密码</span>
-          <input type="password" rows="1" class="span4" type="password" name="user[password]"></input>
-        </div>
-
-        <div class="editor_buttons">
-          <input type="submit" class="span-primary" value="注册"></input>
-        </div>
-      </form>
-
-      <%= if @errors do %>
-        <%= for error <- @errors do %>
-          <div class="alert alert-warning">
-            <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
-          </div>
-        <% end %>
-      <% end %>
+    <div class="panel-body post">
+      <%= render ElixirChina.UserView, "_form.html", errors: @errors %>
+      <%= render ElixirChina.SessionView, "_form.html", [] %>
     </div>
   </div>
 </div>

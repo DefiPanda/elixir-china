@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_CN">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/editor.css" />
     <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <!-- // <script type="text/javascript" src="/js/bootstrap.min.js"></script> -->
     <script type="text/javascript" src="/js/editor.js"></script>
     <script type="text/javascript" src="/js/marked.js"></script>
     <script type="text/javascript" src="/js/pagination.js"></script>

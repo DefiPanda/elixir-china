@@ -1,11 +1,8 @@
 <div id="content">
-  <div class="panel">
-    <div class="header">
-      <ol class="breadcrumb">
-        <li class="active">用户</li>
-      </ol>
-    </div>
-    <div class="inner userinfo">
+  <div class="panel panel-default">
+    <div class="panel-heading">用户</div>
+
+    <div class="panel-body userinfo">
       <a class="dark"><%= @user.name %></a>
 
       <div class="user_profile">
@@ -32,7 +29,7 @@
 <div id="content">
    <div class="panel">
      <div class="header">
-      <a href="<%= user_post_path(:index, @user.id) %>"> 
+      <a href="<%= user_post_path(:index, @user.id) %>">
         <%= if @user_id != nil and @user_id == @user.id do %>
           查看我的帖子
         <%= else %>

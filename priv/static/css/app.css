@@ -1,11 +1,11 @@
 @media (min-width: 1600px) {
-    .container {
-        width: 1400px;
-    }
+  .container {
+    width: 1400px;
+  }
 }
 
 body {
-  background-color: #e1e1e1;
+  background-color: #DBD9DB;
 }
 
 .panel {
@@ -17,7 +17,7 @@ body {
 }
 
 .topic > .panel-heading {
-    background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 h1.panel-title { font-size: 36px; }
