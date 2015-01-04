@@ -26,15 +26,18 @@ defmodule ElixirChina.CommentController do
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
     user_id = get_user_id(conn)
+    utc = utc()
     comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
-                      content: params["content"], time: utc()}
+                      content: params["content"], time: utc}
 
     case Comment.validate(comment) do
       [] ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
         post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
-          |> Repo.all |> hd
+          |> Repo.one
+        post = %{post | update_time: utc}
+        Repo.update(post)
         # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
         notify_mentioed_users(comment.post_id, comment.content)
@@ -63,17 +66,6 @@ defmodule ElixirChina.CommentController do
         json conn, %{location: Helpers.post_path(:show, post_id)}
       errors ->
         json conn, errors: errors
-    end
-  end
-
-  def destroy(conn, %{"post_id" => post_id, "id" => id}) do
-    comment = validate_and_get_comment(conn, id)
-    case comment do
-      comment when is_map(comment) ->
-        Repo.delete(comment)
-        json conn, %{location: Helpers.post_path(:show, post_id)}
-      _ ->
-        unauthorized conn
     end
   end
 

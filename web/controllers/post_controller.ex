@@ -15,7 +15,8 @@ defmodule ElixirChina.PostController do
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
           posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}], preload: :user),
-          user: Repo.get(User, String.to_integer(user_id))
+          user: Repo.get(User, String.to_integer(user_id)),
+          user_id: get_session(conn, :user_id)
   end
 
   def index(conn, _params) do
@@ -25,8 +26,9 @@ defmodule ElixirChina.PostController do
   def show(conn, %{"id" => id}) do
     case get_loaded_post(String.to_integer(id)) do
       post when is_map(post) ->
+        user_id = get_session(conn, :user_id)
         comments = get_comments_with_loaded_user(String.to_integer(id))
-        render conn, "show.html", post: post, comments: comments, user_id: get_session(conn, :user_id)
+        render conn, "show.html", post: post, comments: comments, user_id: user_id, is_admin: is_admin(user_id)
       _ ->
         unauthorized conn
     end
@@ -38,8 +40,10 @@ defmodule ElixirChina.PostController do
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id(conn)
+    utc = utc()
+    # update_time is initialized here and will only be changed when a comment is to be made or deleted.
     post = %Post{title: title, content: content, user_id: user_id,
-                category_id: String.to_integer(category_id), time: utc()}
+                category_id: String.to_integer(category_id), time: utc, update_time: utc}
 
     case Post.validate(post) do
       [] ->
@@ -52,7 +56,7 @@ defmodule ElixirChina.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, false)
     case post do
       post when is_map(post) ->
         render conn, "edit.html", post: post, categories: Repo.all(Category), user_id: get_session(conn, :user_id)
@@ -62,7 +66,7 @@ defmodule ElixirChina.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => params}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, false)
     post = %{post | title: params["title"],
                     content: params["content"],
                     category_id: String.to_integer(params["category_id"])}
@@ -77,13 +81,13 @@ defmodule ElixirChina.PostController do
   end
 
   def destroy(conn, %{"id" => id}) do
-    post = validate_and_get_post(conn, id)
+    post = validate_and_get_post(conn, id, true)
     case post do
       post when is_map(post) ->
         (from n in Notification, where: n.post_id == ^String.to_integer(id)) |> Repo.delete_all
         (from comment in Comment, where: comment.post_id == ^String.to_integer(id)) |> Repo.delete_all
+        increment_score(Repo.get(User, post.user_id), -10)
         Repo.delete(post)
-        increment_score(Repo.get(User, get_user_id(conn)), -10)
         json conn, %{location: "/"}
       _ ->
         unauthorized conn
@@ -100,12 +104,19 @@ defmodule ElixirChina.PostController do
     Repo.all(query)
   end
 
-  defp validate_and_get_post(conn, id) do
+  # Admin is only allowed to delete, but not edit, a post
+  defp validate_and_get_post(conn, id, admin_ok) do
     user_id = get_user_id(conn)
     post = Repo.get(Post, String.to_integer(id))
-    if user_id != post.user_id do
+    if user_id == post.user_id or (admin_ok and is_admin(user_id)) do
+      post
+    else
       unauthorized conn
     end
-    post
+  end
+
+  defp is_admin(user_id) do
+    user = Repo.one(from u in User, where: u.id == ^user_id)
+    is_map(user) and user.admin
   end
 end

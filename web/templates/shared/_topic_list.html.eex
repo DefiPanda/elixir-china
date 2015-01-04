@@ -9,9 +9,9 @@
       </a>
       <span class="pull-right">
         <a href="<%= user_path(:show, post.user_id) %>" class="author"><%= post.user.get.name %></a>
-        于
-        <time class="last_active_time pubdate" datetime="<%= to_string post.time %>"><%= to_string post.time %></time>
-        发表
+        的帖子于
+        <time class="last_active_time pubdate" datetime="<%= to_string post.update_time %>"><%= to_string post.time %></time>
+        最后更新
       </span>
     </li>
   <% end %>
