@@ -4,12 +4,16 @@
     }
 }
 
+body {
+  background-color: #e1e1e1;
+}
+
 .panel {
   padding: 0;
 }
 
-body {
-  background-color: #e1e1e1;
+.nav>li>a {
+  padding: 3px 6px;
 }
 
 .topic > .panel-heading {
@@ -34,4 +38,9 @@ h3.panel-title { font-size: 24px; }
 
 .topics_pagination .pagination {
   margin: 0;
+}
+
+img[alt=emoji] {
+  width: 20px;
+  height: 20px;
 }

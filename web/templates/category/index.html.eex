@@ -1,14 +1,19 @@
 <div id="content">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="<%= category_path(:index) %>" class="topic-tab current-tab">全部</a>
-      <%= for category <- @categories do %>
-        <a href="<%= category_path(:show, category.id) %>" class="topic-tab"><%= category.name %></a>
-      <% end %>
-
-      <%= if @user_id != nil and @show_post != nil do %>
-        <a href="<%= post_path(:new)%>" class="topic-tab current-tab pull-right">发布话题</a>
-      <% end %>
+      <ul class="nav nav-pills">
+        <li class="active"><a href="<%= category_path(:index) %>">全部</a></li>
+        <%= for category <- @categories do %>
+          <li>
+            <a href="<%= category_path(:show, category.id) %>"><%= category.name %></a>
+          </li>
+        <% end %>
+        <%= if @user_id != nil and @show_post != nil do %>
+          <li class="active pull-right">
+            <a href="<%= post_path(:new)%>">发布话题</a>
+          </li>
+        <% end %>
+      </ul>
     </div>
 
     <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, pages: @pages, page: @page %>
