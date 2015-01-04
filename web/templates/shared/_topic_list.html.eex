@@ -2,7 +2,7 @@
   <%= for post <- @posts do %>
     <li class="list-group-item">
       <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
-        <img src="<%= avatar_url(post.user.get.email) %>" height="48" width="48">
+        <img src="<%= avatar_url(post.user.get.email) %>" height="36" width="36" class="img-rounded">
       </a>
       <a href="<%= post_path(:show, post.id) %>">
         <%= post.title %>

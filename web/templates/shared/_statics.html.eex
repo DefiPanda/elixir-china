@@ -4,11 +4,11 @@
       <h3 class="panel-title">社区状态</h3>
     </div>
     <div class="panel-body">
-      <ol>
+      <ul class="list-unstyled">
         <li>会员 <%= @user_count %></li>
         <li>主题 <%= @post_count %></li>
         <li>回复 <%= @comment_count %></li>
-      </ol>
+      </ul>
     </div>
   </div>
 <% end %>

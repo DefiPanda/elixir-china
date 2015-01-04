@@ -12,7 +12,7 @@ body {
   padding: 0;
 }
 
-.nav>li>a {
+.nav.category-list > li > a {
   padding: 3px 6px;
 }
 

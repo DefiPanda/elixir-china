@@ -33,7 +33,7 @@
         <li class="list-group-item media">
           <div class="media-left">
             <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
-              <img src="<%= avatar_url(comment.user.get.email)%>" height="48" width="48">
+              <img src="<%= avatar_url(comment.user.get.email)%>" height="48" width="48" class="img-rounded">
             </a>
           </div>
           <div class="media-body reply_content">
@@ -59,7 +59,7 @@
                 <% end %>
               </span>
             </h6>
-            <div class="markdown-text text-overflow"><%= comment.content %></div>
+            <div class="markdown-text"><%= comment.content %></div>
           </div>
         </li>
       <% end %>

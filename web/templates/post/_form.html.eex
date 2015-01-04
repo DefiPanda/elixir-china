@@ -1,4 +1,5 @@
 <form action="<%= @action %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH">
   <div class="form-group form-inline">
     <label class="">所属板块
       <select name="post[category_id]" class="form-control" value="<%= @post.category_id %>">
