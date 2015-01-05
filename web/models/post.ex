@@ -7,7 +7,7 @@ defmodule ElixirChina.Post do
      category_id: present()
 
   schema "posts" do
-  	field :title, :string
+    field :title, :string
     field :content, :string
     field :time, :datetime
     field :update_time, :datetime

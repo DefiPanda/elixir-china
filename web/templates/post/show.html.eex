@@ -6,7 +6,7 @@
       </h3>
       <h6><small>
           作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.name %></a>
-          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"> <%= @post.category.name %> </a>
+          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"><mark class="text-muted"><%= @post.category.name %></mark></a>
       </small></h6>
     </header>
 
@@ -16,18 +16,14 @@
 
     <%= if @user_id != nil do %>
       <div class="panel-footer">
-        <div class="form-inline">
-          <%= if @user_id == @post.user_id do %>
+        <%= if @user_id == @post.user_id or @is_admin do %>
+          <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
             <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">
               编辑
             </a>
-          <% end %>
-          <%= if@user_id == @post.user_id or @is_admin do %>
-            <form class="form-inline" action="/posts/<%= @post.id %>" id="delete-form" method="post">
-              <input type="submit" class="btn btn-danger" value="删除"></input>
-            </form>
-          <% end %>
-        </div>
+            <input type="submit" class="btn btn-danger" value="删除"></input>
+          </form>
+        <% end %>
       </div>
     <% end %>
   </article>
