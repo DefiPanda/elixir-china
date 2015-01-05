@@ -12,21 +12,24 @@
 
     <div class="panel-body">
       <div class="markdown-text"><%= @post.content %></div>
-      <%= if @user_id != nil do %>
-        <div>
+    </div>
+
+    <%= if @user_id != nil do %>
+      <div class="panel-footer">
+        <div class="form-inline">
           <%= if @user_id == @post.user_id do %>
             <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">
               编辑
             </a>
           <% end %>
           <%= if@user_id == @post.user_id or @is_admin do %>
-            <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+            <form class="form-inline" action="/posts/<%= @post.id %>" id="delete-form" method="post">
               <input type="submit" class="btn btn-danger" value="删除"></input>
             </form>
           <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </article>
 
   <div class="panel panel-default comments">
@@ -44,7 +47,7 @@
             </a>
           </div>
           <div class="media-body reply_content">
-            <h6>
+            <h6 class="media-heading">
               <a class="reply_author" href="<%= user_path(:show, comment.user_id) %>">
                 <%= comment.user.get.name %>
               </a>

@@ -28,7 +28,7 @@ h3.panel-title { font-size: 24px; }
   word-break: break-all;
 }
 
-.comment_list .media {
+.list-group-item.media {
   margin-top: 0;
 }
 

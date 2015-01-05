@@ -1,20 +1,18 @@
 <div id="content">
-  <div class="panel">
-      <div class="header">
-        <span class="col_fade">新消息提示</span>
-      </div>
+  <div class="panel panel-default">
+      <div class="panel-heading">新消息提示</div>
 
       <%= if @notifications != nil do %>
-        <div class="inner topic">
+        <div class="panel-body topic">
           <%= for notification <- @notifications do %>
             <div>
               <%= if notification.type == 0 do %>
-                您的帖子 
+                您的帖子
                 <a class="read-notification" data-post-link="<%= post_path(:show, notification.post.get.id) %>" href="<%= user_notification_path(:destroy, @user_id, notification.id) %>">
                   <%= notification.post.get.title %>
                 </a> 有了新回复
               <%= else %>
-                您在帖子 
+                您在帖子
                 <a class="read-notification" data-post-link="<%= post_path(:show, notification.post.get.id) %>" href="<%= user_notification_path(:destroy, @user_id, notification.id) %>">
                   <%= notification.post.get.title %>
                 </a>
@@ -31,7 +29,6 @@
       <% end %>
   </div>
 </div>
-  
 
 <script>
   $(".read-notification").on("click", function(event) {

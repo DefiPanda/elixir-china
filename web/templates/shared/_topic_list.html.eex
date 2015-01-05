@@ -1,18 +1,23 @@
 <ul class="topic_list list-group">
   <%= for post <- @posts do %>
-    <li class="list-group-item">
-      <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
-        <img src="<%= avatar_url(post.user.get.email) %>" height="36" width="36" class="img-rounded">
-      </a>
-      <a href="<%= post_path(:show, post.id) %>">
-        <%= post.title %>
-      </a>
-      <span class="pull-right">
-        <a href="<%= user_path(:show, post.user_id) %>" class="author"><%= post.user.get.name %></a>
-        的帖子于
-        <time class="last_active_time pubdate" datetime="<%= to_string post.update_time %>"><%= to_string post.time %></time>
-        最后更新
-      </span>
+    <li class="list-group-item media">
+      <div class="media-left">
+        <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
+          <img src="<%= avatar_url(@user && @user.email || post.user.get.email) %>" height="48" width="48" class="img-rounded">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <a href="<%= post_path(:show, post.id) %>">
+            <%= post.title %>
+          </a>
+        </h4>
+        <h5 class="media-heading small">
+          <small><a href="<%= user_path(:show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.get.name %></a>
+            于 <time class="last_active_time pubdate" datetime="<%= to_string post.update_time %>"><%= to_string post.time %></time>
+            最后更新</small>
+        </h5>
+      </div>
     </li>
   <% end %>
   <%= if (@pages || 0) > 1 do %>

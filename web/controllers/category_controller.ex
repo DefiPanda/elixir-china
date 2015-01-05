@@ -51,12 +51,12 @@ defmodule ElixirChina.CategoryController do
 
   defp get_posts_by_page(page) do
     Repo.all(from p in Post, where: true, order_by: [{:desc, p.update_time}], limit: @posts_per_page,
-      offset: (String.to_integer(page) - 1) * @posts_per_page, preload: :user)
+      offset: (String.to_integer(page) - 1) * @posts_per_page, preload: [:user, :category])
   end
 
   defp get_posts_by_page_and_category(page, id) do
     Repo.all(from p in Post, where: p.category_id == ^String.to_integer(id), order_by: [{:desc, p.update_time}],
-      limit: @posts_per_page, offset: (String.to_integer(page) - 1) * @posts_per_page, preload: :user)
+      limit: @posts_per_page, offset: (String.to_integer(page) - 1) * @posts_per_page, preload: [:user, :category])
   end
 
   defp get_categories() do
