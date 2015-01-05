@@ -34,9 +34,9 @@ defmodule ElixirChina.CommentController do
       [] ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
-        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
-          |> Repo.one
-        post = %{post | update_time: utc}
+        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
+        |> Repo.one
+        post = %{post | update_time: utc, comments_count: post.comments_count+1 }
         Repo.update(post)
         # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)

@@ -19,6 +19,9 @@
             最后更新</small>
         </h5>
       </div>
+      <div class="media-right">
+        <h4><div class="label label-<%= if post.comments_count > 0, do: "primary", else: "default" %>"><%= post.comments_count %></div></h4>
+      </div>
     </li>
   <% end %>
   <%= if (@pages || 0) > 1 do %>
