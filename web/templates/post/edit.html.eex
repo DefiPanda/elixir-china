@@ -1,9 +1,7 @@
-<div id="content">
-  <div class="panel panel-default">
-    <div class="panel-heading">修改话题</div>
-    <div class="panel-body post">
-      <%= render ElixirChina.PostView, "_form.html", action: post_path(:update, @post.id), post: @post, categories: @categories %>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">修改话题</div>
+  <div class="panel-body post">
+    <%= render ElixirChina.PostView, "_form.html", action: post_path(:update, @post.id), post: @post, categories: @categories %>
   </div>
 </div>
 

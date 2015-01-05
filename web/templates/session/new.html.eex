@@ -1,10 +1,8 @@
-<div id="content">
-  <div class="panel panel-default">
-    <div class="panel-heading">注册 / 登录</div>
+<div class="panel panel-default">
+  <div class="panel-heading">注册 / 登录</div>
 
-    <div class="panel-body post">
-      <%= render ElixirChina.UserView, "_form.html", [] %>
-      <%= render ElixirChina.SessionView, "_form.html", errors: @errors %>
-    </div>
+  <div class="panel-body post">
+    <%= render ElixirChina.UserView, "_form.html", [] %>
+    <%= render ElixirChina.SessionView, "_form.html", errors: @errors %>
   </div>
 </div>

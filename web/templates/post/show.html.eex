@@ -1,95 +1,93 @@
-<div id="content">
-  <article class="panel panel-default topic">
-    <header class="panel-heading">
-      <h3 class="panel-title">
-        <div class="title"><%= @post.title %></div>
-      </h3>
-      <h6><small>
-          作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.name %></a>
-          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"><mark class="text-muted"><%= @post.category.name %></mark></a>
-      </small></h6>
-    </header>
+<article class="panel panel-default topic">
+  <header class="panel-heading">
+    <h3 class="panel-title">
+      <div class="title"><%= @post.title %></div>
+    </h3>
+    <h6><small>
+        作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.name %></a>
+        所属板块 <a href="<%= category_path(:show, @post.category_id) %>"><mark class="text-muted"><%= @post.category.name %></mark></a>
+    </small></h6>
+  </header>
 
-    <div class="panel-body">
-      <div class="markdown-text"><%= @post.content %></div>
-    </div>
-
-    <%= if @user_id != nil do %>
-      <div class="panel-footer">
-        <%= if @user_id == @post.user_id or @is_admin do %>
-          <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
-            <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">
-              编辑
-            </a>
-            <input type="submit" class="btn btn-danger" value="删除"></input>
-          </form>
-        <% end %>
-      </div>
-    <% end %>
-  </article>
-
-  <div class="panel panel-default comments">
-    <header class="panel-heading">
-      <%=length(@comments)%> 回复
-    </header>
-
-    <%= if @comments != nil do %>
-      <ul class="comment_list list-group">
-      <%= for comment <- @comments do %>
-        <li class="list-group-item media">
-          <div class="media-left">
-            <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
-              <img src="<%= avatar_url(comment.user.email)%>" height="48" width="48" class="img-rounded">
-            </a>
-          </div>
-          <div class="media-body reply_content">
-            <h6 class="media-heading">
-              <a class="reply_author" href="<%= user_path(:show, comment.user_id) %>">
-                <%= comment.user.name %>
-              </a>
-              <small class="media-heading">
-                于 <time class="reply_time pubdate" datetime="<%= to_string comment.time %>">
-                  <%= to_string comment.time %>
-                </time> 发表
-              </small>
-              <span class="pull-right">
-                <%= if @user_id != nil do %>
-                  <%= if @user_id == comment.user_id do %>
-                    <a href="<%= post_comment_path(:edit, @post.id, comment.id) %>" class="reply_author">
-                      修改
-                    </a>
-                  <% end %>
-                  <a href="#post-form" data-uid="<%= comment.user.id %>" data-uname="<%= comment.user.name %>" class="reply_author reply-link">
-                    回复
-                  </a>
-                <% end %>
-              </span>
-            </h6>
-            <div class="markdown-text"><%= comment.content %></div>
-          </div>
-        </li>
-      <% end %>
-      </ul>
-    <% end %>
+  <div class="panel-body">
+    <div class="markdown-text"><%= @post.content %></div>
   </div>
 
   <%= if @user_id != nil do %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <span class="col_fade">回帖</span>
-      </div>
-      <div class="panel-body reply">
-        <form action="<%= post_comment_path(:create, @post.id)%>" id="post-form" method="post">
-            <input type="hidden" id="comment-uid" name="comment[uid]" value="">
-            <textarea rows="8" name="comment[content]" class="editor" id="editor"></textarea>
-            <div class="editor_buttons">
-              <input type="submit" class="btn btn-primary" value="回复"></input>
-            </div>
+    <div class="panel-footer">
+      <%= if @user_id == @post.user_id or @is_admin do %>
+        <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+          <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">
+            编辑
+          </a>
+          <input type="submit" class="btn btn-danger" value="删除"></input>
         </form>
-      </div>
+      <% end %>
     </div>
   <% end %>
+</article>
+
+<div class="panel panel-default comments">
+  <header class="panel-heading">
+    <%=length(@comments)%> 回复
+  </header>
+
+  <%= if @comments != nil do %>
+    <ul class="comment_list list-group">
+    <%= for comment <- @comments do %>
+      <li class="list-group-item media">
+        <div class="media-left">
+          <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
+            <img src="<%= avatar_url(comment.user.email)%>" height="48" width="48" class="img-rounded">
+          </a>
+        </div>
+        <div class="media-body reply_content">
+          <h6 class="media-heading">
+            <a class="reply_author" href="<%= user_path(:show, comment.user_id) %>">
+              <%= comment.user.name %>
+            </a>
+            <small class="media-heading">
+              于 <time class="reply_time pubdate" datetime="<%= to_string comment.time %>">
+                <%= to_string comment.time %>
+              </time> 发表
+            </small>
+            <span class="pull-right">
+              <%= if @user_id != nil do %>
+                <%= if @user_id == comment.user_id do %>
+                  <a href="<%= post_comment_path(:edit, @post.id, comment.id) %>" class="reply_author">
+                    修改
+                  </a>
+                <% end %>
+                <a href="#post-form" data-uid="<%= comment.user.id %>" data-uname="<%= comment.user.name %>" class="reply_author reply-link">
+                  回复
+                </a>
+              <% end %>
+            </span>
+          </h6>
+          <div class="markdown-text"><%= comment.content %></div>
+        </div>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
 </div>
+
+<%= if @user_id != nil do %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="col_fade">回帖</span>
+    </div>
+    <div class="panel-body reply">
+      <form action="<%= post_comment_path(:create, @post.id)%>" id="post-form" method="post">
+          <input type="hidden" id="comment-uid" name="comment[uid]" value="">
+          <textarea rows="8" name="comment[content]" class="editor" id="editor"></textarea>
+          <div class="editor_buttons">
+            <input type="submit" class="btn btn-primary" value="回复"></input>
+          </div>
+      </form>
+    </div>
+  </div>
+<% end %>
 
 <script>
   $("#delete-form").on("submit", function(event) {

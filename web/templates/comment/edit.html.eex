@@ -1,17 +1,15 @@
-<div id="content">
-  <div class="panel panel-default">
-    <div class="panel-heading">编辑评论</div>
-    <div class="panel-body post">
-      <form action="<%= post_comment_path(:update, @post_id, @comment.id) %>" method="POST">
-        <input type="hidden" name="_method" value="PATCH">
-        <div class="form-group">
-          <textarea rows="8" name="comment[content]" class="editor" id="editor"><%= @comment.content %></textarea>
-        </div>
-        <div class="form-group">
-          <input type="submit" class="span-primary submit_btn" value="更新"></button>
-        </div>
-      </form>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">编辑评论</div>
+  <div class="panel-body post">
+    <form action="<%= post_comment_path(:update, @post_id, @comment.id) %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <div class="form-group">
+        <textarea rows="8" name="comment[content]" class="editor" id="editor"><%= @comment.content %></textarea>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="span-primary submit_btn" value="更新"></button>
+      </div>
+    </form>
   </div>
 </div>
 

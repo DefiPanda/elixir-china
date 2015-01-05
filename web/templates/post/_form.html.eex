@@ -1,4 +1,4 @@
-<form action="<%= @action %>" method="POST">
+<form action="<%= @action %>" method="post">
   <input type="hidden" name="_method" value="PATCH">
   <div class="form-group form-inline">
     <label class="">所属板块
