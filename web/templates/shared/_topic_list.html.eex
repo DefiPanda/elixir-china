@@ -3,7 +3,7 @@
     <li class="list-group-item media">
       <div class="media-left">
         <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
-          <img src="<%= avatar_url(@user && @user.email || post.user.get.email) %>" height="48" width="48" class="img-rounded">
+          <img src="<%= avatar_url(@user && @user.email || post.user.email) %>" height="48" width="48" class="img-rounded">
         </a>
       </div>
       <div class="media-body">
@@ -13,7 +13,7 @@
           </a>
         </h4>
         <h5 class="media-heading small">
-          <small><a href="<%= user_path(:show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.get.name %></a>
+          <small><a href="<%= user_path(:show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.name %></a>
             于 <time class="last_active_time pubdate" datetime="<%= to_string post.update_time %>"><%= to_string post.time %></time>
             最后更新</small>
         </h5>

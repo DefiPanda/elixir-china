@@ -116,7 +116,9 @@ defmodule ElixirChina.PostController do
   end
 
   defp is_admin(user_id) do
-    user = Repo.one(from u in User, where: u.id == ^user_id)
-    is_map(user) and user.admin
+    unless is_nil(user_id) do
+      user = Repo.one(from u in User, where: u.id == ^user_id)
+      is_map(user) and user.admin
+    end
   end
 end

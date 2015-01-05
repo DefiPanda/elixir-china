@@ -5,8 +5,8 @@
         <div class="title"><%= @post.title %></div>
       </h3>
       <h6><small>
-          作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.get.name %></a>
-          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"> <%= @post.category.get.name %> </a>
+          作者 <a href="<%= user_path(:show, @post.user_id) %>"><%= @post.user.name %></a>
+          所属板块 <a href="<%= category_path(:show, @post.category_id) %>"> <%= @post.category.name %> </a>
       </small></h6>
     </header>
 
@@ -43,13 +43,13 @@
         <li class="list-group-item media">
           <div class="media-left">
             <a href="<%= user_path(:show, comment.user_id) %>" class="user_avatar">
-              <img src="<%= avatar_url(comment.user.get.email)%>" height="48" width="48" class="img-rounded">
+              <img src="<%= avatar_url(comment.user.email)%>" height="48" width="48" class="img-rounded">
             </a>
           </div>
           <div class="media-body reply_content">
             <h6 class="media-heading">
               <a class="reply_author" href="<%= user_path(:show, comment.user_id) %>">
-                <%= comment.user.get.name %>
+                <%= comment.user.name %>
               </a>
               <small class="media-heading">
                 于 <time class="reply_time pubdate" datetime="<%= to_string comment.time %>">
@@ -63,7 +63,7 @@
                       修改
                     </a>
                   <% end %>
-                  <a href="#post-form" data-uid="<%= comment.user.get.id %>" data-uname="<%= comment.user.get.name %>" class="reply_author reply-link">
+                  <a href="#post-form" data-uid="<%= comment.user.id %>" data-uname="<%= comment.user.name %>" class="reply_author reply-link">
                     回复
                   </a>
                 <% end %>
