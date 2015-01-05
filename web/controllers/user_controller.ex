@@ -26,8 +26,8 @@ defmodule ElixirChina.UserController do
     user = %User{email: email, name: name, admin: false, password: password}
 
     case User.validate(user) do
-      [] ->
-      	user = %{user | :password => to_string User.encrypt_password(user.password)}
+      nil ->
+        user = %{user | :password => to_string User.encrypt_password(user.password)}
         user = Repo.insert(user)
         conn = put_session conn, :user_id, user.id
         conn = put_session conn, :current_user, user
@@ -55,7 +55,7 @@ defmodule ElixirChina.UserController do
     user = %{user | password: params["password"]}
 
     case User.validate_password(user.password) do
-      [] ->
+      nil ->
         user = %{user | :password => to_string User.encrypt_password(user.password)}
         Repo.update(user)
         render conn, "show.html", user: user, user_id: get_session(conn, :user_id)

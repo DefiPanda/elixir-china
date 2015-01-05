@@ -14,7 +14,7 @@
 
     $.ajax({
       url: $that.getAttribute('action'),
-      type: "POST",
+      type: "PATCH",
       data: $('form').serialize(),
       success: function(data) {
         window.location = data.location;

@@ -1,5 +1,5 @@
 <form action="<%= @action %>" method="post">
-  <input type="hidden" name="_method" value="PATCH">
+  <input type="hidden" name="_method" value="POST">
   <div class="form-group form-inline">
     <label class="">所属板块
       <select name="post[category_id]" class="form-control" value="<%= @post.category_id %>">
@@ -16,6 +16,6 @@
     <textarea name="post[content]" class="editor" id="editor"><%= @post.content %></textarea>
   </div>
   <div class="form-group">
-    <input type="submit" class="btn btn-primary" value="<%= @post && "更新" || "发布" %>"></input>
+    <input type="submit" class="btn btn-primary" value="<%= @post.id && "更新" || "发布" %>"></input>
   </div>
 </form>

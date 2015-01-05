@@ -46,7 +46,7 @@ defmodule ElixirChina.PostController do
                 category_id: String.to_integer(category_id), time: utc, update_time: utc}
 
     case Post.validate(post) do
-      [] ->
+      nil ->
         post = Repo.insert(post)
         increment_score(Repo.get(User, user_id), 10)
         redirect conn, to: Helpers.post_path(:show, post.id)
@@ -72,7 +72,7 @@ defmodule ElixirChina.PostController do
                     category_id: String.to_integer(params["category_id"])}
 
     case Post.validate(post) do
-      [] ->
+      nil ->
         Repo.update(post)
         json conn, %{location: Helpers.post_path(:show, post.id)}
       errors ->
