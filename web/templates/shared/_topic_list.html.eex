@@ -1,0 +1,30 @@
+<ul class="topic_list list-group">
+  <%= for post <- @posts do %>
+    <li class="list-group-item media">
+      <div class="media-left">
+        <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
+          <img src="<%= avatar_url(@user && @user.email || post.user.email) %>" height="48" width="48" class="img-rounded">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <a href="<%= post_path(:show, post.id) %>">
+            <%= post.title %>
+          </a>
+        </h4>
+        <h5 class="media-heading small">
+          <a href="<%= category_path(:show, post.category_id) %>"><mark class="text-muted"><%= post.category.name %></mark></a>
+          <small><a href="<%= user_path(:show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.name %></a>
+            于 <time class="last_active_time pubdate" datetime="<%= to_string post.update_time %>"><%= to_string post.time %></time>
+            最后更新</small>
+        </h5>
+      </div>
+      <div class="media-right">
+        <h4><div class="label label-<%= if post.comments_count > 0, do: "primary", else: "default" %>"><%= post.comments_count %></div></h4>
+      </div>
+    </li>
+  <% end %>
+  <%= if (@pages || 0) > 1 do %>
+    <li class="topics_pagination list-group-item" data-pages="<%= @pages %>" data-page="<%= @page %>"></li>
+  <% end %>
+</ul>

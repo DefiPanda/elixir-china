@@ -1,49 +1,19 @@
-<div id="content">
-  <div class="panel">
-    <div class="header">
-      <a href="<%= category_path(:index) %>" class="topic-tab">全部</a>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <ul class="nav nav-pills category-list">
+      <li><a href="<%= category_path(:index) %>">全部</a></li>
       <%= for category <- @categories do %>
-        <a href="<%= category_path(:show, category.id) %>" 
-        	class="topic-tab<%= if category.id == @category, do: ' current-tab'%>">
-        	<%= category.name %>
-        </a>
+        <li class="<%= if category.id == @category, do: "active" %>">
+          <a href="<%= category_path(:show, category.id) %>"><%= category.name %></a>
+        </li>
       <% end %>
-
       <%= if @user_id != nil and @show_post != nil do %>
-        <a href="<%= post_path(:new)%>" class="topic-tab current-tab pull-right">发布话题</a>
+        <li class="active pull-right">
+          <a href="<%= post_path(:new)%>">发布话题</a>
+        </li>
       <% end %>
-    </div>
-
-    <div class="inner no-padding">
-      <div id="topic_list">
-        <%= for post <- @posts do %>
-          <div class="cell">
-            <a class="user_avatar" href="<%= user_path(:show, post.user_id) %>">
-              <img src="<%= avatar_url(post.user.get.email) %>" height="30" width="30">
-            </a>
-            <a href="<%= post_path(:show, post.id) %>">
-              <%= post.title %>
-            </a>
-            <a href="<%= user_path(:show, post.user_id) %>">
-              (<%= post.user.get.name %>)
-            </a>
-          </div>
-        <% end %>
-      </div>
-
-      <%= if @pages> 1 do %>
-        <div class="pagination" id="pagination"></div>
-      <% end %>
-    </div>
+    </ul>
   </div>
-</div>
 
-<script>
-  $("#pagination").pagination({
-    total_pages: <%= @pages %>,
-    current_page: <%= @page %>,
-    callback: function(_event, page) {
-      window.location.replace("<%= category_path(:index) %>?page=" + page);
-    }
-  });
-</script>
+  <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, pages: @pages, page: @page %>
+</div>

@@ -1,32 +1,7 @@
-<div id="content">
-  <div class="panel">
-    <div class="header">
-      <ol class="breadcrumb">
-        <li class="active">修改话题</li>
-      </ol>
-    </div>
-    <div class="inner post">
-      <form action="<%= post_path(:update, @post.id) %>" method="post">
-          <input type="hidden" name="_method" value="PUT">
-          <div class="form-group">
-            <span class="tab-selector">所属板块</span>
-            <select name="post[category_id]">
-              <%= for category <- @categories do %>
-                <option value="<%= category.id %>"><%= category.name %></option>
-              <% end %>
-            </select>
-            <textarea rows="1" id="title" class="span9" name="post[title]"><%= @post.title %></textarea>
-            <div class="markdown_editor in_editor">
-              <div class="markdown_in_editor">
-                <textarea rows="8" name="post[content]" class="editor"><%= @post.content %></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="editor_buttons">
-            <input type="submit" class="span-primary submit_btn" value="更新"></input>
-          </div>
-      </form>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">修改话题</div>
+  <div class="panel-body post">
+    <%= render ElixirChina.PostView, "_form.html", action: post_path(:update, @post.id), post: @post, categories: @categories %>
   </div>
 </div>
 
@@ -35,10 +10,11 @@
     event.preventDefault();
 
     $that = this;
+    Editor.editor.element.textContent = Editor.editor.value();
 
     $.ajax({
       url: $that.getAttribute('action'),
-      type: "POST",
+      type: "PATCH",
       data: $('form').serialize(),
       success: function(data) {
         window.location = data.location;

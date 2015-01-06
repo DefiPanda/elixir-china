@@ -31,19 +31,18 @@ defmodule ElixirChina.CommentController do
                       content: params["content"], time: utc}
 
     case Comment.validate(comment) do
-      [] ->
+      nil ->
         Repo.insert(comment)
         increment_score(Repo.get(User, user_id), 1)
-        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) 
-          |> Repo.one
-        post = %{post | update_time: utc}
+        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
+        |> Repo.one
+        post = %{post | update_time: utc, comments_count: post.comments_count+1 }
         Repo.update(post)
-        # POST_REPLY = 0
         notify_subscriber(comment.post_id, post.user_id, 0)
         notify_mentioed_users(comment.post_id, comment.content)
         redirect conn, to: Helpers.post_path(:show, post_id)
       errors ->
-        render conn, "new", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
+        render conn, "new.html", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
     end
   end
 
@@ -61,7 +60,7 @@ defmodule ElixirChina.CommentController do
     comment = validate_and_get_comment(conn, id)
     comment = %{comment | content: params["content"]}
     case Comment.validate(comment) do
-      [] ->
+      nil ->
         Repo.update(comment)
         json conn, %{location: Helpers.post_path(:show, post_id)}
       errors ->

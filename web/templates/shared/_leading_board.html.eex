@@ -1,0 +1,21 @@
+<%= if @leading_users != nil do %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">积分榜</h3>
+    </div>
+    <div class="panel-body">
+      <ol class="list-unstyled">
+        <%= for user <- @leading_users do %>
+          <li>
+            <span class="top_score"><%= user.score %></span>
+            <span class="user_name">
+              <a href="<%= user_path(:show, user.id) %>">
+                <%= user.name %>
+              </a>
+            </span>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+<% end %>

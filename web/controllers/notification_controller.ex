@@ -3,7 +3,7 @@ defmodule ElixirChina.NotificationController do
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Notification
-  
+
   plug :action
 
   def index(conn, %{"user_id" => user_id}) do

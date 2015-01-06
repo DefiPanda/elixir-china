@@ -9,16 +9,16 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Notification
   alias ElixirChina.Category
   alias ElixirChina.User
-  
+
   plug :action
 
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
-          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}]),
+          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}], preload: :category),
           user: Repo.get(User, String.to_integer(user_id)),
           user_id: get_session(conn, :user_id)
   end
-  
+
   def index(conn, _params) do
     redirect conn, to: "/"
   end
@@ -35,7 +35,7 @@ defmodule ElixirChina.PostController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html", user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    render conn, "new.html", user_id: get_session(conn, :user_id), post: %Post{}, categories: Repo.all(Category)
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
@@ -46,7 +46,7 @@ defmodule ElixirChina.PostController do
                 category_id: String.to_integer(category_id), time: utc, update_time: utc}
 
     case Post.validate(post) do
-      [] ->
+      nil ->
         post = Repo.insert(post)
         increment_score(Repo.get(User, user_id), 10)
         redirect conn, to: Helpers.post_path(:show, post.id)
@@ -67,12 +67,12 @@ defmodule ElixirChina.PostController do
 
   def update(conn, %{"id" => id, "post" => params}) do
     post = validate_and_get_post(conn, id, false)
-    post = %{post | title: params["title"], 
-                    content: params["content"], 
+    post = %{post | title: params["title"],
+                    content: params["content"],
                     category_id: String.to_integer(params["category_id"])}
 
     case Post.validate(post) do
-      [] ->
+      nil ->
         Repo.update(post)
         json conn, %{location: Helpers.post_path(:show, post.id)}
       errors ->
@@ -116,7 +116,9 @@ defmodule ElixirChina.PostController do
   end
 
   defp is_admin(user_id) do
-    user = Repo.one(from u in User, where: u.id == ^user_id)
-    is_map(user) and user.admin
+    unless is_nil(user_id) do
+      user = Repo.one(from u in User, where: u.id == ^user_id)
+      is_map(user) and user.admin
+    end
   end
 end

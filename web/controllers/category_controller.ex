@@ -21,7 +21,7 @@ defmodule ElixirChina.CategoryController do
                       post_count: post_count,
                       comment_count: Repo.one(from c in Comment, select: count(c.id)),
                       user_count: Repo.one(from u in User, select: count(u.id)),
-                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: @leading_users_to_display),
+                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: ^@leading_users_to_display),
                       show_post: true,
                       user_id: get_session(conn, :user_id)
   end
@@ -40,7 +40,7 @@ defmodule ElixirChina.CategoryController do
                       post_count: Repo.one(from p in Post, select: count(p.id)),
                       comment_count: Repo.one(from c in Comment, select: count(c.id)),
                       user_count: Repo.one(from u in User, select: count(u.id)),
-                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: @leading_users_to_display),
+                      leading_users: Repo.all(from u in User, order_by: [{:desc, u.score}], limit: ^@leading_users_to_display),
                       show_post: true,
                       user_id: get_session(conn, :user_id)
   end
@@ -50,13 +50,13 @@ defmodule ElixirChina.CategoryController do
   end
 
   defp get_posts_by_page(page) do
-    Repo.all(from p in Post, where: true, order_by: [{:desc, p.update_time}], limit: @posts_per_page,
-      offset: (String.to_integer(page) - 1) * @posts_per_page, preload: :user)
+    Repo.all(from p in Post, where: true, order_by: [{:desc, p.update_time}], limit: ^@posts_per_page,
+      offset: ^((String.to_integer(page) - 1) * @posts_per_page), preload: [:user, :category])
   end
 
   defp get_posts_by_page_and_category(page, id) do
     Repo.all(from p in Post, where: p.category_id == ^String.to_integer(id), order_by: [{:desc, p.update_time}],
-      limit: @posts_per_page, offset: (String.to_integer(page) - 1) * @posts_per_page, preload: :user)
+      limit: ^@posts_per_page, offset: ^((String.to_integer(page) - 1) * @posts_per_page), preload: [:user, :category])
   end
 
   defp get_categories() do
