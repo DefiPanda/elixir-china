@@ -22,7 +22,7 @@
         <%= if @user_id != nil do %>
           <li><a href="/signout"> 退出 </a></li>
           <li><a href="<%= user_path(:show, @user_id) %>"> 账户 </a></li>
-          <li><a href="<%= user_notification_path(:index, @user_id) %>"> 消息中心 </a></li>
+          <li><a href="<%= notification_path(:index) %>"> 消息中心 </a></li>
           <li><a href="<%= user_post_path(:index, @user_id) %>"> 我的帖子 </a></li>
         <% end %>
       </ul>
