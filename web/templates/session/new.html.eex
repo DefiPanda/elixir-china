@@ -21,15 +21,15 @@
           <input type="submit" class="btn btn-primary" value="登录"></input>
         </div>
       </div>
-    </form>
-      
-    <%= if @errors do %>
-      <%= for error <- @errors do %>
-        <div class="alert alert-warning">
-          <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
-        </div>
+
+      <%= if @errors do %>
+        <%= for error <- @errors do %>
+          <div class="alert alert-warning">
+            <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </form>
     </div>
   </div>
 </div>

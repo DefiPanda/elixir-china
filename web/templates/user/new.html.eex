@@ -27,17 +27,17 @@
           <input type="submit" class="btn btn-primary" value="注册"></input>
         </div>
       </div>
-    </form>
-      
-    <%= if @errors do %>
-      <%= for error <- @errors do %>
-        <div class="alert alert-warning">
-          <% type = elem(error, 0) %>
-          <% if type == :do, do: type = "" %>
-          <%= "#{type} #{Enum.join(elem(error, 1), " & ")}" %>
-        </div>
+
+      <%= if @errors do %>
+        <%= for error <- @errors do %>
+          <div class="alert alert-warning">
+            <% type = elem(error, 0) %>
+            <% if type == :do, do: type = "" %>
+            <%= "#{type} #{Enum.join(elem(error, 1), " & ")}" %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </form>
     </div>
   </div>
 </div>
