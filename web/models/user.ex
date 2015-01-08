@@ -2,7 +2,6 @@ defmodule ElixirChina.User do
   use Ecto.Model
 
   validate user,
-    name:  present(),
     name:  has_length(min: 3),
     email: present(),
     admin:  present(),
@@ -20,13 +19,13 @@ defmodule ElixirChina.User do
     has_many :notifications, ElixirChina.Notification
   end
 
-  defp validate_uniqueness(user) do
+  validatep validate_uniqueness(user) do
     is_name_unique = unique(:name, user.name)
     is_email_unique = unique(:email, user.email)
     case {is_name_unique, is_email_unique} do
-      {false, false} -> [{"Username and email", "already exist"}]
-      {false, true} -> [{"Username", "already exist"}]
-      {true, false} -> [{"Email", "already exist"}]
+      {false, false} -> "Username and email already exist"
+      {false, true} -> "Username already exist"
+      {true, false} -> "Email already exist"
       _ -> []
     end
   end

@@ -26,7 +26,7 @@ defmodule ElixirChina.UserController do
     user = %User{email: email, name: name, admin: false, password: password}
 
     case User.validate(user) do
-      nil ->
+      %{do: [[]]} ->
         user = %{user | :password => to_string User.encrypt_password(user.password)}
         user = Repo.insert(user)
         conn = put_session conn, :user_id, user.id
