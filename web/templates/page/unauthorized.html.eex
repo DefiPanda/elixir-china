@@ -1,8 +1,31 @@
 <html>
   <head>
     <title>401 Unauthorized Error</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css">
   </head>
   <body>
-    <h1> 大哥，您没权限进行此操作。 </h1>
+  	<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">ElixirChina</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h1> 大哥，您没权限进行此操作。 三秒后跳转主页</h1>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // set delay only to 2 seconds because it takes time to fetch index page
+    	window.setTimeout(function(){
+	        window.location.href = "/";
+	    }, 2000);
+    </script>
   </body>
 </html>
