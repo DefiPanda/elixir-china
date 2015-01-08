@@ -1,7 +1,7 @@
 <%= if @leading_users != nil do %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">积分榜</h3>
+      积分榜
     </div>
     <div class="panel-body">
       <ol class="list-unstyled">
