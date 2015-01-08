@@ -34,6 +34,11 @@ h3.panel-title { font-size: 24px; }
   word-break: break-all;
 }
 
+.markdown-text img {
+  max-width: 793px;
+  width: 100%;
+}
+
 .list-group-item.media {
   margin-top: 0;
 }
