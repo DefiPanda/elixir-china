@@ -18,6 +18,7 @@
     event.preventDefault();
 
     $that = this;
+    Editor.editor.element.textContent = Editor.editor.value();
 
     $.ajax({
       url: $that.getAttribute('action'),
