@@ -13,16 +13,16 @@
     <div class="markdown-text"><%= @post.content %></div>
   </div>
 
-  <%= if @user_id != nil do %>
+  <%= if @user_id == @post.user_id or @is_admin do %>
     <div class="panel-footer">
-      <%= if @user_id == @post.user_id or @is_admin do %>
-        <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+      <form action="/posts/<%= @post.id %>" id="delete-form" method="post">
+        <%= if @user_id == @post.user_id do %>
           <a href="<%= post_path(:edit, @post.id) %>" class="btn btn-primary">
             编辑
           </a>
-          <input type="submit" class="btn btn-danger" value="删除"></input>
-        </form>
-      <% end %>
+        <% end %>
+        <input type="submit" class="btn btn-danger" value="删除"></input>
+      </form>
     </div>
   <% end %>
 </article>
