@@ -23,6 +23,17 @@ defmodule ElixirChina.UserController do
   end
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
+    not name in [
+      "root", "admin", "bot", "robot", "master", "webmaster",
+      "account", "people", "user", "users", "project", "projects",
+      "search", "action", "favorite", "like", "love", "none", "nil",
+      "team", "teams", "group", "groups", "organization",
+      "organizations", "package", "packages", "org", "com", "net",
+      "help", "doc", "docs", "document", "documentation", "blog",
+      "bbs", "forum", "forums", "static", "assets", "repository",
+      "public", "private"
+    ] || raise "bad username"
+
     user = %User{email: email, name: name, admin: false, password: password}
 
     case User.validate(user) do
