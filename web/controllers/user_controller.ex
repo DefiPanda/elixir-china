@@ -23,7 +23,10 @@ defmodule ElixirChina.UserController do
   end
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
-    not name in [
+    user = %User{email: email, name: name, admin: false, password: password}
+    validate_result = User.validate(user)
+
+    bad_name_list = [
       "root", "admin", "bot", "robot", "master", "webmaster",
       "account", "people", "user", "users", "project", "projects",
       "search", "action", "favorite", "like", "love", "none", "nil",
@@ -32,10 +35,14 @@ defmodule ElixirChina.UserController do
       "help", "doc", "docs", "document", "documentation", "blog",
       "bbs", "forum", "forums", "static", "assets", "repository",
       "public", "private"
-    ] || raise "bad username"
+    ]
 
-    user = %User{email: email, name: name, admin: false, password: password}
-    validate_result = User.validate(user)
+    if name in bad_name_list do
+      {name_errors, _dict} = Dict.pop(validate_result, :name)
+      name_errors =  name_errors || []
+      name_errors = name_errors ++ ["forbidden username"]
+      validate_result = Dict.put(validate_result, :name, name_errors)
+    end
 
     if validate_result == %{do: [[]]} do
         user = %{user | :password => to_string User.encrypt_password(user.password)}
