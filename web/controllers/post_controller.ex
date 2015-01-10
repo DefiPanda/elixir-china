@@ -96,7 +96,7 @@ defmodule ElixirChina.PostController do
 
   defp get_loaded_post(id) do
     query = from(c in Post, where: c.id == ^id, preload: [:user, :category])
-    hd(Repo.all(query))
+    List.first(Repo.all(query))
   end
 
   defp get_comments_with_loaded_user(id) do
