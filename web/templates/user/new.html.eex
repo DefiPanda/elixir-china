@@ -30,11 +30,14 @@
 
       <%= if @errors do %>
         <%= for error <- @errors do %>
-          <div class="alert alert-warning">
-            <% type = elem(error, 0) %>
-            <% if type == :do, do: type = "" %>
-            <%= "#{type} #{Enum.join(elem(error, 1), " & ")}" %>
-          </div>
+          <% type = elem(error, 0) %>
+          <% message = elem(error, 1) %>
+          <%= if type != :do or message != [[]] do %>
+            <div class="alert alert-warning">
+              <% if type == :do, do: type = "" %>
+              <%= "#{type} #{Enum.join(message, " & ")}" %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </form>

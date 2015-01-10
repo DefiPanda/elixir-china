@@ -2,6 +2,7 @@ defmodule ElixirChina.User do
   use Ecto.Model
 
   validate user,
+    name: present(),
     name:  has_length(min: 3),
     email: present(),
     admin:  present(),
