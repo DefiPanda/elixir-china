@@ -27,7 +27,7 @@ defmodule ElixirChina.UserController do
     validate_result = User.validate(user)
 
     bad_name_list = [
-      "root", "admin","administrator","post", "bot", "robot", "master", "webmaster",
+      "root", "admin", "administrator", "post", "bot", "robot", "master", "webmaster",
       "account", "people", "user", "users", "project", "projects",
       "search", "action", "favorite", "like", "love", "none", "nil",
       "team", "teams", "group", "groups", "organization",
