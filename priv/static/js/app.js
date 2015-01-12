@@ -6,8 +6,6 @@ $(function() {
     datetime = self.attr('datetime');
     user = self.data('user');
     utc = new Date(datetime);
-    offset = new Date().getTimezoneOffset();
-    utc.setMinutes(utc.getMinutes() - offset);
     return self.html("" + (utc.getFullYear()) + "-" + (utc.getMonth() + 1) + "-" + (utc.getDate()) + " " + (utc.getHours()) + "点" + (utc.getMinutes()) + "分");
   });
   return $(".topics_pagination").each(function() {
