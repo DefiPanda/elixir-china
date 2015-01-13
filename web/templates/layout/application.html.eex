@@ -32,6 +32,7 @@
         <%= render ElixirChina.SharedView, "_leading_board.html", leading_users: @leading_users %>
         <%= render ElixirChina.SharedView, "_statics.html", post_count: @post_count, comment_count: @comment_count, user_count: @user_count %>
         <%= render ElixirChina.SharedView, "_contrib.html", [] %>
+        <%= render ElixirChina.SharedView, "_friend_community.html", [] %>
       </sidebar>
 
     </div>

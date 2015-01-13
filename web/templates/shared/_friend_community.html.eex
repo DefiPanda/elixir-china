@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    友情社区
+  </div>
+  <div class="panel-body friendship-community">
+    <a href="https://ruby-china.org/" target="_blank">
+  	  <img src="/img/friend-community/ruby-china.png" class="community-brand">
+    </a>
+    <a href="http://golangtc.com/" target="_blank">
+  	  <img src="/img/friend-community/golang-china.png" class="community-brand">
+    </a>
+  </div>
+</div>

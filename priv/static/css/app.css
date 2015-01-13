@@ -64,3 +64,11 @@ img[alt=emoji] {
   padding: 24px 0px;
   background-color: #fff;
 }
+
+.community-brand {
+  width: 65%;
+}
+
+.friendship-community img {
+  margin-bottom: 0.5em;
+}

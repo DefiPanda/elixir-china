@@ -18,4 +18,12 @@
   <div class="form-group">
     <input type="submit" class="btn btn-primary" value="<%= @post.id && "更新" || "发布" %>"></input>
   </div>
+
+  <%= if @errors do %>
+    <%= for error <- @errors do %>
+      <div class="alert alert-warning">
+        <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+      </div>
+    <% end %>
+  <% end %>
 </form>
