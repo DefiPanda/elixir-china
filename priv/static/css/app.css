@@ -68,3 +68,7 @@ img[alt=emoji] {
 .community-brand {
   width: 65%;
 }
+
+.friendship-community img {
+  margin-bottom: 0.5em;
+}
