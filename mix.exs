@@ -29,7 +29,7 @@ defmodule ElixirChina.Mixfile do
       {:linguist, "~> 0.1.4"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 0.5.0"},
+      {:ecto, "~> 0.5.1"},
       {:bcrypt, github: "opscode/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]
