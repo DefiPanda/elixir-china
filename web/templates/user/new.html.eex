@@ -1,8 +1,19 @@
 <div class="panel panel-default">
   <div class="panel-heading">注册</div>
-
   <div class="panel-body post">
     <div class="inner post">
+    <%= if @errors do %>
+    <div class="alert alert-warning">
+      <%= for error <- @errors do %>
+        <% type = elem(error, 0) %>
+        <% message = elem(error, 1) %>
+        <%= if type != :do or message != [[]] do %>
+          <% if type == :do, do: type = "" %>
+          <%= "#{Enum.join(message, " & ")}" %> <br />
+        <% end %>
+      <% end %>
+    </div>
+    <% end %>
     <form class="col-md-6 form-horizontal" action="/users" method="post">
       <div class="form-group">
         <span class="control-label col-sm-3">用户名</span>
@@ -27,19 +38,6 @@
           <input type="submit" class="btn btn-primary" value="注册"></input>
         </div>
       </div>
-
-      <%= if @errors do %>
-        <%= for error <- @errors do %>
-          <% type = elem(error, 0) %>
-          <% message = elem(error, 1) %>
-          <%= if type != :do or message != [[]] do %>
-            <div class="alert alert-warning">
-              <% if type == :do, do: type = "" %>
-              <%= "#{type} #{Enum.join(message, " & ")}" %>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
     </form>
     </div>
   </div>
