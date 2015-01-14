@@ -14,7 +14,7 @@ defmodule ElixirChina.User do
     field :admin,       :boolean
     field :name, :string
     field :password,   :string
-    field :score, :integer
+    field :score, :integer, default: 0
     has_many :comments, ElixirChina.Comment
     has_many :posts, ElixirChina.Post
     has_many :notifications, ElixirChina.Notification

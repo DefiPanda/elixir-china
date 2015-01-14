@@ -6,9 +6,3 @@ config :elixir_china, ElixirChina.Endpoint,
 
 # Enables code reloading for development
 config :phoenix, :code_reloader, true
-
-config :elixir_china, :postgres,
-  host: "localhost",
-  database: "elixir_china",
-  username: "postgres",
-  password: "postgres"

@@ -14,6 +14,6 @@ defmodule ElixirChina.Post do
     belongs_to :user, ElixirChina.User
     belongs_to :category, ElixirChina.Category
     has_many :comments, ElixirChina.Comment
-    field :comments_count, :integer
+    field :comments_count, :integer, default: 0
   end
 end

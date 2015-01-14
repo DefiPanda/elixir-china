@@ -19,8 +19,8 @@ config :elixir_china, ElixirChina.Endpoint,
 config :logger,
   level: :info
 
-config :elixir_china, :postgres,
-  host: "localhost",
+config :elixir_china, Repo,
   database: "elixir_china",
   username: "postgres",
-  password: "postgres"
+  password: "postgres",
+  hostname: "localhost"
