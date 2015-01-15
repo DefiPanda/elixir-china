@@ -40,7 +40,7 @@ defmodule ElixirChina.UserController do
     if name in bad_name_list do
       {name_errors, _dict} = Dict.pop(validate_result, :name)
       name_errors =  name_errors || []
-      name_errors = name_errors ++ ["forbidden username"]
+      name_errors = name_errors ++ ["无效的用户名"]
       validate_result = Dict.put(validate_result, :name, name_errors)
     end
 
