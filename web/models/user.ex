@@ -2,11 +2,11 @@ defmodule ElixirChina.User do
   use Ecto.Model
 
   validate user,
-    name: present(),
-    name:  has_length(min: 3),
-    email: present(),
+    name: present(message: "用户名不能为空"),
+    name:  has_length(min: 3, too_short: "用户名最少为3位"),
+    email: present(message: "邮箱不能为空"),
     admin:  present(),
-    password:  has_length(min: 6),
+    password:  has_length(min: 6, too_short: "密码最少为6位"),
     also: validate_uniqueness
 
   schema "users" do
@@ -24,9 +24,9 @@ defmodule ElixirChina.User do
     is_name_unique = unique(:name, user.name)
     is_email_unique = unique(:email, user.email)
     case {is_name_unique, is_email_unique} do
-      {false, false} -> "Username and email already exist"
-      {false, true} -> "Username already exist"
-      {true, false} -> "Email already exist"
+      {false, false} -> "用户名和邮箱已经存在"
+      {false, true} -> "用户名已经存在"
+      {true, false} -> "邮箱已经存在"
       _ -> []
     end
   end
