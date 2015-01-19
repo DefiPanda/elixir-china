@@ -13,7 +13,7 @@ use Mix.Config
 
 config :elixir_china, ElixirChina.Endpoint,
   url: [host: "example.com"],
-  http: [port: System.get_env("PORT")],
+  http: [port: System.get_env("PORT") || 80],
   secret_key_base: "ziHerwRAx1RS4ksABZzkL3Vl9aa1RH7b80BIv3v7Pn8l0ciAmfCjmuGKJxqoVoAL"
 
 config :logger,

@@ -1,16 +1,11 @@
 defmodule ElixirChina.ErrorView do
   use ElixirChina.View
 
-  def render("404.html", _assigns) do
-    "Page not found - 404"
+  def render("404.html", assigns) do
+    render "not_found.html", assigns
   end
 
-  def render("500.html", _assigns) do
-    "Server internal error - 500"
-  end
-
-  # Render all other templates as 500
-  def render(_, assigns) do
-    render "500.html", assigns
+  def render("500.html", assigns) do
+    render "internal_error.html", assigns
   end
 end

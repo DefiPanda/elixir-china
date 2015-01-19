@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>501 Unauthorized Error</title>
+    <title>404 Not Found Error</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
   </head>
@@ -16,7 +16,7 @@
     <div class="container">
       <div class="panel panel-default">
         <div class="panel-body">
-          <h1> 您没有权限进行次操作。 三秒后跳转主页</h1>
+          <h1> 您查询的页面不存在。 三秒后跳转主页</h1>
         </div>
       </div>
     </div>
