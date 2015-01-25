@@ -47,17 +47,16 @@ defmodule ElixirChina.UserController do
     end
   end
 
-  def update(conn, %{"id" => id, "user" => params}) do
-    user = Repo.get(User, String.to_integer(id))
-    user = %{user | password_digest: params["password"]}
+  def update(conn, params) do
+    user_id = get_session(conn, :user_id) 
+    user = Repo.get(User, user_id)
+    changeset = User.changeset user, :update, params["user"]
 
-    case User.validate_password(user.password) do
-      nil ->
-        user = %{user | :password_digest => to_string User.encrypt_password(user.password)}
-        Repo.update(user)
-        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
-      errors ->
-        render conn, "edit.html", user: user, errors: errors, user_id: get_session(conn, :user_id)
+    if changeset.valid? do
+      Repo.update(changeset)
+      render conn, "show.html", user: user, user_id: user_id
+    else
+      render conn, "edit.html", user: user, errors: changeset.errors, user_id: user_id
     end
   end
 end

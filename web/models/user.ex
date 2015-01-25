@@ -34,6 +34,13 @@ defmodule ElixirChina.User do
     |> put_change(:password, encrypt_password(params["password"]))
   end
 
+  def changeset(user, :update, params) do
+    params
+    |> cast(user, ~w(password))
+    |> validate_length(:password, min: 6)
+    |> put_change(:password, encrypt_password(params["password"]))
+  end
+
   def valid_password?(record, password) do
     salt = String.slice(record.password, 0, 29)
     {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
