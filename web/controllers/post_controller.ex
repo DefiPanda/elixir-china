@@ -1,6 +1,5 @@
 defmodule ElixirChina.PostController do
   import Ecto.Query
-  import Ecto.DateTime
   import ElixirChina.ControllerUtils
   use Phoenix.Controller
   alias ElixirChina.Router.Helpers
@@ -38,20 +37,16 @@ defmodule ElixirChina.PostController do
     render conn, "new.html", user_id: get_session(conn, :user_id), post: %Post{}, categories: Repo.all(Category)
   end
 
-  def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
-    user_id = get_user_id(conn)
-    utc = utc()
-    # update_time is initialized here and will only be changed when a comment is to be made or deleted.
-    post = %Post{title: title, content: content, user_id: user_id,
-                category_id: String.to_integer(category_id), time: utc, update_time: utc}
+  def create(conn, params) do
+    user_id = get_session(conn, :user_id)
+    changeset = Post.changeset %Post{user_id: user_id}, :create, params["post"]
 
-    case Post.validate(post) do
-      nil ->
-        post = Repo.insert(post)
-        increment_score(Repo.get(User, user_id), 10)
-        redirect conn, to: Helpers.post_path(:show, post.id)
-      errors ->
-        render conn, "new.html", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    if changeset.valid? do
+      post = Repo.insert(changeset)
+      increment_score(Repo.get(User, user_id), 10)
+      redirect conn, to: Helpers.post_path(:show, post.id)
+    else
+      render conn, "new.html", post: changeset.model, errors: changeset.errors, user_id: user_id, categories: Repo.all(Category)
     end
   end
 
@@ -65,19 +60,17 @@ defmodule ElixirChina.PostController do
     end
   end
 
-  def update(conn, %{"id" => id, "post" => params}) do
+  def update(conn, %{"id" => id, "post" => post_params}) do
     post = validate_and_get_post(conn, id, false)
-    post = %{post | title: params["title"],
-                    content: params["content"],
-                    category_id: String.to_integer(params["category_id"])}
+    changeset = Post.changeset post, :update, post_params
 
-    case Post.validate(post) do
-      nil ->
-        Repo.update(post)
-        json conn, %{location: Helpers.post_path(:show, post.id)}
-      errors ->
-        json conn, errors: errors
-    end
+    if changeset.valid? do
+      Repo.update(changeset)
+      redirect conn, to: Helpers.post_path(:show, post.id)
+    else
+      IO.inspect changeset.errors
+      render conn, "edit.html", post: changeset.model, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    end 
   end
 
   def destroy(conn, %{"id" => id}) do
@@ -100,7 +93,7 @@ defmodule ElixirChina.PostController do
   end
 
   defp get_comments_with_loaded_user(id) do
-    query = from(c in Comment, where: c.post_id == ^id, order_by: c.time, preload: :user)
+    query = from(c in Comment, where: c.post_id == ^id, order_by: c.inserted_at, preload: :user)
     Repo.all(query)
   end
 
