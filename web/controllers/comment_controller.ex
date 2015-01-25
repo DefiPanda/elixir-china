@@ -27,8 +27,7 @@ defmodule ElixirChina.CommentController do
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
     user_id = get_user_id(conn)
     utc = utc()
-    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
-                      content: params["content"], time: utc}
+    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id, content: params["content"]}
 
     case Comment.validate(comment) do
       nil ->

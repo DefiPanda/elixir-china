@@ -1,19 +1,31 @@
 defmodule ElixirChina.Post do
   use Ecto.Model
-
-  validate post,
-     content: present(),
-     title: present(),
-     category_id: present()
+  alias Ecto.DateTime
 
   schema "posts" do
-    field :title, :string
-    field :content, :string
-    field :time, :datetime
-    field :update_time, :datetime
+    field :title
+    field :content
+    field :comments_count, :integer, default: 0
+    timestamps
     belongs_to :user, ElixirChina.User
     belongs_to :category, ElixirChina.Category
     has_many :comments, ElixirChina.Comment
-    field :comments_count, :integer, default: 0
+  end
+
+  def changeset(post, :create, params) do
+    params
+    |> cast(post, ~w(title content category_id))
+    |> validate_length(:title, min: 3)
+    |> validate_length(:content, min: 10)
+    |> put_change(:inserted_at, DateTime.utc)
+    |> put_change(:updated_at, DateTime.utc)
+  end
+
+  def changeset(post, :update, params) do
+    params
+    |> cast(post, ~w(title content category_id))
+    |> validate_length(:title, min: 3)
+    |> validate_length(:content, min: 10)
+    |> put_change(:updated_at, DateTime.utc)
   end
 end
