@@ -16,7 +16,7 @@ defmodule ElixirChina.Post do
     params
     |> cast(post, ~w(title content category_id))
     |> validate_length(:title, min: 3)
-    |> validate_length(:content, min: 10)
+    |> validate_length(:content, min: 5)
     |> put_change(:inserted_at, DateTime.utc)
     |> put_change(:updated_at, DateTime.utc)
   end
@@ -25,7 +25,7 @@ defmodule ElixirChina.Post do
     params
     |> cast(post, ~w(title content category_id))
     |> validate_length(:title, min: 3)
-    |> validate_length(:content, min: 10)
+    |> validate_length(:content, min: 5)
     |> put_change(:updated_at, DateTime.utc)
   end
 end

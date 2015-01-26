@@ -13,7 +13,7 @@ defmodule ElixirChina.PostController do
 
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
-          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}], preload: :category),
+          posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.inserted_at}], preload: :category),
           user: Repo.get(User, String.to_integer(user_id)),
           user_id: get_session(conn, :user_id)
   end
@@ -46,7 +46,7 @@ defmodule ElixirChina.PostController do
       increment_score(Repo.get(User, user_id), 10)
       redirect conn, to: Helpers.post_path(:show, post.id)
     else
-      render conn, "new.html", post: changeset.model, errors: changeset.errors, user_id: user_id, categories: Repo.all(Category)
+      render conn, "new.html", post: changeset.changes, errors: changeset.errors, user_id: user_id, categories: Repo.all(Category)
     end
   end
 
