@@ -11,19 +11,6 @@ defmodule ElixirChina.CommentController do
 
   plug :action
 
-  def show(conn, %{"post_id" => post_id, "id" => id}) do
-    case get_comment_with_loaded_user(String.to_integer(id)) do
-      comment when is_map(comment) ->
-        render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
-      _ ->
-        unauthorized conn
-    end
-  end
-
-  def new(conn, %{"post_id" => post_id}) do
-    render conn, "new",  post_id: post_id, user_id: get_session(conn, :user_id)
-  end
-
   def create(conn, %{"post_id" => post_id, "comment" => comment_params}) do
     user_id = get_user_id(conn)
     changeset = Comment.changeset %Comment{user_id: user_id, post_id: String.to_integer(post_id)}, :create, comment_params
