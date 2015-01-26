@@ -1,5 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-heading">编辑评论</div>
+  <%= if @errors do %>
+    <div class="alert alert-warning">
+      <ul>
+        <%= for error <- @errors do %>
+          <li> <%= human_error(error) %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="panel-body post">
     <form action="<%= post_comment_path(:update, @post_id, @comment.id) %>" method="post">
       <input type="hidden" name="_method" value="PATCH">
@@ -13,20 +22,3 @@
   </div>
 </div>
 
-<script>
-  $("form").on("submit", function(event) {
-    event.preventDefault();
-
-    $that = this;
-    Editor.editor.element.textContent = Editor.editor.value();
-
-    $.ajax({
-      url: $that.getAttribute('action'),
-      type: "POST",
-      data: $('form').serialize(),
-      success: function(data) {
-        window.location = data.location;
-      }
-    });
-  });
-</script>
