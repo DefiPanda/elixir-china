@@ -68,7 +68,6 @@ defmodule ElixirChina.PostController do
       Repo.update(changeset)
       redirect conn, to: Helpers.post_path(:show, post.id)
     else
-      IO.inspect changeset.errors
       render conn, "edit.html", post: changeset.model, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end 
   end
