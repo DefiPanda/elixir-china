@@ -25,6 +25,6 @@ defmodule ElixirChina.View do
       |> :erlang.bitstring_to_list 
       |> Enum.map(&(:io_lib.format("~2.16.0b", [&1]))) 
       |> List.flatten 
-    "http://cdn.v2ex.com/gravatar/#{hash}"
+    "https://cdn.v2ex.com/gravatar/#{hash}"
   end
 end
