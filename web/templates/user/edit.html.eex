@@ -5,6 +5,15 @@
     </div>
 
     <div class="panel-body post">
+     <%= if @errors do %>
+          <div class="alert alert-warning">
+            <ul>
+              <%= for error <- @errors do %>
+                <li> <%= human_error(error) %> </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
       <form action="<%= user_path(:update, @user.id) %>" method="post">
         <input type="hidden" name="_method" value="PATCH">
@@ -17,14 +26,6 @@
         <div class="editor_buttons">
           <input type="submit" class="btn btn-primary" value="更新"></input>
         </div>
-
-        <%= if @errors do %>
-          <%= for error <- @errors do %>
-            <div class="alert alert-warning">
-              <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
-            </div>
-          <% end %>
-        <% end %>
       </form>
     </div>
   </div>

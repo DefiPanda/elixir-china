@@ -11,38 +11,21 @@ defmodule ElixirChina.CommentController do
 
   plug :action
 
-  def show(conn, %{"post_id" => post_id, "id" => id}) do
-    case get_comment_with_loaded_user(String.to_integer(id)) do
-      comment when is_map(comment) ->
-        render conn, "show", post_id: post_id, comment: comment, user_id: get_session(conn, :user_id)
-      _ ->
-        unauthorized conn
-    end
-  end
-
-  def new(conn, %{"post_id" => post_id}) do
-    render conn, "new",  post_id: post_id, user_id: get_session(conn, :user_id)
-  end
-
-  def create(conn, %{"post_id" => post_id, "comment" => params}) do
+  def create(conn, %{"post_id" => post_id, "comment" => comment_params}) do
     user_id = get_user_id(conn)
-    utc = utc()
-    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
-                      content: params["content"], time: utc}
+    changeset = Comment.changeset %Comment{user_id: user_id, post_id: String.to_integer(post_id)}, :create, comment_params
 
-    case Comment.validate(comment) do
-      nil ->
-        Repo.insert(comment)
-        increment_score(Repo.get(User, user_id), 1)
-        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
-        |> Repo.one
-        post = %{post | update_time: utc, comments_count: post.comments_count+1 }
-        Repo.update(post)
-        notify_subscriber(comment.post_id, post.user_id, 0)
-        notify_mentioed_users(comment.post_id, comment.content)
-        redirect conn, to: Helpers.post_path(:show, post_id)
-      errors ->
-        render conn, "new.html", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
+    if changeset.valid? do
+      comment = Repo.insert(changeset)
+      increment_score(Repo.get(User, user_id), 1)
+      post = from(p in Post, where: p.id == ^comment.post_id, preload: :user) |> Repo.one
+      post = %{post | updated_at: utc, comments_count: post.comments_count+1 }
+      Repo.update(post)
+      notify_subscriber(comment.post_id, post.user_id, 0)
+      notify_mentioed_users(comment.post_id, comment.content)
+      redirect conn, to: Helpers.post_path(:show, post_id)
+    else
+      render conn, "new.html", comment: changeset.changes, errors: changeset.errors, user_id: user_id
     end
   end
 
@@ -56,15 +39,16 @@ defmodule ElixirChina.CommentController do
     end
   end
 
-  def update(conn, %{"post_id" => post_id, "id" => id, "comment" => params}) do
+  def update(conn, %{"post_id" => post_id, "id" => id, "comment" => comment_params}) do
     comment = validate_and_get_comment(conn, id)
-    comment = %{comment | content: params["content"]}
-    case Comment.validate(comment) do
-      nil ->
-        Repo.update(comment)
-        json conn, %{location: Helpers.post_path(:show, post_id)}
-      errors ->
-        json conn, errors: errors
+    changeset = Comment.changeset comment, :update, comment_params
+
+    if changeset.valid? do
+      Repo.update(changeset)
+      redirect conn, to: Helpers.post_path(:show, post_id)
+    else
+      comment = %{comment | content: comment_params["content"]}
+      render conn, "edit.html", comment: comment, post_id: post_id, user_id: get_session(conn, :user_id), errors: changeset.errors
     end
   end
 

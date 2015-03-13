@@ -3,16 +3,13 @@
   <div class="panel-body post">
     <div class="inner post">
     <%= if @errors do %>
-    <div class="alert alert-warning">
-      <%= for error <- @errors do %>
-        <% type = elem(error, 0) %>
-        <% message = elem(error, 1) %>
-        <%= if type != :do or message != [[]] do %>
-          <% if type == :do, do: type = "" %>
-          <%= "#{Enum.join(message, " & ")}" %> <br />
-        <% end %>
-      <% end %>
-    </div>
+      <div class="alert alert-warning">
+        <ul>
+          <%= for error <- @errors do %>
+            <li> <%= human_error(error) %> </li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
     <form class="col-md-6 form-horizontal" action="/users" method="post">
       <div class="form-group">

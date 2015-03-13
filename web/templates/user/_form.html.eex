@@ -29,7 +29,7 @@
   <%= if @errors do %>
     <%= for error <- @errors do %>
       <div class="alert alert-warning">
-        <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+        <%= human_error(error) %>
       </div>
     <% end %>
   <% end %>

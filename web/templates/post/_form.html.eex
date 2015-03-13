@@ -1,6 +1,16 @@
 <form action="<%= @action %>" method="post">
-  <input type="hidden" name="_method" value="POST">
+  <input type="hidden" name="_method" value="<%= @method %>">
   <div class="form-group form-inline">
+    <%= if @errors do %>
+      <div class="alert alert-warning">
+        <ul>
+          <%= for error <- @errors do %>
+            <li> <%= human_error(error) %> </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
     <label class="">所属板块
       <select name="post[category_id]" class="form-control" value="<%= @post.category_id %>">
         <%= for category <- @categories do %>
@@ -16,14 +26,8 @@
     <textarea name="post[content]" class="editor" id="editor"><%= @post.content %></textarea>
   </div>
   <div class="form-group">
-    <input type="submit" class="btn btn-primary" value="<%= @post.id && "更新" || "发布" %>"></input>
+    <input type="submit" class="btn btn-primary" value="<%= button_text(@method) %>"></input>
   </div>
 
-  <%= if @errors do %>
-    <%= for error <- @errors do %>
-      <div class="alert alert-warning">
-        <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
-      </div>
-    <% end %>
-  <% end %>
+  
 </form>

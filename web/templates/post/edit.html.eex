@@ -1,24 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">修改话题</div>
   <div class="panel-body post">
-    <%= render ElixirChina.PostView, "_form.html", action: post_path(:update, @post.id), post: @post, categories: @categories %>
+    <%= render ElixirChina.PostView, "_form.html", action: post_path(:update, @post.id), post: @post, categories: @categories, errors: @errors, method: "PATCH" %>
   </div>
 </div>
 
-<script>
-  $("form").on("submit", function(event) {
-    event.preventDefault();
 
-    $that = this;
-    Editor.editor.element.textContent = Editor.editor.value();
-
-    $.ajax({
-      url: $that.getAttribute('action'),
-      type: "PATCH",
-      data: $('form').serialize(),
-      success: function(data) {
-        window.location = data.location;
-      }
-    });
-  });
-</script>

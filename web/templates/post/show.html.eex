@@ -47,8 +47,8 @@
               <%= comment.user.name %>
             </a>
             <small class="media-heading">
-              于 <time class="reply_time pubdate" datetime="<%= to_string comment.time %>">
-                <%= to_string comment.time %>
+              于 <time class="reply_time pubdate" datetime="<%= to_string comment.inserted_at %>">
+                <%= to_string comment.inserted_at %>
               </time> 发表
             </small>
             <span class="pull-right">
