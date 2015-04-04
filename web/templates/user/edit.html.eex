@@ -6,7 +6,7 @@
 
     <div class="panel-body post">
 
-      <form action="<%= user_path(:update, @user.id) %>" method="post">
+      <form action="<%= user_path(@conn, :update, @user.id) %>" method="post">
         <input type="hidden" name="_method" value="PATCH">
         <div class="form-group">
           <label for="user[password]">新密码

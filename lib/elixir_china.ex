@@ -7,9 +7,11 @@ defmodule ElixirChina do
     import Supervisor.Spec, warn: false
 
     children = [
+      # Start the endpoint when the application starts
+      supervisor(ElixirChina.Endpoint, []),
       # Define workers and child supervisors to be supervised
       # worker(ElixirChina.Worker, [arg1, arg2, arg3])
-      worker(Repo, [])
+      worker(ElixirChina.Repo, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

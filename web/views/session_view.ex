@@ -1,4 +1,4 @@
 defmodule ElixirChina.SessionView do
-  use ElixirChina.View
+  use ElixirChina.Web, :view
 
 end

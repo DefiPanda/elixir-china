@@ -2,7 +2,7 @@ defmodule ElixirChina.CommentController do
   import Ecto.Query
   import Ecto.DateTime
   import ElixirChina.ControllerUtils
-  use Phoenix.Controller
+  use ElixirChina.Web, :controller
   alias ElixirChina.Router.Helpers
   alias ElixirChina.Comment
   alias ElixirChina.User

@@ -3,7 +3,7 @@
 
   <div class="panel-body post">
     <div class="inner post">
-    <form class="col-md-6 form-horizontal" action="<%= session_path(:create) %>" method="post">
+    <form class="col-md-6 form-horizontal" action="<%= session_path(@conn, :create) %>" method="post">
       <div class="form-group">
         <span class="control-label col-sm-3">用户名</span>
         <div class="col-sm-9">

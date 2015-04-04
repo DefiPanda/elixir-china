@@ -10,7 +10,9 @@ config :elixir_china, ElixirChina.Endpoint,
   url: [host: "localhost"],
   http: [port: System.get_env("PORT")],
   secret_key_base: "ziHerwRAx1RS4ksABZzkL3Vl9aa1RH7b80BIv3v7Pn8l0ciAmfCjmuGKJxqoVoAL",
-  debug_errors: false
+  debug_errors: false,
+  pubsub: [name: ElixirChina.PubSub,
+           adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -18,7 +20,8 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Configures database
-config :elixir_china, Repo,
+config :elixir_china, ElixirChina.Repo,
+  adapter: Ecto.Adapters.Postgres,
   database: "elixir_china",
   username: "postgres",
   password: "postgres",

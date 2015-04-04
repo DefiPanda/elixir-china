@@ -4,7 +4,7 @@
   <div class="panel-body userinfo">
     <div class="media">
       <div class="media-left">
-        <a href="<%= user_path(:show, @user.id) %>" class="user_avatar">
+        <a href="<%= user_path(@conn, :show, @user.id) %>" class="user_avatar">
           <img src="<%= avatar_url(@user.email)%>" height="64" width="64" class="img-rounded">
         </a>
       </div>
@@ -19,7 +19,7 @@
 <%= if @user_id != nil and @user_id == @user.id do %>
   <div class="panel panel-default">
     <div class="panel-body">
-      <a href="<%= user_path(:edit, @user.id) %>" class="btn btn-primary">
+      <a href="<%= user_path(@conn, :edit, @user.id) %>" class="btn btn-primary">
         修改密码
       </a>
     </div>
@@ -28,7 +28,7 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <a href="<%= user_post_path(:index, @user.id) %>">
+    <a href="<%= user_post_path(@conn, :index, @user.id) %>">
       <%= if @user_id != nil and @user_id == @user.id do %>
         查看我的帖子
       <%= else %>

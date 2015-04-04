@@ -1,8 +1,7 @@
 defmodule ElixirChina.PostController do
   import Ecto.Query
-  import Ecto.DateTime
   import ElixirChina.ControllerUtils
-  use Phoenix.Controller
+  use ElixirChina.Web, :controller
   alias ElixirChina.Router.Helpers
   alias ElixirChina.Post
   alias ElixirChina.Comment
@@ -40,18 +39,19 @@ defmodule ElixirChina.PostController do
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
     user_id = get_user_id(conn)
-    utc = utc()
+    # utc = utc()
     # update_time is initialized here and will only be changed when a comment is to be made or deleted.
-    post = %Post{title: title, content: content, user_id: user_id,
-                category_id: String.to_integer(category_id), time: utc, update_time: utc}
+    post = %{title: title, content: content, user_id: user_id,
+                category_id: String.to_integer(category_id)}
 
-    case Post.validate(post) do
-      nil ->
-        post = Repo.insert(post)
-        increment_score(Repo.get(User, user_id), 10)
-        redirect conn, to: Helpers.post_path(:show, post.id)
-      errors ->
-        render conn, "new.html", post: post, errors: errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+    changeset = Post.changeset(%Post{}, post)
+
+    if changeset.valid? do
+      post = Repo.insert(changeset)
+      increment_score(Repo.get(User, user_id), 10)
+      redirect conn, to: Helpers.post_path(conn, :show, post.id)
+    else
+        render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 

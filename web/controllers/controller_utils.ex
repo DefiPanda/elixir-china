@@ -1,6 +1,7 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
   import Phoenix.Controller
+  alias ElixirChina.Repo
   alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 

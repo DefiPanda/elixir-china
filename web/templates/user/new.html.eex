@@ -4,13 +4,8 @@
     <div class="inner post">
     <%= if @errors do %>
     <div class="alert alert-warning">
-      <%= for error <- @errors do %>
-        <% type = elem(error, 0) %>
-        <% message = elem(error, 1) %>
-        <%= if type != :do or message != [[]] do %>
-          <% if type == :do, do: type = "" %>
-          <%= "#{Enum.join(message, " & ")}" %> <br />
-        <% end %>
+      <%= for error <- format_errors(@errors) do %>
+          <%= "#{error}" %> <br />
       <% end %>
     </div>
     <% end %>

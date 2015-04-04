@@ -9,7 +9,7 @@
           <li>
             <span class="top_score"><%= user.score %></span>
             <span class="user_name">
-              <a href="<%= user_path(:show, user.id) %>">
+              <a href="<%= user_path(@conn, :show, user.id) %>">
                 <%= user.name %>
               </a>
             </span>

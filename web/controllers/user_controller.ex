@@ -1,6 +1,6 @@
 defmodule ElixirChina.UserController do
   import ElixirChina.ControllerUtils
-  use Phoenix.Controller
+  use ElixirChina.Web, :controller
   alias ElixirChina.User
 
   plug :action
@@ -23,8 +23,10 @@ defmodule ElixirChina.UserController do
   end
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
-    user = %User{email: email, name: name, admin: false, password: password}
-    validate_result = User.validate(user)
+    user = %{email: email, name: name, admin: false, password: password}
+    # validate_result = User.validate(user)
+
+    changeset = User.changeset(%User{}, user)
 
     bad_name_list = [
       "root", "admin", "administrator", "post", "bot", "robot", "master", "webmaster",
@@ -38,20 +40,19 @@ defmodule ElixirChina.UserController do
     ]
 
     if name in bad_name_list do
-      {name_errors, _dict} = Dict.pop(validate_result, :name)
-      name_errors =  name_errors || []
-      name_errors = name_errors ++ ["无效的用户名"]
-      validate_result = Dict.put(validate_result, :name, name_errors)
+      changeset = Ecto.Changeset.add_error(changeset, :name, "无效的用户名")
     end
 
-    if validate_result == %{do: [[]]} do
-        user = %{user | :password => to_string User.encrypt_password(user.password)}
-        user = Repo.insert(user)
-        conn = put_session conn, :user_id, user.id
-        conn = put_session conn, :current_user, user
-        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
+    if changeset.valid? do
+      # user = %{user | :password => to_string User.encrypt_password(user.password)}
+      changeset = Ecto.Changeset.put_change(changeset, :password, user.password |> User.encrypt_password |> to_string)
+      IO.inspect changeset.errors
+      user = Repo.insert(changeset)
+      conn = put_session conn, :user_id, user.id
+      conn = put_session conn, :current_user, user
+      render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
     else
-      render conn, "new.html", user: user, errors: validate_result, user_id: get_session(conn, :user_id)
+      render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
     end
   end
 
