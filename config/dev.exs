@@ -10,7 +10,7 @@ config :elixir_china, ElixirChina.Endpoint,
 # *Note*: Be careful with wildcards. Larger projects
 # will use higher CPU in dev as the number of files
 # grow. Adjust as necessary.
-config :study, ElixirChina.Endpoint,
+config :elixir_china, ElixirChina.Endpoint,
   live_reload: [Path.expand("priv/static/js/app.js"),
                 Path.expand("priv/static/css/app.css"),
                 Path.expand("web/templates/**/*.eex")]
