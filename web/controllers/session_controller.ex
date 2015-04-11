@@ -33,7 +33,7 @@ defmodule ElixirChina.SessionController do
     end
   end
 
-  def destroy(conn, _params) do
+  def delete(conn, _params) do
     conn = put_session conn, :user_id, nil
     conn = put_session conn, :current_user, nil
     render conn, "new.html"

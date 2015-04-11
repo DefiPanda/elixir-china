@@ -44,9 +44,7 @@ defmodule ElixirChina.UserController do
     end
 
     if changeset.valid? do
-      # user = %{user | :password => to_string User.encrypt_password(user.password)}
       changeset = Ecto.Changeset.put_change(changeset, :password, user.password |> User.encrypt_password |> to_string)
-      IO.inspect changeset.errors
       user = Repo.insert(changeset)
       conn = put_session conn, :user_id, user.id
       conn = put_session conn, :current_user, user
@@ -71,15 +69,14 @@ defmodule ElixirChina.UserController do
 
   def update(conn, %{"id" => id, "user" => params}) do
     user = Repo.get(User, String.to_integer(id))
-    user = %{user | password: params["password"]}
+    changeset = User.changeset(user, params)
 
-    case User.validate_password(user.password) do
-      nil ->
-        user = %{user | :password => to_string User.encrypt_password(user.password)}
-        Repo.update(user)
-        render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
-      errors ->
-        render conn, "edit.html", user: user, errors: errors, user_id: get_session(conn, :user_id)
+    if changeset.valid? do
+      changeset = Ecto.Changeset.put_change(changeset, :password, params["password"] |> User.encrypt_password |> to_string)
+      Repo.update(changeset)
+      render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
+    else
+      render conn, "edit.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
     end
   end
 end

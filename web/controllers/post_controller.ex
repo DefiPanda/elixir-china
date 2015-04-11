@@ -67,20 +67,20 @@ defmodule ElixirChina.PostController do
 
   def update(conn, %{"id" => id, "post" => params}) do
     post = validate_and_get_post(conn, id, false)
-    post = %{post | title: params["title"],
+    update_params = %{title: params["title"],
                     content: params["content"],
-                    category_id: String.to_integer(params["category_id"])}
+                category_id: String.to_integer(params["category_id"])}
 
-    case Post.validate(post) do
-      nil ->
-        Repo.update(post)
-        json conn, %{location: Helpers.post_path(:show, post.id)}
-      errors ->
-        json conn, errors: errors
+    changeset = Post.changeset(post, update_params)
+    if changeset.valid? do
+      Repo.update(changeset)
+      json conn, %{location: Helpers.post_path(conn, :show, post.id)}
+    else
+      json conn, errors: changeset.errors
     end
   end
 
-  def destroy(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}) do
     post = validate_and_get_post(conn, id, true)
     case post do
       post when is_map(post) ->

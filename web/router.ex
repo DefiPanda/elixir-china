@@ -14,14 +14,14 @@ defmodule ElixirChina.Router do
 
     # Posts and comments
     resources "/posts", PostController do
-      resources "/comments", CommentController, except: [:index, :new, :show, :destroy]
+      resources "/comments", CommentController, except: [:index, :new, :show, :delete]
     end
 
     resources "/users", UserController do
       resources "/posts", PostController, only: [:index]
     end
 
-    resources "/notifications", NotificationController, only: [:index, :destroy]
+    resources "/notifications", NotificationController, only: [:index, :delete]
     
     resources "/categories", CategoryController, only: [:index, :show]
 
@@ -31,6 +31,6 @@ defmodule ElixirChina.Router do
     # Sessions
     resources "/sessions", SessionController, only: [:new, :create]
     get "/signin", SessionController, :new
-    get "/signout", SessionController, :destroy
+    get "/signout", SessionController, :delete
   end
 end

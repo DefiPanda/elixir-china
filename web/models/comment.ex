@@ -14,6 +14,6 @@ defmodule ElixirChina.Comment do
 
   def changeset(comment, params \\ nil) do
     comment
-    |> cast(params, ~w(content))
+    |> cast(params, ~w(content post_id user_id))
   end
 end
