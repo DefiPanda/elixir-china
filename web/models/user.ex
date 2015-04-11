@@ -24,7 +24,6 @@ defmodule ElixirChina.User do
   end
 
   def valid_password?(record, password) do
-    IO.inspect record
     salt = String.slice(record.password, 0, 29)
     {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
     "#{hashed_password}" == record.password
