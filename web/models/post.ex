@@ -17,6 +17,6 @@ defmodule ElixirChina.Post do
 
   def changeset(post, params \\ nil) do
     post
-    |> cast(params, ~w(content title category_id))
+    |> cast(params, ~w(content title category_id user_id), ~w(update_time comments_count))
   end
 end
