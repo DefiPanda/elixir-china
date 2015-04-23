@@ -1,5 +1,5 @@
 defmodule ElixirChina.ErrorView do
-  use ElixirChina.View
+  use ElixirChina.Web, :view
 
   def render("404.html", assigns) do
     render "not_found.html", assigns

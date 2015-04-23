@@ -1,15 +1,15 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <ul class="nav nav-pills category-list">
-      <li><a href="<%= category_path(:index) %>">全部</a></li>
+      <li><a href="<%= category_path @conn, :index %>">全部</a></li>
       <%= for category <- @categories do %>
         <li class="<%= if category.id == @category, do: "active" %>">
-          <a href="<%= category_path(:show, category.id) %>"><%= category.name %></a>
+          <a href="<%= category_path @conn, :show, category.id %>"><%= category.name %></a>
         </li>
       <% end %>
       <%= if @user_id != nil and @show_post != nil do %>
         <li class="active pull-right">
-          <a href="<%= post_path(:new)%>">发布话题</a>
+          <a href="<%= post_path @conn, :new %>">发布话题</a>
         </li>
       <% end %>
     </ul>

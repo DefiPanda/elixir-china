@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbar-collapse">
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<%= root_path(:index) %>"> 主页 </a></li>
+        <li><a href="<%= root_path(@conn, :index) %>"> 主页 </a></li>
 
         <%= if @user_id == nil do %>
           <li><a href="/signup"> 注册 </a></li>
@@ -22,9 +22,9 @@
 
         <%= if @user_id != nil do %>
           <li><a href="/signout"> 退出 </a></li>
-          <li><a href="<%= user_path(:show, @user_id) %>"> 账户 </a></li>
-          <li><a href="<%= notification_path(:index) %>"> 消息中心 </a></li>
-          <li><a href="<%= user_post_path(:index, @user_id) %>"> 我的帖子 </a></li>
+          <li><a href="<%= user_path(@conn, :show, @user_id) %>"> 账户 </a></li>
+          <li><a href="<%= notification_path(@conn, :index) %>"> 消息中心 </a></li>
+          <li><a href="<%= user_post_path(@conn, :index, @user_id) %>"> 我的帖子 </a></li>
         <% end %>
       </ul>
     </div>

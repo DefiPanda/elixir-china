@@ -25,11 +25,11 @@ defmodule ElixirChina.Mixfile do
   # Type `mix help deps` for examples and options
   defp deps do
     [
-      {:phoenix, "0.7.2"},
+      {:phoenix, "0.10.0"},
       {:linguist, "~> 0.1.4"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 0.5.0"},
+      {:ecto, "~> 0.10.1"},
       {:bcrypt, github: "opscode/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]

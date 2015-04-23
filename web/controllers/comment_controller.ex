@@ -1,8 +1,7 @@
 defmodule ElixirChina.CommentController do
   import Ecto.Query
-  import Ecto.DateTime
   import ElixirChina.ControllerUtils
-  use Phoenix.Controller
+  use ElixirChina.Web, :controller
   alias ElixirChina.Router.Helpers
   alias ElixirChina.Comment
   alias ElixirChina.User
@@ -26,23 +25,24 @@ defmodule ElixirChina.CommentController do
 
   def create(conn, %{"post_id" => post_id, "comment" => params}) do
     user_id = get_user_id(conn)
-    utc = utc()
-    comment = %Comment{post_id: String.to_integer(post_id), user_id: user_id,
-                      content: params["content"], time: utc}
+    comment = %{post_id: String.to_integer(post_id), user_id: user_id,
+                      content: params["content"]}
 
-    case Comment.validate(comment) do
-      nil ->
-        Repo.insert(comment)
-        increment_score(Repo.get(User, user_id), 1)
-        post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
-        |> Repo.one
-        post = %{post | update_time: utc, comments_count: post.comments_count+1 }
-        Repo.update(post)
-        notify_subscriber(comment.post_id, post.user_id, 0)
-        notify_mentioed_users(comment.post_id, comment.content)
-        redirect conn, to: Helpers.post_path(:show, post_id)
-      errors ->
-        render conn, "new.html", comment: comment, errors: errors, user_id: get_session(conn, :user_id)
+    changeset = Comment.changeset(%Comment{}, comment)
+    if changeset.valid? do
+      comment = Repo.insert(changeset)
+      increment_score(Repo.get(User, user_id), 1)
+      post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
+      |> Repo.one
+
+      post
+      |> Post.changeset(%{update_time: comment.time, comments_count: post.comments_count + 1})
+      |> Repo.update
+      notify_subscriber(comment.post_id, post.user_id, 0)
+      notify_mentioed_users(conn, comment.post_id, comment.content)
+      redirect conn, to: Helpers.post_path(conn, :show, post_id)
+    else
+      render conn, "new.html", comment: comment, errors: changeset.errors, user_id: get_session(conn, :user_id)
     end
   end
 
@@ -58,13 +58,13 @@ defmodule ElixirChina.CommentController do
 
   def update(conn, %{"post_id" => post_id, "id" => id, "comment" => params}) do
     comment = validate_and_get_comment(conn, id)
-    comment = %{comment | content: params["content"]}
-    case Comment.validate(comment) do
-      nil ->
-        Repo.update(comment)
-        json conn, %{location: Helpers.post_path(:show, post_id)}
-      errors ->
-        json conn, errors: errors
+    changeset = Comment.changeset(comment, %{content: params["content"]})
+
+    if changeset.valid? do
+      Repo.update(changeset)
+      json conn, %{location: Helpers.post_path(conn, :show, post_id)}
+    else
+      json conn, errors: changeset.errors
     end
   end
 
@@ -82,12 +82,12 @@ defmodule ElixirChina.CommentController do
     comment
   end
 
-  defp get_mentioned_user_ids(text) do
-    Regex.scan(~r/(?<=]\(#{Helpers.user_path(:index)}\/)[0-9]*(?=\))/, text)
+  defp get_mentioned_user_ids(conn, text) do
+    Regex.scan(~r/(?<=]\(#{Helpers.user_path(conn, :index)}\/)[0-9]*(?=\))/, text)
   end
 
-  defp notify_mentioed_users(post_id, text) do
-    user_ids = get_mentioned_user_ids(text)
+  defp notify_mentioed_users(conn, post_id, text) do
+    user_ids = get_mentioned_user_ids(conn, text)
     # MENTIONED_REPLY = 1
     for user_id <- user_ids, do: notify_subscriber(post_id, String.to_integer(user_id |> List.first), 1)
   end

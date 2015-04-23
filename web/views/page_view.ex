@@ -1,4 +1,4 @@
 defmodule ElixirChina.PageView do
-  use ElixirChina.View
+  use ElixirChina.Web, :view
 
 end

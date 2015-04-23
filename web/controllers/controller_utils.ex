@@ -1,6 +1,7 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
   import Phoenix.Controller
+  alias ElixirChina.Repo
   alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 
@@ -28,6 +29,6 @@ defmodule ElixirChina.ControllerUtils do
   end
 
   def unauthorized(conn) do
-    redirect %{conn | method: :get}, to: Helpers.page_path(:show, "unauthorized")
+    redirect %{conn | method: :get}, to: Helpers.page_path(conn, :show, "unauthorized")
   end
 end

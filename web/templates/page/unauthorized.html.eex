@@ -23,9 +23,9 @@
 
     <script>
       // set delay only to 2 seconds because it takes time to fetch index page
-    	window.setTimeout(function(){
-	        window.location.href = "/";
-	    }, 2000);
+      window.setTimeout(function(){
+        window.location.href = "/";
+      }, 2000);
     </script>
   </body>
 </html>

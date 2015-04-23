@@ -19,7 +19,8 @@ config :elixir_china, ElixirChina.Endpoint,
 config :logger,
   level: :info
 
-config :elixir_china, Repo,
+config :elixir_china, ElixirChina.Repo,
+  adapter: Ecto.Adapters.Postgres,
   database: "elixir_china",
   username: "postgres",
   password: "postgres",
