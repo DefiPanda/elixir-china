@@ -3,10 +3,12 @@
 
 目前[ElixirChina 网站](http://elixir-cn.com/)部署在DigitalOcean上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
 
-`mix deps.get`
-`mix ecto.create Repo`
-`mix ecto.migrate Repo`
-`mix phoenix.server`
+```
+$ mix deps.get
+$ mix ecto.create Repo
+$ mix ecto.migrate Repo
+$ mix phoenix.server
+```
 
 在浏览器输入 `localhost:4000` 就能访问网站啦。
 
