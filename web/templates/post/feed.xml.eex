@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:wfw="http://wellformedweb.org/CommentAPI/">
+  <channel>
+    <title>Elixir China社区</title>
+    <link>http://elixir-cn.com/</link>
+    <description>最新发帖</description>
+    <language>en-us</language>
+    <%= for post <- @posts do %>
+      <item>
+        <title><%= post.title %></title>
+        <link><%= post_url(@conn, :show, post.id) %></link>
+        <author><%= post.user.name %></author>
+        <pubDate><%= Ecto.DateTime.to_iso8601(post.time) %></pubDate>
+        <description><%= post.content %></description>
+      </item>
+    <% end %>
+  </channel>
+</rss>
+

@@ -16,6 +16,7 @@ defmodule ElixirChina.Router do
     resources "/posts", PostController do
       resources "/comments", CommentController, except: [:index, :new, :show, :delete]
     end
+    get "feed", PostController, :feed
 
     resources "/users", UserController do
       resources "/posts", PostController, only: [:index]
