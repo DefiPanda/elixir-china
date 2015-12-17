@@ -4,7 +4,10 @@ defmodule ElixirChina.SessionController do
   alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 
-  plug :action
+  plug :set_user_id
+  defp set_user_id(conn, _msg) do
+    assign(conn, :user_id, nil)
+  end
 
   def new(conn, _params) do
     render conn, "new.html"

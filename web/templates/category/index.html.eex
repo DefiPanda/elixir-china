@@ -15,5 +15,5 @@
     </ul>
   </div>
 
-  <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, pages: @pages, page: @page %>
+  <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, pages: @pages, page: @page, conn: @conn, user: nil %>
 </div>

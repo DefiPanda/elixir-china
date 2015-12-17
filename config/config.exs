@@ -8,9 +8,11 @@ use Mix.Config
 # Configures the endpoint
 config :elixir_china, ElixirChina.Endpoint,
   url: [host: "localhost"],
+  root: Path.dirname(__DIR__),
   http: [port: System.get_env("PORT")],
   secret_key_base: "ziHerwRAx1RS4ksABZzkL3Vl9aa1RH7b80BIv3v7Pn8l0ciAmfCjmuGKJxqoVoAL",
   debug_errors: false,
+  render_errors: [accepts: ~w(html json)],
   pubsub: [name: ElixirChina.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

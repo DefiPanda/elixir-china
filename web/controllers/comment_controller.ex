@@ -8,8 +8,6 @@ defmodule ElixirChina.CommentController do
   alias ElixirChina.Post
   alias ElixirChina.Notification
 
-  plug :action
-
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case get_comment_with_loaded_user(String.to_integer(id)) do
       comment when is_map(comment) ->
@@ -30,7 +28,7 @@ defmodule ElixirChina.CommentController do
 
     changeset = Comment.changeset(%Comment{}, comment)
     if changeset.valid? do
-      comment = Repo.insert(changeset)
+      comment = Repo.insert!(changeset)
       increment_score(Repo.get(User, user_id), 1)
       post = from(p in Post, where: p.id == ^comment.post_id, preload: :user)
       |> Repo.one

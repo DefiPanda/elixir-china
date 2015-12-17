@@ -4,8 +4,6 @@ defmodule ElixirChina.NotificationController do
   use ElixirChina.Web, :controller
   alias ElixirChina.Notification
 
-  plug :action
-
   def index(conn, _params) do
     current_user_id = get_user_id(conn)
     query = from n in Notification, where: n.user_id == ^current_user_id, preload: :post

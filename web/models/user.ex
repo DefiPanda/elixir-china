@@ -19,8 +19,8 @@ defmodule ElixirChina.User do
     |> cast(params, ~w(name email admin password), ~w(score))
     |> validate_length(:name, min: 3)
     |> validate_length(:password, min: 6)
-    |> validate_unique(:name, on: Repo)
-    |> validate_unique(:email, on: Repo)
+    |> unique_constraint(:name, name: :users_name_key)
+    |> unique_constraint(:email, name: :users_email_index)
   end
 
   def valid_password?(record, password) do
