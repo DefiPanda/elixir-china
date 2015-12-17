@@ -1,6 +1,6 @@
 defmodule ElixirChina.SessionController do
-  import Ecto.Query
   use ElixirChina.Web, :controller
+
   alias ElixirChina.Router.Helpers
   alias ElixirChina.User
 

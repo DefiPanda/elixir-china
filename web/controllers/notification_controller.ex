@@ -1,7 +1,7 @@
 defmodule ElixirChina.NotificationController do
-  import Ecto.Query
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
+
+  import ElixirChina.ControllerUtils
   alias ElixirChina.Notification
 
   def index(conn, _params) do

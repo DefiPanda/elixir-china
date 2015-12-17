@@ -1,6 +1,6 @@
 defmodule ElixirChina.CategoryController do
-  import Ecto.Query
   use ElixirChina.Web, :controller
+
   alias ElixirChina.Post
   alias ElixirChina.Comment
   alias ElixirChina.User

@@ -1,6 +1,7 @@
 defmodule ElixirChina.UserController do
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
+
+  import ElixirChina.ControllerUtils
   alias ElixirChina.User
 
   def index(conn, _params) do

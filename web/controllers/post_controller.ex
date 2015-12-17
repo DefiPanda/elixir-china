@@ -1,7 +1,7 @@
 defmodule ElixirChina.PostController do
-  import Ecto.Query
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
+
+  import ElixirChina.ControllerUtils
   alias ElixirChina.Router.Helpers
   alias ElixirChina.Post
   alias ElixirChina.Comment

@@ -56,6 +56,8 @@ defmodule ElixirChina.Web do
 
       # Alias the data repository as a convenience
       alias ElixirChina.Repo
+      import Ecto
+      import Ecto.Query, only: [from: 1, from: 2]
 
       # Import URL helpers from the router
       import ElixirChina.Router.Helpers
@@ -64,7 +66,11 @@ defmodule ElixirChina.Web do
 
   def model do
     quote do
-      use Ecto.Model
+      use Ecto.Schema
+
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query, only: [from: 1, from: 2]
     end
   end
 

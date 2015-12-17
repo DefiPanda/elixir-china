@@ -1,5 +1,5 @@
 defmodule ElixirChina.User do
-  use Ecto.Model
+  use ElixirChina.Web, :model
   alias ElixirChina.Repo
 
   schema "users" do

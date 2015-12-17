@@ -1,5 +1,5 @@
 defmodule ElixirChina.Comment do
-  use Ecto.Model
+  use ElixirChina.Web, :model
 
   schema "comments" do
     field :content, :string
