@@ -1,10 +1,8 @@
 defmodule ElixirChina.NotificationController do
-  import Ecto.Query
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
-  alias ElixirChina.Notification
 
-  plug :action
+  import ElixirChina.ControllerUtils
+  alias ElixirChina.Notification
 
   def index(conn, _params) do
     current_user_id = get_user_id(conn)

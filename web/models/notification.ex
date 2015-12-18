@@ -1,5 +1,5 @@
 defmodule ElixirChina.Notification do
-  use Ecto.Model
+  use ElixirChina.Web, :model
 
   schema "notifications" do
     field :type, :integer

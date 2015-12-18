@@ -1,5 +1,5 @@
 defmodule ElixirChina.Post do
-  use Ecto.Model
+  use ElixirChina.Web, :model
 
   schema "posts" do
     field :title, :string

@@ -23,16 +23,18 @@
   </head>
 
   <body>
-    <%= render ElixirChina.SharedView, "_nav.html", user_id: @user_id %>
+    <%= render ElixirChina.SharedView, "_nav.html", conn: @conn, user_id: @user_id %>
     <div class="container">
       <div class="col-md-9" role="main">
-        <%= @inner %>
+        <%= render @view_module, @view_template, assigns %>
       </div>
       <sidebar class="col-md-3" role="sidebar">
-        <%= render ElixirChina.SharedView, "_leading_board.html", leading_users: @leading_users %>
-        <%= render ElixirChina.SharedView, "_statics.html", post_count: @post_count, comment_count: @comment_count, user_count: @user_count %>
+        <%= if show_leaderboard?(@conn) do %>
+          <%= render ElixirChina.SharedView, "_leading_board.html", conn: @conn, leading_users: @leading_users %>
+          <%= render ElixirChina.SharedView, "_statics.html", post_count: @post_count, comment_count: @comment_count, user_count: @user_count %>
+        <% end %>
         <%= render ElixirChina.SharedView, "_contrib.html", [] %>
-        <%= render ElixirChina.SharedView, "_friend_community.html", [] %>
+        <%= render ElixirChina.SharedView, "_friend_community.html", conn: @conn %>
       </sidebar>
 
     </div>

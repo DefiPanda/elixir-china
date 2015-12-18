@@ -1,7 +1,7 @@
 defmodule ElixirChina.PostController do
-  import Ecto.Query
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
+
+  import ElixirChina.ControllerUtils
   alias ElixirChina.Router.Helpers
   alias ElixirChina.Post
   alias ElixirChina.Comment
@@ -9,13 +9,13 @@ defmodule ElixirChina.PostController do
   alias ElixirChina.Category
   alias ElixirChina.User
 
-  plug :action
-
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
           posts: Repo.all(from p in Post, where: p.user_id == ^String.to_integer(user_id), order_by: [{:desc, p.time}], preload: :category),
           user: Repo.get(User, String.to_integer(user_id)),
-          user_id: get_session(conn, :user_id)
+          user_id: get_session(conn, :user_id),
+          conn: conn,
+          pages: 0
   end
 
   def index(conn, _params) do
@@ -34,7 +34,7 @@ defmodule ElixirChina.PostController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html", user_id: get_session(conn, :user_id), post: %Post{}, categories: Repo.all(Category)
+    render conn, "new.html", user_id: get_session(conn, :user_id), post: %Post{}, categories: Repo.all(Category), errors: nil
   end
 
   def create(conn, %{"post" => %{"title" => title, "content" => content, "category_id" => category_id}}) do
@@ -47,7 +47,7 @@ defmodule ElixirChina.PostController do
     changeset = Post.changeset(%Post{}, post)
 
     if changeset.valid? do
-      post = Repo.insert(changeset)
+      post = Repo.insert!(changeset)
       increment_score(Repo.get(User, user_id), 10)
       redirect conn, to: Helpers.post_path(conn, :show, post.id)
     else

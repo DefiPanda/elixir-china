@@ -1,9 +1,8 @@
 defmodule ElixirChina.UserController do
-  import ElixirChina.ControllerUtils
   use ElixirChina.Web, :controller
-  alias ElixirChina.User
 
-  plug :action
+  import ElixirChina.ControllerUtils
+  alias ElixirChina.User
 
   def index(conn, _params) do
     redirect conn, "/"
@@ -19,7 +18,7 @@ defmodule ElixirChina.UserController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html"
+    render conn, "new.html", user_id: nil, errors: nil
   end
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
@@ -45,10 +44,14 @@ defmodule ElixirChina.UserController do
 
     if changeset.valid? do
       changeset = Ecto.Changeset.put_change(changeset, :password, user.password |> User.encrypt_password |> to_string)
-      user = Repo.insert(changeset)
-      conn = put_session conn, :user_id, user.id
-      conn = put_session conn, :current_user, user
-      render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
+      case Repo.insert(changeset) do
+        {:ok, user} ->
+          conn = put_session conn, :user_id, user.id
+          conn = put_session conn, :current_user, user
+          render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
+        {:error, changeset} ->
+          render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
+      end
     else
       render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
     end
@@ -61,7 +64,7 @@ defmodule ElixirChina.UserController do
     end
     case Repo.get(User, String.to_integer(id)) do
       user when is_map(user) ->
-        render conn, "edit.html", user: user, user_id: get_session(conn, :user_id)
+        render conn, "edit.html", user: user, user_id: get_session(conn, :user_id), errors: nil
       _ ->
         unauthorized conn
     end

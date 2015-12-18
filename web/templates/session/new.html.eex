@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <%= if @errors do %>
+      <%= if Dict.has_key?(@conn.assigns, :errors) do %>
         <%= for error <- @errors do %>
           <div class="alert alert-warning">
             <%= "#{elem(error, 0)} #{elem(error, 1)}" %>

@@ -1,5 +1,5 @@
 defmodule ElixirChina.Category do
-  use Ecto.Model
+  use ElixirChina.Web, :model
 
   schema "categories" do
     field :name, :string

@@ -2,5 +2,5 @@
   <div class="panel-heading">
     <%= @user.name %>的帖子
   </div>
-  <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, user: @user %>
+  <%= render ElixirChina.SharedView, "_topic_list.html", posts: @posts, user: @user, conn: @conn, pages: 0 %>
 </div>
