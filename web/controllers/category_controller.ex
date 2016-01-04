@@ -64,7 +64,7 @@ defmodule ElixirChina.CategoryController do
   end
 
   defp get_categories() do
-    categories = Repo.all(Category)
+    categories = Repo.all(from c in Category, order_by: [{:asc, c.id}])
     for category <- categories, do: %{name: category.name,
         id: category.id}
   end
