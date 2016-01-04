@@ -12,6 +12,7 @@
             <%= post.title %>
           </a>
         </h4>
+        <div class="sep5"></div>
         <h5 class="media-heading small">
           <a href="<%= category_path(@conn, :show, post.category_id) %>"><mark class="text-muted"><%= post.category.name %></mark></a>
           <small><a href="<%= user_path(@conn, :show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.name %></a>
