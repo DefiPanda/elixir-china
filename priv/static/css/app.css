@@ -26,6 +26,10 @@ body {
   background-color: #FFFFFF;
 }
 
+.sep5 {
+  height: 5px;
+}
+
 h1.panel-title { font-size: 36px; }
 h2.panel-title { font-size: 30px; }
 h3.panel-title { font-size: 24px; }
