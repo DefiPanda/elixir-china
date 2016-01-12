@@ -36,4 +36,13 @@ defmodule ElixirChina.User do
       hashed_password
     end
   end
+
+  def count do
+    from u in __MODULE__, select: count(u.id)
+  end
+
+  @leading_size 10
+  def leading(size \\ @leading_size) do
+    from u in __MODULE__, order_by: [{:desc, u.score}], limit: ^size
+  end
 end

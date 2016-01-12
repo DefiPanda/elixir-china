@@ -4,7 +4,7 @@ defmodule ElixirChina.PageController do
   def show(conn, %{"page" => "unauthorized"}) do
     conn
     |> put_layout(false)
-    |> render "unauthorized.html"
+    |> render("unauthorized.html")
   end
 
   def error(conn, {:error, ElixirChina.Errors.Unauthorized}) do

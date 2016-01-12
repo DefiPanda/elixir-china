@@ -16,4 +16,5 @@
   "postgrex": {:hex, :postgrex, "0.10.0"},
   "quickrand": {:hex, :quickrand, "1.4.0"},
   "ranch": {:hex, :ranch, "1.2.0"},
+  "scrivener": {:hex, :scrivener, "1.1.1"},
   "uuid": {:git, "https://github.com/okeuday/uuid.git", "f154016f3a73075f7cf3f05be01edeea93564367", []}}
