@@ -8,3 +8,11 @@ config :elixir_china, ElixirChina.Repo,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Configures database
+config :elixir_china, ElixirChina.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "elixir_china_test",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost"

@@ -1,16 +1,11 @@
 defmodule ElixirChina.CategoryControllerTest do
   use ElixirChina.ConnCase
 
-  alias ElixirChina.Post
-
-  @valid_attrs %{title: "Post Title", content: "Post content.", category_id: 1, user_id: 1}
-  @valid_attrs1 %{title: "Post 2 Title", content: "Post 2 content.", category_id: 2, user_id: 2}
-  @invalid_attrs %{}
-
   test "lists all posts when there's no chosen category", %{conn: conn} do
-    Repo.insert(Post.changeset(%Post{}, @valid_attrs))
+    user = insert_user
+    insert_post(%{user_id: user.id})
     conn = get conn, category_path(conn, :index)
-    assert html_response(conn, 200) =~ "Post Title"
+    assert html_response(conn, 200) =~ "Elixir is cool"
     assert conn.assigns.page == 1
   end
 
@@ -29,9 +24,10 @@ defmodule ElixirChina.CategoryControllerTest do
   end
 
   test "lists posts of one category", %{conn: conn} do
-    post = Repo.insert!(Post.changeset(%Post{}, @valid_attrs))
-    Repo.insert(Post.changeset(%Post{}, @valid_attrs1))
-    conn = get conn, category_path(conn, :show, 1)
+    user = insert_user
+    post = insert_post(%{user_id: user.id})
+    insert_post(%{user_id: user.id, category_id: 2})
+    conn = get conn, category_path(conn, :show, "1")
     assert List.first(conn.assigns.posts).id == post.id
   end
 

@@ -25,6 +25,7 @@ defmodule ElixirChina.ConnCase do
       import Ecto.Query, only: [from: 2]
 
       import ElixirChina.Router.Helpers
+      import ElixirChina.TestHelpers
 
       # The default endpoint for testing
       @endpoint ElixirChina.Endpoint

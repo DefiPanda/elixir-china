@@ -32,6 +32,6 @@ defmodule ElixirChina.Post do
   end
 
   def by_category_id(query \\ __MODULE__, category_id) do
-    from p in query, where: p.category_id == ^String.to_integer(category_id)
+    from p in query, where: p.category_id == ^category_id
   end
 end

@@ -36,10 +36,11 @@ defmodule ElixirChina.CategoryController do
   end
 
   def show(conn, %{"id" => id, "page" => page}) do
+    id = String.to_integer(id)
     paged_posts = get_posts_by_page(page, id)
     render conn, "show.html", categories: Repo.all(Category),
                       posts: paged_posts.entries |> Repo.preload([:user, :category]),
-                      category_id: String.to_integer(id),
+                      category_id: id,
                       pages: paged_posts.total_pages,
                       page: page
   end
