@@ -1,6 +1,5 @@
 defmodule ElixirChina.User do
   use ElixirChina.Web, :model
-  alias ElixirChina.Repo
 
   schema "users" do
     field :email,      :string
@@ -37,8 +36,8 @@ defmodule ElixirChina.User do
     end
   end
 
-  def count do
-    from u in __MODULE__, select: count(u.id)
+  def count(query \\ __MODULE__) do
+    from u in query, select: count(u.id)
   end
 
   @leading_size 10
