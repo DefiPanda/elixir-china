@@ -1,6 +1,5 @@
 defmodule ElixirChina.User do
   use ElixirChina.Web, :model
-  alias ElixirChina.Repo
 
   schema "users" do
     field :email,      :string
@@ -35,5 +34,14 @@ defmodule ElixirChina.User do
       {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
       hashed_password
     end
+  end
+
+  def count(query \\ __MODULE__) do
+    from u in query, select: count(u.id)
+  end
+
+  @leading_size 10
+  def leading(size \\ @leading_size) do
+    from u in __MODULE__, order_by: [{:desc, u.score}], limit: ^size
   end
 end

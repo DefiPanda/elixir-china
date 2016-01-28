@@ -7,7 +7,7 @@
           <a href="<%= category_path @conn, :show, category.id %>"><%= category.name %></a>
         </li>
       <% end %>
-      <%= if @user_id != nil and @show_post != nil do %>
+      <%= if @user_id do %>
         <li class="active pull-right">
           <a href="<%= post_path @conn, :new %>">发布话题</a>
         </li>

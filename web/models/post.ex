@@ -15,8 +15,23 @@ defmodule ElixirChina.Post do
     field :comments_count, :integer, default: 0
   end
 
+  @required_fields ~w(content title category_id user_id)
+  @optional_fields ~w(update_time comments_count)
+
   def changeset(post, params \\ nil) do
     post
-    |> cast(params, ~w(content title category_id user_id), ~w(update_time comments_count))
+    |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def count(query \\ __MODULE__) do
+    from p in query, select: count(p.id)
+  end
+
+  def recent(query \\ __MODULE__) do
+    from p in query, order_by: [desc: p.update_time]
+  end
+
+  def by_category_id(query \\ __MODULE__, category_id) do
+    from p in query, where: p.category_id == ^category_id
   end
 end

@@ -29,7 +29,7 @@
         <%= render @view_module, @view_template, assigns %>
       </div>
       <sidebar class="col-md-3" role="sidebar">
-        <%= if show_leaderboard?(@conn) do %>
+        <%= if show_statics?(@conn) do %>
           <%= render ElixirChina.SharedView, "_leading_board.html", conn: @conn, leading_users: @leading_users %>
           <%= render ElixirChina.SharedView, "_statics.html", post_count: @post_count, comment_count: @comment_count, user_count: @user_count %>
         <% end %>

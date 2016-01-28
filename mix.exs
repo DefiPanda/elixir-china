@@ -39,6 +39,7 @@ defmodule ElixirChina.Mixfile do
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 1.1.0"},
+      {:scrivener, "~> 1.1"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]

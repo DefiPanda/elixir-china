@@ -16,4 +16,8 @@ defmodule ElixirChina.Comment do
     comment
     |> cast(params, ~w(content post_id user_id))
   end
+
+  def count(query \\ __MODULE__) do
+    from c in query, select: count(c.id)
+  end
 end
