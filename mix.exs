@@ -41,7 +41,8 @@ defmodule ElixirChina.Mixfile do
       {:ecto, "~> 1.1.0"},
       {:scrivener, "~> 1.1"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
-      {:uuid, github: "okeuday/uuid"}
+      {:uuid, github: "okeuday/uuid"},
+      {:logger_file_backend, "~> 0.0.5"}
     ]
   end
 end

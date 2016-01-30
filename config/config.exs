@@ -17,7 +17,11 @@ config :elixir_china, ElixirChina.Endpoint,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
-config :logger, :console,
+config :logger,
+  backends: [{LoggerFileBackend, :file_log}]
+
+config :logger, :file_log,
+  path: "#{Path.dirname(__DIR__)}/log/#{Mix.env}.log",
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
