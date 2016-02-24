@@ -4,13 +4,13 @@
   </div>
   <div class="panel-body friendship-community">
     <a href="https://ruby-china.org/" target="_blank">
-      <img src="<%= static_path(@conn, "/img/friend-community/ruby-china.png") %>" class="community-brand">
+      <img src="<%= static_path(@conn, "/images/friend-community/ruby-china.png") %>" class="community-brand">
     </a>
     <a href="http://golangtc.com/" target="_blank">
-      <img src="<%= static_path(@conn, "/img/friend-community/golang-china.png") %>" class="community-brand">
+      <img src="<%= static_path(@conn, "/images/friend-community/golang-china.png") %>" class="community-brand">
     </a>
     <a href="https://phphub.org/" target="_blank">
-      <img src="<%= static_path(@conn, "/img/friend-community/phphub.png") %>" class="community-brand">
+      <img src="<%= static_path(@conn, "/images/friend-community/phphub.png") %>" class="community-brand">
     </a>
   </div>
 </div>

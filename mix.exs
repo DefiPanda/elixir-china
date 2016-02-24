@@ -35,7 +35,6 @@ defmodule ElixirChina.Mixfile do
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.4"},
       {:phoenix_live_reload, "~> 1.0.1", only: :dev},
-      {:linguist, "~> 0.1.5"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 1.1.0"},
