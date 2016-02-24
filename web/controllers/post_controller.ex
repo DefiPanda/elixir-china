@@ -41,13 +41,12 @@ defmodule ElixirChina.PostController do
                 category_id: String.to_integer(category_id)}
 
     changeset = Post.changeset(%Post{}, post)
-
     if changeset.valid? do
       post = Repo.insert!(changeset)
       increment_score(Repo.get(User, user_id), 10)
       redirect conn, to: Helpers.post_path(conn, :show, post.id)
     else
-        render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+      render conn, "new.html", post: changeset.model, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 

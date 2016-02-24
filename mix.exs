@@ -6,7 +6,7 @@ defmodule ElixirChina.Mixfile do
      version: "0.0.1",
      elixir: "~> 1.1",
      elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix] ++ Mix.compilers,
+     compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -18,7 +18,7 @@ defmodule ElixirChina.Mixfile do
   def application do
     [
       mod: { ElixirChina, [] },
-      applications: [:phoenix, :cowboy, :logger, :postgrex, :ecto, :bcrypt]
+      applications: [:phoenix, :cowboy, :logger, :postgrex, :ecto, :bcrypt, :gettext]
     ]
   end
 
@@ -40,6 +40,7 @@ defmodule ElixirChina.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 1.1.0"},
       {:scrivener, "~> 1.1"},
+      {:gettext, "~> 0.9"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]

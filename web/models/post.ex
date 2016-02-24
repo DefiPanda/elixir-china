@@ -21,6 +21,8 @@ defmodule ElixirChina.Post do
   def changeset(post, params \\ nil) do
     post
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_length(:title, min: 1)
+    |> validate_length(:content, min: 1)
   end
 
   def count(query \\ __MODULE__) do

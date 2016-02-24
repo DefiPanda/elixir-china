@@ -1,24 +1,10 @@
 <div class="panel panel-default">
-    <div class="panel-heading">新消息提示</div>
-
+    <div class="panel-heading">
+      <button data-link="<%= notification_path(@conn, :delete_all) %>", class="btn btn-danger read-all-notification" %>清空</button>
+    </div>
     <%= if @notifications != nil do %>
       <div class="panel-body topic">
-        <%= for notification <- @notifications do %>
-          <div>
-            <%= if notification.type == 0 do %>
-              您的帖子
-              <a class="read-notification" data-post-link="<%= post_path @conn, :show, notification.post.id %>" href="<%= notification_path @conn, :delete, notification.id %>">
-                <%= notification.post.title %>
-              </a> 有了新回复
-            <%= else %>
-              您在帖子
-              <a class="read-notification" data-post-link="<%= post_path @conn, :show, notification.post.id %>" href="<%= notification_path @conn, :delete, notification.id %>">
-                <%= notification.post.title %>
-              </a>
-               中被人@了
-            <% end %>
-          </div>
-        <% end %>
+        <%= render_many @notifications, ElixirChina.NotificationView, "_notification.html", conn: @conn %>
         <%= if length(@notifications) == 0 do %>
           <div>
             目前没有消息。
@@ -26,22 +12,36 @@
         <% end %>
       </div>
     <% end %>
+    <div class="panel-footer">
+      <%= if (@pages || 0) > 1 do %>
+        <li class="topics_pagination list-group-item" data-pages="<%= @pages %>" data-page="<%= @page %>"></li>
+      <% end %>
+    </div>
 </div>
 
 <script>
   $(".read-notification").on("click", function(event) {
     event.preventDefault();
-
-    $that = this;
-
+    var that = this;
     $.ajax({
-      url: $that.getAttribute('href'),
+      url: that.getAttribute('href'),
       type: "DELETE",
       success: function(data) {
-        window.location = $that.getAttribute('data-post-link')
+        window.location = that.getAttribute('data-post-link')
       }
     });
 
     event.stopPropagation();
+  });
+
+  $(".read-all-notification").on("click", function(event) {
+    var that = this;
+    $.ajax({
+      url: that.getAttribute('data-link'),
+      type: "DELETE",
+      success: function(data) {
+        window.location.reload();
+      }
+    });
   });
 </script>

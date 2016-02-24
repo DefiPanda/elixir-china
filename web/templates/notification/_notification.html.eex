@@ -1,0 +1,14 @@
+<div class="media">
+  <%= if @notification.type == 0 do %>
+    您的帖子
+    <a class="read-notification" data-post-link="<%= post_path @conn, :show, @notification.post.id %>" href="<%= notification_path @conn, :delete, @notification.id %>">
+      <%= @notification.post.title %>
+    </a> 有了新回复
+  <%= else %>
+    您在帖子
+    <a class="read-notification" data-post-link="<%= post_path @conn, :show, @notification.post.id %>" href="<%= notification_path @conn, :delete, @notification.id %>">
+      <%= @notification.post.title %>
+    </a>
+     中被人@了
+  <% end %>
+</div>

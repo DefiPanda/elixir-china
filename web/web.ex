@@ -18,6 +18,8 @@ defmodule ElixirChina.Web do
 
       # Import URL helpers from the router
       import ElixirChina.Router.Helpers
+      import ElixirChina.ErrorHelpers
+      import ElixirChina.Gettext
 
       # Import all HTML functions (forms, tags, etc)
       use Phoenix.HTML

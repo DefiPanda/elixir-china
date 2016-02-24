@@ -22,6 +22,7 @@ defmodule ElixirChina.Router do
     end
 
     resources "/notifications", NotificationController, only: [:index, :delete]
+    delete "/notifications", NotificationController, :delete_all
 
     resources "/categories", CategoryController, only: [:index, :show]
 
