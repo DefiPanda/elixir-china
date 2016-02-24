@@ -2,11 +2,8 @@ defmodule ElixirChina.CommentController do
   use ElixirChina.Web, :controller
 
   import ElixirChina.ControllerUtils
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.Comment
-  alias ElixirChina.User
-  alias ElixirChina.Post
-  alias ElixirChina.Notification
+
+  alias ElixirChina.{Router.Helpers , Comment, User, Post, Notification}
 
   def show(conn, %{"post_id" => post_id, "id" => id}) do
     case get_comment_with_loaded_user(String.to_integer(id)) do

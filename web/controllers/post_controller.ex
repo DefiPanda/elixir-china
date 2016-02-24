@@ -2,12 +2,8 @@ defmodule ElixirChina.PostController do
   use ElixirChina.Web, :controller
 
   import ElixirChina.ControllerUtils
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.Post
-  alias ElixirChina.Comment
-  alias ElixirChina.Notification
-  alias ElixirChina.Category
-  alias ElixirChina.User
+
+  alias ElixirChina.{Router.Helpers, Post, Comment, Notification, Category, User}
 
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",

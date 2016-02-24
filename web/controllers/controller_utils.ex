@@ -1,9 +1,8 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
   import Phoenix.Controller
-  alias ElixirChina.Repo
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.User
+
+  alias ElixirChina.{Repo, Router.Helpers, User}
 
   def get_user_id(conn) do
     user = get_user_for_request(conn)

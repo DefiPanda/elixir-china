@@ -1,8 +1,7 @@
 defmodule ElixirChina.SessionController do
   use ElixirChina.Web, :controller
 
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.User
+  alias ElixirChina.{Router.Helpers, User}
 
   plug :set_user_id
   defp set_user_id(conn, _msg) do

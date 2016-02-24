@@ -1,7 +1,12 @@
 language: elixir
-elixir: 1.1.1
+elixir:
+  - 1.2.2
 otp_release:
-  - 18.0
+  - 18.2.1
+cache:
+  directories:
+    - _build
+    - deps
 sudo: false
 before_script:
   - mix deps.get --only test
