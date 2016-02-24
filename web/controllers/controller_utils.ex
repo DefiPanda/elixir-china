@@ -23,8 +23,9 @@ defmodule ElixirChina.ControllerUtils do
   end
 
   def increment_score(user, amount) do
-    user = %{user | score: user.score + amount}
-    Repo.update(user)
+    user
+    |> Ecto.Changeset.change(score: user.score + amount)
+    |> Repo.update
   end
 
   def unauthorized(conn) do
