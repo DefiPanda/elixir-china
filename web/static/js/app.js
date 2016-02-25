@@ -33,11 +33,11 @@ $(function() {
     self = $(this);
     path = self.data("path");
     return self.pagination({
-        total_pages: parseInt(self.data('pages')),
-        current_page: parseInt(self.data('page')),
-        callback: function(_event, page) {
-            return window.location.search = "?page=" + page;
-        }
+      total_pages: parseInt(self.data('pages')),
+      current_page: parseInt(self.data('page')),
+      callback: function(_event, page) {
+        return window.location.search = "?page=" + page;
+      }
     });
   });
 });
