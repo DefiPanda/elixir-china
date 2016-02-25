@@ -1,5 +1,5 @@
 defmodule ElixirChina.Router do
-  use Phoenix.Router
+  use ElixirChina.Web, :router
 
   pipeline :browser do
     plug :accepts, ~w(html)

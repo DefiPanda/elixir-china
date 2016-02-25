@@ -5,7 +5,7 @@ defmodule ElixirChina.Gettext do
   By using [Gettext](http://hexdocs.pm/gettext),
   your module gains a set of macros for translations, for example:
 
-      import NewPhoenix.Gettext
+      import ElixirChina.Gettext
 
       # Simple translation
       gettext "Here is the string to translate"

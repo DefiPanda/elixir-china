@@ -16,13 +16,16 @@ defmodule ElixirChina.Web do
     quote do
       use Phoenix.View, root: "web/templates"
 
+      # Import all HTML functions (forms, tags, etc)
+      use Phoenix.HTML
+
+      # Import convenience functions from controllers
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
+
       # Import URL helpers from the router
       import ElixirChina.Router.Helpers
       import ElixirChina.ErrorHelpers
       import ElixirChina.Gettext
-
-      # Import all HTML functions (forms, tags, etc)
-      use Phoenix.HTML
 
       # Functions defined here are available to all other views/templates
       def avatar_url(email) do
@@ -63,6 +66,7 @@ defmodule ElixirChina.Web do
 
       # Import URL helpers from the router
       import ElixirChina.Router.Helpers
+      import ElixirChina.Gettext
     end
   end
 
@@ -73,6 +77,23 @@ defmodule ElixirChina.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+    end
+  end
+
+  def router do
+    quote do
+      use Phoenix.Router
+    end
+  end
+
+  def channel do
+    quote do
+      use Phoenix.Channel
+
+      alias ElixirChina.Repo
+      import Ecto
+      import Ecto.Query, only: [from: 1, from: 2]
+      import ElixirChina.Gettext
     end
   end
 

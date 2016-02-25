@@ -21,8 +21,9 @@ defmodule ElixirChina.ConnCase do
       use Phoenix.ConnTest
 
       alias ElixirChina.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 2]
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query, only: [from: 1, from: 2]
 
       import ElixirChina.Router.Helpers
       import ElixirChina.TestHelpers

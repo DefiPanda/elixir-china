@@ -2,6 +2,7 @@ defmodule ElixirChina.NotificationController do
   use ElixirChina.Web, :controller
 
   import ElixirChina.ControllerUtils
+
   alias ElixirChina.Notification
 
   def index(conn, %{"page" => page}) do

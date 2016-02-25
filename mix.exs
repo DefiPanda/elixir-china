@@ -4,11 +4,12 @@ defmodule ElixirChina.Mixfile do
   def project do
     [app: :elixir_china,
      version: "0.0.1",
-     elixir: "~> 1.1",
+     elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     aliases: aliases,
      deps: deps]
   end
 
@@ -18,7 +19,7 @@ defmodule ElixirChina.Mixfile do
   def application do
     [
       mod: { ElixirChina, [] },
-      applications: [:phoenix, :cowboy, :logger, :postgrex, :ecto, :bcrypt, :gettext]
+      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :bcrypt, :phoenix_ecto, :postgrex]
     ]
   end
 
@@ -43,5 +44,10 @@ defmodule ElixirChina.Mixfile do
       {:bcrypt, github: "chef/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]
+  end
+
+  defp aliases do
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"]]
   end
 end

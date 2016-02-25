@@ -6,7 +6,7 @@ defmodule ElixirChina.NotificationControllerTest do
     post = insert_post(%{user_id: user.id})
     insert_notification(%{user_id: user.id, post_id: post.id})
     conn = conn |> put_session(user.id)
-    conn = get conn, notification_path(conn, :index)
+    conn = get conn, notification_path(conn, :index, page: 1)
     assert html_response(conn, 200)
   end
 end

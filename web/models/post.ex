@@ -18,7 +18,7 @@ defmodule ElixirChina.Post do
   @required_fields ~w(content title category_id user_id)
   @optional_fields ~w(update_time comments_count)
 
-  def changeset(post, params \\ nil) do
+  def changeset(post, params \\ :empty) do
     post
     |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:title, min: 1)

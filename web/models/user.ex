@@ -13,7 +13,7 @@ defmodule ElixirChina.User do
     has_many :notifications, ElixirChina.Notification
   end
 
-  def changeset(user, params \\ nil) do
+  def changeset(user, params \\ :empty) do
     user
     |> cast(params, ~w(name email admin password), ~w(score))
     |> validate_length(:name, min: 3)

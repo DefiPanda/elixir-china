@@ -7,7 +7,8 @@ defmodule ElixirChina.Notification do
     belongs_to :user, ElixirChina.User
   end
 
-  def changeset(notification, params \\ nil) do
+  # ecto~2.0 params \\ :invalid
+  def changeset(notification, params \\ :empty) do
     notification
     |> cast(params, ~w(type post_id user_id), ~w())
   end
