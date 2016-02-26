@@ -17,10 +17,11 @@ defmodule ElixirChina.ModelCase do
   using do
     quote do
       alias ElixirChina.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 2]
-      import ElixirChina.ModelCase
 
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query, only: [from: 1, from: 2]
+      import ElixirChina.ModelCase
       import ElixirChina.TestHelpers
     end
   end

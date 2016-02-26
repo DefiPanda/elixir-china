@@ -1,9 +1,8 @@
 defmodule ElixirChina.ControllerUtils do
   import Plug.Conn
   import Phoenix.Controller
-  alias ElixirChina.Repo
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.User
+
+  alias ElixirChina.{Repo, Router.Helpers, User}
 
   def get_user_id(conn) do
     user = get_user_for_request(conn)
@@ -24,8 +23,9 @@ defmodule ElixirChina.ControllerUtils do
   end
 
   def increment_score(user, amount) do
-    user = %{user | score: user.score + amount}
-    Repo.update(user)
+    user
+    |> Ecto.Changeset.change(score: user.score + amount)
+    |> Repo.update
   end
 
   def unauthorized(conn) do

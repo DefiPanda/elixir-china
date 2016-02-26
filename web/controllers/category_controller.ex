@@ -1,10 +1,7 @@
 defmodule ElixirChina.CategoryController do
   use ElixirChina.Web, :controller
 
-  alias ElixirChina.Post
-  alias ElixirChina.Comment
-  alias ElixirChina.User
-  alias ElixirChina.Category
+  alias ElixirChina.{Post, Comment, User, Category}
 
   plug :set_statics when action in [:index, :show]
   defp set_statics(conn, _msg) do

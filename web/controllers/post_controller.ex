@@ -2,12 +2,8 @@ defmodule ElixirChina.PostController do
   use ElixirChina.Web, :controller
 
   import ElixirChina.ControllerUtils
-  alias ElixirChina.Router.Helpers
-  alias ElixirChina.Post
-  alias ElixirChina.Comment
-  alias ElixirChina.Notification
-  alias ElixirChina.Category
-  alias ElixirChina.User
+
+  alias ElixirChina.{Router.Helpers, Post, Comment, Notification, Category, User}
 
   def index(conn, %{"user_id" => user_id}) do
     render conn, "index.html",
@@ -45,13 +41,12 @@ defmodule ElixirChina.PostController do
                 category_id: String.to_integer(category_id)}
 
     changeset = Post.changeset(%Post{}, post)
-
     if changeset.valid? do
       post = Repo.insert!(changeset)
       increment_score(Repo.get(User, user_id), 10)
       redirect conn, to: Helpers.post_path(conn, :show, post.id)
     else
-        render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+      render conn, "new.html", post: changeset.model, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 

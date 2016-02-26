@@ -12,7 +12,7 @@ defmodule ElixirChina.Comment do
     belongs_to :user, ElixirChina.User
   end
 
-  def changeset(comment, params \\ nil) do
+  def changeset(comment, params \\ :empty) do
     comment
     |> cast(params, ~w(content post_id user_id))
   end

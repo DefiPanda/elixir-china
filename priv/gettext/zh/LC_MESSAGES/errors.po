@@ -1,0 +1,95 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: zh\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "can't be blank"
+msgstr "不能为空"
+
+msgid "has already been taken"
+msgstr "已经被占用"
+
+msgid "is invalid"
+msgstr "是无效的"
+
+msgid "has invalid format"
+msgstr "格式错误"
+
+msgid "has an invalid entry"
+msgstr "含有无效输入"
+
+msgid "is reserved"
+msgstr "是保留字"
+
+msgid "does not match confirmation"
+msgstr "与确认信息不匹配"
+
+msgid "is still associated to this entry"
+msgstr "和此输入关联"
+
+msgid "are still associated to this entry"
+msgstr "和此输入关联"
+
+msgid "should be %{count} character(s)"
+msgid_plural "should be %{count} character(s)"
+msgstr[0] "应该等于 %{count} 字符"
+msgstr[1] "应该等于 %{count} 字符"
+
+msgid "should have %{count} item(s)"
+msgid_plural "should have %{count} item(s)"
+msgstr[0] "应该包含 %{count} 项"
+msgstr[1] "应该包含 %{count} 项"
+
+msgid "should be at least %{count} character(s)"
+msgid_plural "should be at least %{count} character(s)"
+msgstr[0] "应该至少有 %{count} 字符"
+msgstr[1] "应该至少有 %{count} 字符"
+
+msgid "should have at least %{count} item(s)"
+msgid_plural "should have at least %{count} item(s)"
+msgstr[0] "应该至少有 %{count} 项"
+msgstr[1] "应该至少有 %{count} 项"
+
+msgid "should be at most %{count} character(s)"
+msgid_plural "should be at most %{count} character(s)"
+msgstr[0] "最多是 %{count} 字符"
+msgstr[1] "最多是 %{count} 字符"
+
+msgid "should have at most %{count} item(s)"
+msgid_plural "should have at most %{count} item(s)"
+msgstr[0] "最多包含 %{count} 项"
+msgstr[1] "最多包含 %{count} 项"
+
+msgid "must be less than %{count}"
+msgid_plural "must be less than %{count}"
+msgstr[0] "必须小于 %{count}"
+msgstr[1] "必须小于 %{count}"
+
+msgid "must be greater than %{count}"
+msgid_plural "must be greater than %{count}"
+msgstr[0] "必须大于 %{count}"
+msgstr[1] "必须大于 %{count}"
+
+msgid "must be less than or equal to %{count}"
+msgid_plural "must be less than or equal to %{count}"
+msgstr[0] "必须小于或等于 %{count}"
+msgstr[1] "必须小于或等于 %{count}"
+
+msgid "must be greater than or equal to %{count}"
+msgid_plural "must be greater than or equal to %{count}"
+msgstr[0] "必须大于或等于 %{count}"
+msgstr[1] "必须大于或等于 %{count}"
+
+msgid "must be equal to %{count}"
+msgid_plural "must be equal to %{count}"
+msgstr[0] "必须等于 %{count}"
+msgstr[1] "必须等于 %{count}"
