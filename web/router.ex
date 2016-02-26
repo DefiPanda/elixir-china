@@ -19,7 +19,7 @@ defmodule ElixirChina.Router do
 
     resources "/users", UserController do
       resources "/posts", PostController, only: [:index]
-    end
+    end                                                             gi
 
     resources "/notifications", NotificationController, only: [:index, :delete]
     delete "/notifications", NotificationController, :delete_all

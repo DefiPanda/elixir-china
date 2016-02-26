@@ -4,8 +4,8 @@
     <div class="inner post">
     <%= if @errors do %>
     <div class="alert alert-warning">
-      <%= for error <- format_errors(@errors) do %>
-          <%= "#{error}" %> <br />
+      <%= for {attr, message} <- @errors do %>
+        <%= attr %> <%= translate_error(message) %>
       <% end %>
     </div>
     <% end %>

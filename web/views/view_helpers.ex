@@ -1,4 +1,4 @@
-defmodule ElixirChina.ErrorHelpers do
+defmodule ElixirChina.ViewHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -30,5 +30,16 @@ defmodule ElixirChina.ErrorHelpers do
 
   def translate_error(msg) do
     Gettext.dgettext(ElixirChina.Gettext, "errors", msg)
+  end
+
+  # Functions defined here are available to all other views/templates
+  def avatar_url(email) do
+    hash = email
+      |> String.strip
+      |> (fn data -> :crypto.hash(:md5, data) end).()
+      |> :erlang.bitstring_to_list
+      |> Enum.map(&(:io_lib.format("~2.16.0b", [&1])))
+      |> List.flatten
+    "https://cdn.v2ex.com/gravatar/#{hash}"
   end
 end
