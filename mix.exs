@@ -38,7 +38,6 @@ defmodule ElixirChina.Mixfile do
       {:phoenix_live_reload, "~> 1.0.1", only: :dev},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 1.1.0"},
       {:scrivener, "~> 1.1"},
       {:gettext, "~> 0.9"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
