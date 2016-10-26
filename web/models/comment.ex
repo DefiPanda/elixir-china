@@ -12,9 +12,12 @@ defmodule ElixirChina.Comment do
     belongs_to :user, ElixirChina.User
   end
 
-  def changeset(comment, params \\ nil) do
+  @required_fields ~w(content post_id user_id)a
+
+  def changeset(comment, params \\ %{}) do
     comment
-    |> cast(params, ~w(content post_id user_id))
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
   end
 
   def count(query \\ __MODULE__) do

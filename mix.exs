@@ -9,7 +9,8 @@ defmodule ElixirChina.Mixfile do
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     aliases: aliases(),
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -18,7 +19,7 @@ defmodule ElixirChina.Mixfile do
   def application do
     [
       mod: { ElixirChina, [] },
-      applications: [:phoenix, :cowboy, :logger, :postgrex, :ecto, :bcrypt]
+      applications: [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger, :postgrex, :ecto, :bcrypt]
     ]
   end
 
@@ -31,17 +32,24 @@ defmodule ElixirChina.Mixfile do
   # Type `mix help deps` for examples and options
   defp deps do
     [
-      {:phoenix, "~> 1.1.0"},
-      {:phoenix_ecto, "~> 2.0"},
-      {:phoenix_html, "~> 2.3"},
+      {:phoenix, "~> 1.2.1"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix_ecto, "~> 3.0"},
+      {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0.1", only: :dev},
       {:linguist, "~> 0.1.5"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 1.1.0"},
-      {:scrivener, "~> 1.1"},
+      {:scrivener, "~> 2.0"},
+      {:scrivener_ecto, "~> 1.0.2"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
       {:uuid, github: "okeuday/uuid"}
     ]
+  end
+
+  defp aliases do
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

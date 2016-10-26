@@ -15,12 +15,14 @@ defmodule ElixirChina.Post do
     field :comments_count, :integer, default: 0
   end
 
-  @required_fields ~w(content title category_id user_id)
-  @optional_fields ~w(update_time comments_count)
+  @optional_fields ~w(update_time comments_count)a
+  @required_fields ~w(content title category_id user_id)a
+  @allowed_fields @required_fields ++ @optional_fields
 
-  def changeset(post, params \\ nil) do
+  def changeset(post, params \\ %{}) do
     post
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
   end
 
   def count(query \\ __MODULE__) do

@@ -62,7 +62,9 @@ defmodule ElixirChina.CommentController do
       Repo.update(changeset)
       json conn, %{location: Helpers.post_path(conn, :show, post_id)}
     else
-      json conn, errors: changeset.errors
+      conn
+      |> put_status(400)
+      |> json(%{errors: flatten_changeset_errors(changeset)})
     end
   end
 

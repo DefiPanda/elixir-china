@@ -57,10 +57,18 @@ defmodule ElixirChina.Web do
       # Alias the data repository as a convenience
       alias ElixirChina.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
 
       # Import URL helpers from the router
       import ElixirChina.Router.Helpers
+
+      def flatten_changeset_errors(changeset) do
+        Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+          Enum.reduce(opts, msg, fn {key, value}, acc ->
+            String.replace(acc, "%{#{key}}", to_string(value))
+          end)
+        end)
+      end
     end
   end
 
@@ -70,7 +78,7 @@ defmodule ElixirChina.Web do
 
       import Ecto
       import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
     end
   end
 

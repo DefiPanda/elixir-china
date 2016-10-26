@@ -13,9 +13,10 @@ defmodule ElixirChina.User do
     has_many :notifications, ElixirChina.Notification
   end
 
-  def changeset(user, params \\ nil) do
+  def changeset(user, params \\ %{}) do
     user
-    |> cast(params, ~w(name email admin password), ~w(score))
+    |> cast(params, ~w(name email admin password score)a)
+    |> validate_required(~w(name email admin password)a)
     |> validate_length(:name, min: 3)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:name, name: :users_name_key)

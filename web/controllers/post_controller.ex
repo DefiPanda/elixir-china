@@ -42,7 +42,7 @@ defmodule ElixirChina.PostController do
     # utc = utc()
     # update_time is initialized here and will only be changed when a comment is to be made or deleted.
     post = %{title: title, content: content, user_id: user_id,
-                category_id: String.to_integer(category_id)}
+                category_id: String.to_integer(category_id), id: nil}
 
     changeset = Post.changeset(%Post{}, post)
 
@@ -51,7 +51,7 @@ defmodule ElixirChina.PostController do
       increment_score(Repo.get(User, user_id), 10)
       redirect conn, to: Helpers.post_path(conn, :show, post.id)
     else
-        render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
+      render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
   end
 
@@ -76,7 +76,9 @@ defmodule ElixirChina.PostController do
       Repo.update(changeset)
       json conn, %{location: Helpers.post_path(conn, :show, post.id)}
     else
-      json conn, errors: changeset.errors
+      conn
+      |> put_status(400)
+      |> json(%{errors: flatten_changeset_errors(changeset)})
     end
   end
 
