@@ -16,18 +16,12 @@ config :elixir_china, ElixirChina.Endpoint,
   pubsub: [name: ElixirChina.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :elixir_china, ecto_repos: [ElixirChina.Repo]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
-
-# Configures database
-config :elixir_china, ElixirChina.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  database: "elixir_china",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

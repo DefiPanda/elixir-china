@@ -4,7 +4,7 @@ defmodule ElixirChina.ConnCase do
   tests that require setting up a connection.
 
   Such tests rely on `Phoenix.ConnTest` and also
-  imports other functionality to make it easier
+  import other functionality to make it easier
   to build and query models.
 
   Finally, if the test case interacts with the database,
@@ -21,8 +21,9 @@ defmodule ElixirChina.ConnCase do
       use Phoenix.ConnTest
 
       alias ElixirChina.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 2]
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
 
       import ElixirChina.Router.Helpers
       import ElixirChina.TestHelpers
@@ -33,10 +34,12 @@ defmodule ElixirChina.ConnCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElixirChina.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(ElixirChina.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(ElixirChina.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

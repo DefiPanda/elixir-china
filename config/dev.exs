@@ -4,7 +4,6 @@ config :elixir_china, ElixirChina.Endpoint,
   http: [port: System.get_env("PORT") || 4000],
   debug_errors: true,
   code_reloader: true,
-  cache_static_lookup: false,
   check_origin: false,
   watchers: []
 
@@ -20,5 +19,13 @@ config :elixir_china, ElixirChina.Endpoint,
       ~r{web/templates/.*(eex)$}
     ]
   ]
+
+# Configures database
+config :elixir_china, ElixirChina.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "elixir_china",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost"
 
 config :phoenix, :stacktrace_depth, 20

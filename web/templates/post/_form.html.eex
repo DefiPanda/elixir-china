@@ -20,9 +20,9 @@
   </div>
 
   <%= if @errors do %>
-    <%= for error <- @errors do %>
+    <%= for {key, error} <- @errors do %>
       <div class="alert alert-warning">
-        <%= "#{elem(error, 0)} #{elem(error, 1)}" %>
+        <%= "#{key} #{elem(error, 0)}" %>
       </div>
     <% end %>
   <% end %>
