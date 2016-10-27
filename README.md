@@ -1,5 +1,5 @@
 # ElixirChina
-[![Build Status](https://travis-ci.org/jw2013/elixir-china.svg)](https://travis-ci.org/jw2013/elixir-china)
+[![Build Status](https://travis-ci.org/elixir-cn/elixir-china.svg)](https://travis-ci.org/jw2013/elixir-china)
 
 目前[ElixirChina 网站](http://elixir-cn.com/)部署在DigitalOcean上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
 
