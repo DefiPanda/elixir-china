@@ -32,5 +32,8 @@ defmodule ElixirChina.Router do
     resources "/sessions", SessionController, only: [:new, :create]
     get "/signin", SessionController, :new
     get "/signout", SessionController, :delete
+
+    # Other
+    resources "/images", ImageController, only: [:create]
   end
 end
