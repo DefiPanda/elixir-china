@@ -11,10 +11,10 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/editor.css" />
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/editor.js"></script>
     <script type="text/javascript" src="/js/marked.js"></script>
     <script type="text/javascript" src="/js/pagination.js"></script>
     <script type="text/javascript" src="/js/helper.js"></script>
