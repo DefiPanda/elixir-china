@@ -6,6 +6,12 @@ $(document).ready(function(){
     var editor = new SimpleMDE({
       element: ele,
       showIcons: ['code'],
+      spellChecker: false,
+      autosave: {
+        enabled: true,
+        delay: 5000,
+        uniqueId: window.location.href
+      },
       autoDownloadFontAwesome: false
     });
     attachFileUpload(editor);
