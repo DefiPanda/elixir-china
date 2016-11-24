@@ -19,7 +19,8 @@ defmodule ElixirChina.Mixfile do
   def application do
     [
       mod: { ElixirChina, [] },
-      applications: [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger, :postgrex, :ecto, :bcrypt]
+      applications: [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger,
+                     :postgrex, :ecto, :bcrypt, :qiniu]
     ]
   end
 
@@ -40,6 +41,7 @@ defmodule ElixirChina.Mixfile do
       {:linguist, "~> 0.1.5"},
       {:cowboy, "~> 1.0.0"},
       {:postgrex, ">= 0.0.0"},
+      {:qiniu, "~> 0.3.3"},
       {:scrivener, "~> 2.0"},
       {:scrivener_ecto, "~> 1.0.2"},
       {:bcrypt, github: "chef/erlang-bcrypt"},

@@ -29,3 +29,5 @@ config :elixir_china, ElixirChina.Repo,
   hostname: "localhost"
 
 config :phoenix, :stacktrace_depth, 20
+
+import_config "dev.secret.exs"
