@@ -4,6 +4,7 @@
 目前[ElixirChina 网站](http://elixir-cn.com/)部署在DigitalOcean上。如果要本地开发运行ElixirChina，请依次运行以下命令行指令。
 
 ```
+$ cp config/dev.secret.exs.example config/dev.secret.exs
 $ mix deps.get
 $ mix ecto.create Repo
 $ mix ecto.migrate Repo
