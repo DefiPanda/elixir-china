@@ -20,7 +20,7 @@ defmodule ElixirChina.User do
     |> validate_length(:name, min: 3)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:name, name: :users_name_key)
-    |> unique_constraint(:email, name: :users_email_index)
+    |> unique_constraint(:email, name: :users_email_key)
   end
 
   def valid_password?(record, password) do
