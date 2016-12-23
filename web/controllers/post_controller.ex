@@ -27,7 +27,9 @@ defmodule ElixirChina.PostController do
       post when is_map(post) ->
         user_id = get_session(conn, :user_id)
         comments = get_comments_with_loaded_user(String.to_integer(id))
-        render conn, "show.html", post: post, comments: comments, user_id: user_id, is_admin: is_admin(user_id)
+        render conn, "show.html", post: post, comments: comments, user_id: user_id,
+                                  is_admin: is_admin(user_id), page_title: post.title,
+                                  page_summary: Post.summary(post)
       _ ->
         unauthorized conn
     end
@@ -98,7 +100,7 @@ defmodule ElixirChina.PostController do
 
   defp get_loaded_post(id) do
     query = from(c in Post, where: c.id == ^id, preload: [:user, :category])
-    List.first(Repo.all(query))
+    Repo.one(query)
   end
 
   defp get_comments_with_loaded_user(id) do
@@ -109,7 +111,7 @@ defmodule ElixirChina.PostController do
   # Admin is only allowed to delete, but not edit, a post
   defp validate_and_get_post(conn, id, admin_ok) do
     user_id = get_user_id(conn)
-    post = Repo.get(Post, String.to_integer(id))
+    post = get_loaded_post(id)
     if user_id == post.user_id or (admin_ok and is_admin(user_id)) do
       post
     else
