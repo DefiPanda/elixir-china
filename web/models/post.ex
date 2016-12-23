@@ -36,4 +36,16 @@ defmodule ElixirChina.Post do
   def by_category_id(query \\ __MODULE__, category_id) do
     from p in query, where: p.category_id == ^category_id
   end
+
+  def summary(post) do
+    post.content
+    # image
+    |> String.replace(~r/\!\[.*?\]\(.*?\)/, "")
+    # link
+    |> String.replace(~r/\[(.*?)\]\(.*?\)/, "\\1")
+    # leading formats
+    |> String.replace(~r/(^|\n)(>\s*|#+\s*|\*\s+)/, "\\1")
+    |> String.slice(0..99)
+    |> String.trim
+  end
 end

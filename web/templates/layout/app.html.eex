@@ -4,10 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="ElixirChina(ElixirCN)是中国人学习和交流Elixir语言的乐园。">
+    <meta name="description" content="<%= page_summary(assigns) %>">
     <meta name="author" content="">
+    <meta name="og:site_name" content="ElixirChina">
+    <meta name="og:title" content="<%= assigns[:page_title] %>">
+    <meta name="og:description" content="<%= assigns[:page_summary] %>">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@elixirchina" />
+    <meta name="twitter:title" content="<%= assigns[:page_title] %>" />
+    <meta name="twitter:description" content="<%= page_summary(assigns) %>" />
 
-    <title>ElixirChina</title>
+    <title><%= page_title(assigns) %></title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css">
