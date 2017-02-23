@@ -60,7 +60,10 @@ img[alt=emoji] {
   height: 20px;
 }
 
-#footer {
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
   padding: 24px 0px;
   background-color: #fff;
 }
