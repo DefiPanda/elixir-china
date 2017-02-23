@@ -49,7 +49,7 @@
 
     </div>
 
-    <div id="footer">
+    <div class="footer">
       <div class="container">
         <div class="text-muted">
           Made with &#9825; by Elixir makers.
