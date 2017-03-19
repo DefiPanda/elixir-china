@@ -4,7 +4,7 @@
     <label class="">所属板块
       <select name="post[category_id]" class="form-control" value="<%= @post.category_id %>">
         <%= for category <- @categories do %>
-          <option value="<%= category.id %>" <%= if @post.category.id == category.id, do: "selected" %>><%= category.name %></option>
+          <option value="<%= category.id %>" <%= if @post.id && @post.category.id == category.id, do: "selected" %>><%= category.name %></option>
         <% end %>
       </select>
     </label>
