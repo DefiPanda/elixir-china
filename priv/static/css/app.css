@@ -62,7 +62,7 @@ img[alt=emoji] {
 
 .footer {
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   padding: 24px 0px;
   background-color: #fff;
