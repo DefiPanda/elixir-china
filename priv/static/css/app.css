@@ -1,6 +1,6 @@
 @media (max-width: 992px) {
   div[role=main] {
-    padding: 0px;
+    padding: 0;
   }
 }
 
@@ -10,8 +10,14 @@
   }
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   background-color: #DBD9DB;
+  margin-bottom: 60px;
 }
 
 .panel {
@@ -62,10 +68,13 @@ img[alt=emoji] {
 
 .footer {
   width: 100%;
-  position: fixed;
+  position: absolute;
+  height: 60px;
   bottom: 0;
-  padding: 24px 0px;
   background-color: #fff;
+}
+.footer .text-muted {
+  margin: 20px 0;
 }
 
 .community-brand {
