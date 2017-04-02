@@ -35,5 +35,7 @@ defmodule ElixirChina.Router do
 
     # Other
     resources "/images", ImageController, only: [:create]
+
+    resources "/auth/:platform", AuthController, only: [:new, :show], singleton: true
   end
 end

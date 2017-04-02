@@ -20,7 +20,7 @@ defmodule ElixirChina.Mixfile do
     [
       mod: { ElixirChina, [] },
       applications: [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger,
-                     :postgrex, :ecto, :bcrypt, :qiniu]
+                     :postgrex, :ecto, :bcrypt, :qiniu, :oauthex]
     ]
   end
 
@@ -45,7 +45,8 @@ defmodule ElixirChina.Mixfile do
       {:scrivener, "~> 2.0"},
       {:scrivener_ecto, "~> 1.0.2"},
       {:bcrypt, github: "chef/erlang-bcrypt"},
-      {:uuid, github: "okeuday/uuid"}
+      {:uuid, github: "okeuday/uuid"},
+      {:oauthex, github: "h1u2i3/oauthex"}
     ]
   end
 
