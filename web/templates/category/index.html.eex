@@ -9,6 +9,9 @@
       <% end %>
       <%= if @user_id do %>
         <li class="active pull-right">
+          <a href="<%= feed_path @conn, :feed %>">RSS</a>
+        </li>
+        <li class="active pull-right">
           <a href="<%= post_path @conn, :new %>">发布话题</a>
         </li>
       <% end %>

@@ -98,6 +98,11 @@ defmodule ElixirChina.PostController do
     end
   end
 
+  def feed(conn, _params) do
+    posts = Repo.all(from p in Post, limit: 20, order_by: [{:desc, p.time}], preload: :user)
+    render conn, "feed.xml", posts: posts
+  end
+
   defp get_loaded_post(id) do
     query = from(c in Post, where: c.id == ^id, preload: [:user, :category])
     Repo.one(query)
