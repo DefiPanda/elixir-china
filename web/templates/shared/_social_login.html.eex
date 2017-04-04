@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    用其他平台的帐号登录
+  </div>
+  <div class="panel-body friendship-community">
+    <a href="<%= auth_path(@conn, :index, :github) %>" class="btn btn-default btn-md">
+      <i class='fa fa-github'></i> Github
+    </a>
+  </div>
+</div>

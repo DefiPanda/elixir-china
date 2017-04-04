@@ -36,4 +36,11 @@ defmodule ElixirChina.Router do
     # Other
     resources "/images", ImageController, only: [:create]
   end
+
+  scope "/auth", ElixirChina do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :index
+    get "/:provider/callback", AuthController, :callback
+  end
 end
