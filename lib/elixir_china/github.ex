@@ -14,11 +14,11 @@ defmodule ElixirChina.Github do
   end
 
   def authorize_url! do
-    OAuth2.Client.authorize_url!(client(), scope: "user,public_repo")
+    OAuth2.Client.authorize_url!(client(), scope: "user:email")
   end
 
-  def get_token!(params \\ [], headers \\ [], opts \\ []) do
-    OAuth2.Client.get_token!(client(), params, headers, opts)
+  def get_token!(params) do
+    OAuth2.Client.get_token!(client(), params)
   end
 
   def authorize_url(client, params) do
