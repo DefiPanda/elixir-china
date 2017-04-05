@@ -62,22 +62,24 @@ defmodule ElixirChina.AuthController do
   end
 
   defp find_or_create_user(email, name) do
-    with {:ok, user} <- insert_user(email, name) do
+    if (user = Repo.get_by(User, email: email)) do
       {:ok, user}
     else
-      {:error, %Ecto.Changeset{errors: [email: {"has already been taken", []}]}} ->
-        {:ok, Repo.get_by(User, email: email)}
-      {:error, %Ecto.Changeset{errors: [name: {"has already been taken", []}]}} ->
-        find_or_create_user(email, generate_name(name))
-      {:error, reason} ->
-        {:error, inspect(reason)}
+      insert_user(email, name)
     end
   end
 
   defp insert_user(email, name) do
-    %User{}
-    |> User.changeset(%{email: email, name: name, admin: false, password: random_string(16)})
-    |> Repo.insert
+    with {:ok, user} <- %User{}
+                        |> User.changeset(%{email: email, name: name, admin: false, password: random_string(16)})
+                        |> Repo.insert do
+      {:ok, user}
+    else
+      {:error, %Ecto.Changeset{errors: [name: {"has already been taken", []}]}} ->
+        insert_user(email, generate_name(name))
+      {:error, reason} ->
+        {:error, inspect(reason)}
+    end
   end
 
   defp fetch_email(info) do
@@ -89,7 +91,7 @@ defmodule ElixirChina.AuthController do
   end
 
   defp fetch_name(info) do
-    if (name = info["name"]) do
+    if (name = info["login"]) do
       {:ok, name}
     else
       {:error, "Bad info from oauth server"}
