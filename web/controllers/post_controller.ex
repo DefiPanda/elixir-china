@@ -49,9 +49,13 @@ defmodule ElixirChina.PostController do
     changeset = Post.changeset(%Post{}, post)
 
     if changeset.valid? do
-      post = Repo.insert!(changeset)
-      increment_score(Repo.get(User, user_id), 10)
-      redirect conn, to: Helpers.post_path(conn, :show, post.id)
+      if title =~ "毕业" do
+        unauthorized conn
+      else
+        post = Repo.insert!(changeset)
+        increment_score(Repo.get(User, user_id), 10)
+        redirect conn, to: Helpers.post_path(conn, :show, post.id)
+      end
     else
       render conn, "new.html", post: post, errors: changeset.errors, user_id: get_session(conn, :user_id), categories: Repo.all(Category)
     end
