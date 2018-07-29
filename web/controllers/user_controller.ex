@@ -23,38 +23,8 @@ defmodule ElixirChina.UserController do
 
   def create(conn, %{"user" => %{"email" => email, "name" => name, "password" => password}}) do
     user = %{email: email, name: name, admin: false, password: password}
-    # validate_result = User.validate(user)
-
-    changeset = User.changeset(%User{}, user)
-
-    bad_name_list = [
-      "root", "admin", "administrator", "post", "bot", "robot", "master", "webmaster",
-      "account", "people", "user", "users", "project", "projects",
-      "search", "action", "favorite", "like", "love", "none", "nil",
-      "team", "teams", "group", "groups", "organization",
-      "organizations", "package", "packages", "org", "com", "net",
-      "help", "doc", "docs", "document", "documentation", "blog",
-      "bbs", "forum", "forums", "static", "assets", "repository",
-      "public", "private"
-    ]
-
-    if name in bad_name_list do
-      changeset = Ecto.Changeset.add_error(changeset, :name, "无效的用户名")
-    end
-
-    if changeset.valid? do
-      changeset = Ecto.Changeset.put_change(changeset, :password, user.password |> User.encrypt_password |> to_string)
-      case Repo.insert(changeset) do
-        {:ok, user} ->
-          conn = put_session conn, :user_id, user.id
-          conn = put_session conn, :current_user, user
-          render conn, "show.html", user: user, user_id: get_session(conn, :user_id)
-        {:error, changeset} ->
-          render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
-      end
-    else
-      render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
-    end
+    changeset = Ecto.Changeset.add_error(User.changeset(%User{}, user), :name, "网站暂时不支持注册")
+    render conn, "new.html", user: user, errors: changeset.errors, user_id: get_session(conn, :user_id)
   end
 
   def edit(conn, %{"id" => id}) do
