@@ -8,6 +8,10 @@ defmodule ElixirChina.LayoutView do
     Dict.get(conn.assigns, :show_statics)
   end
 
+  def show_social_login?(conn) do
+    Map.get(conn.assigns, :show_social_login)
+  end
+
   def page_title(assigns) do
     if assigns[:page_title] do
       assigns[:page_title] <> " - " <> @title
@@ -19,5 +23,4 @@ defmodule ElixirChina.LayoutView do
   def page_summary(assigns) do
     if assigns[:page_summary], do: assigns[:page_summary], else: @summary
   end
-
 end

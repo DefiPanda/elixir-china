@@ -10,7 +10,9 @@ defmodule ElixirChina.SessionController do
   end
 
   def new(conn, _params) do
-    render conn, "new.html"
+    conn
+    |> assign(:show_social_login, true)
+    |> render("new.html")
   end
 
   def create(conn, %{"user" => %{"name" => name, "password" => password}}) do
@@ -37,8 +39,10 @@ defmodule ElixirChina.SessionController do
   end
 
   def delete(conn, _params) do
-    conn = put_session conn, :user_id, nil
-    conn = put_session conn, :current_user, nil
-    render conn, "new.html"
+    conn
+    |> put_session(:user_id, nil)
+    |> put_session(:current_user, nil)
+    |> assign(:show_social_login, true)
+    |> render("new.html")
   end
 end
