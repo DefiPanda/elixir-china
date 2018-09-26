@@ -84,3 +84,5 @@ img[alt=emoji] {
 .friendship-community img {
   margin-bottom: 0.5em;
 }
+
+.clear { clear: both; }

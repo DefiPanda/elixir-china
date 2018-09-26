@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <ul class="nav nav-pills category-list">
-      <li class="active"><a href="<%= category_path @conn, :index %>">全部</a></li>
+      <li class="active"><a href="<%= category_path @conn, :index %>" style="padding: 9px">全部</a></li>
       <%= for category <- @categories do %>
         <li>
-          <a href="<%= category_path @conn, :show, category.id %>"><%= category.name %></a>
+          <a href="<%= category_path @conn, :show, category.id %>" style="padding: 9px"><%= category.name %></a>
         </li>
       <% end %>
       <%= if @user_id do %>

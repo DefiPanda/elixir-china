@@ -1,13 +1,27 @@
 <article class="panel panel-default topic">
-  <header class="panel-heading">
-    <h3 class="panel-title">
-      <div class="title"><%= @post.title %></div>
-    </h3>
-    <h6><small>
-        作者 <a href="<%= user_path(@conn, :show, @post.user_id) %>"><%= @post.user.name %></a>
-        所属板块 <a href="<%= category_path(@conn, :show, @post.category_id) %>"><mark class="text-muted"><%= @post.category.name %></mark></a>
-    </small></h6>
+  <header class="panel-heading" style=" display: block;height: 80px">
+
+    <div class="media-left" style="float: left">
+      <h3 class="panel-title">
+        <div class="title"><%= @post.title %></div>
+      </h3>
+      <h6>
+          作者 <a href="<%= user_path(@conn, :show, @post.user_id) %>"><%= @post.user.name %></a>
+          所属板块 <a href="<%= category_path(@conn, :show, @post.category_id) %>" target="_blank">
+                    <mark class="text-muted"><%= @post.category.name %></mark>
+                  </a>
+          创建于
+                  <time class="last_active_time pubdate" datetime="<%= datetime_string @post.update_time %>">
+              </time>
+      </h6>
+    </div>
+    <div class="media-right" style="float: right; padding: 10px">
+      <a class="user_avatar" href="<%= user_path(@conn, :show, @post.user_id) %>">
+        <img src="<%= avatar_url(@post.user && @post.user.email || @post.user.email) %>" height="48" width="48" class="img-rounded">
+      </a>
+    </div>
   </header>
+  <div class="clear"> </div>
 
   <div class="panel-body">
     <div class="markdown-text"><%= @post.content %></div>

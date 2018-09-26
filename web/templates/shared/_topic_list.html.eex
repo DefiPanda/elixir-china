@@ -8,17 +8,22 @@
       </div>
       <div class="media-body">
         <h4 class="media-heading">
-          <a href="<%= post_path(@conn, :show, post.id) %>">
+          <a href="<%= post_path(@conn, :show, post.id) %>" style="color: #000">
             <%= post.title %>
           </a>
         </h4>
-        <h5 class="media-heading small">
-          <a href="<%= category_path(@conn, :show, post.category_id) %>"><mark class="text-muted"><%= post.category.name %></mark></a>
-          <small><a href="<%= user_path(@conn, :show, post.user_id) %>" class="author"><%= @user && @user.name || post.user.name %></a>
+        <h4 class="media-heading">
+          <a href="<%= category_path(@conn, :show, post.category_id) %>">
+          <mark class="text-muted"><%= post.category.name %></mark></a>
+          <small>
+            <a href="<%= user_path(@conn, :show, post.user_id) %>" class="author">
+              <%= @user && @user.name || post.user.name %>
+            </a>
             的帖子于
-            <time class="last_active_time pubdate" datetime="<%= datetime_string post.update_time %>"><%= datetime_string post.update_time %></time>
+            <time class="last_active_time pubdate" datetime="<%= datetime_string post.update_time %>">
+            </time>
             最后更新</small>
-        </h5>
+        </h4>
       </div>
       <div class="media-right">
         <h4><div class="label label-<%= if post.comments_count > 0, do: "primary", else: "default" %>"><%= post.comments_count %></div></h4>

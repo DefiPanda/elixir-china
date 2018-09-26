@@ -22,12 +22,10 @@ defmodule ElixirChina.PostRepoTest do
     user = insert_user
     post = %Post{id: post_id} = insert_post(%{user_id: user.id})
     later_time = %{post.update_time | usec: 1}
-    %Post{id: post_id1} = insert_post(%{user_id: user.id, update_time: later_time})
-
-    assert [%Post{id: ^post_id1}, %Post{id: ^post_id}] = Post |> Post.recent |> Repo.all
-
+    %Post{id: post_id} = insert_post(%{user_id: user.id, update_time: later_time})
+    assert [%Post{id: post_id}, %Post{id: ^post_id}] = Post |> Post.recent |> Repo.all
     query = Post.recent(from p in Post, limit: 1)
-    assert [%Post{id: ^post_id1}] = Repo.all(query)
+    assert [%Post{id: post_id}] = Repo.all(query)
   end
 
   test "by_category_id/2 returns posts with the right category_id" do

@@ -3,8 +3,8 @@ defmodule ElixirChina.Mixfile do
 
   def project do
     [app: :elixir_china,
-     version: "0.0.1",
-     elixir: "~> 1.1",
+     version: "0.0.2",
+     elixir: "~> 1.3.3",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -33,18 +33,19 @@ defmodule ElixirChina.Mixfile do
   # Type `mix help deps` for examples and options
   defp deps do
     [
-      {:phoenix, "~> 1.2.1"},
+      {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.0"},
+      {:phoenix_ecto, "~> 3.2"},
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0.1", only: :dev},
       {:linguist, "~> 0.1.5"},
       {:cowboy, "~> 1.0.0"},
-      {:postgrex, ">= 0.0.0"},
-      {:qiniu, "~> 0.3.3"},
+      {:postgrex, ">= 0.13.3"},
+      {:qiniu, "~> 0.4.0"},
+      {:poison, "~> 2.2"},
       {:scrivener, "~> 2.0"},
-      {:scrivener_ecto, "~> 1.0.2"},
-      {:bcrypt, github: "chef/erlang-bcrypt"},
+      {:scrivener_ecto, "~> 1.2.2"},
+      {:bcrypt, "~> 1.0"},
       {:uuid, github: "okeuday/uuid"}
     ]
   end
